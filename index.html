@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZULFR | Semantic Intelligence</title>
+<meta name="description" content="ZULFR research platform for measurable AI governance and semantic intelligence infrastructure.">
+<meta name="theme-color" content="#0C1A2E">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+<!-- ── TOP BAR ───────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <a href="#" class="wordmark" onclick="switchTab('home'); return false;">ZUL<em>FR</em></a>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" onclick="switchTab('home')" data-tab="home" role="tab">
+        <span class="tab-icon">⬡</span>
+        <span class="tab-label">Overview</span>
+      </button>
+      <button class="tab" onclick="switchTab('research')" data-tab="research" role="tab">
+        <span class="tab-icon">◈</span>
+        <span class="tab-label">Research</span>
+      </button>
+      <button class="tab" onclick="switchTab('models')" data-tab="models" role="tab">
+        <span class="tab-icon">⬡</span>
+        <span class="tab-label">Models</span>
+      </button>
+      <button class="tab" onclick="switchTab('future')" data-tab="future" role="tab">
+        <span class="tab-icon">◎</span>
+        <span class="tab-label">Roadmap</span>
+      </button>
+      <button class="tab" onclick="switchTab('contact')" data-tab="contact" role="tab">
+        <span class="tab-icon">◌</span>
+        <span class="tab-label">Contact</span>
+      </button>
+    </nav>
+    <div class="topbar-status">
+      <span class="status-dot"></span>
+      SYSTEMS NOMINAL
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 1 — OVERVIEW
+═══════════════════════════════════════════ -->
+<main class="page">
+<div id="panel-home" class="panel active">
+  <div class="wrap">
+
+    <div class="hero-section">
+      <div class="hero-eyebrow">
+        <span class="label">Semantic Intelligence Platform</span>
+      </div>
+      <h1 class="hero-title">The Discipline of<br>Measured Intelligence</h1>
+      <p class="hero-sub">ZULFR formalizes governance-first AI systems where intelligence is constrained, audited, and mathematically measurable across every execution layer.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="switchTab('research')">Explore Research</button>
+        <button class="btn btn-ghost" onclick="switchTab('models')">View Models</button>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="card about-card">
+        <span class="icon">◈</span>
+        <h3>Semantic Governance</h3>
+        <p>Every AI output is constrained by formal semantic rules embedded at the architecture level — not applied as a post-hoc filter.</p>
+      </div>
+      <div class="card about-card">
+        <span class="icon">◎</span>
+        <h3>Measurable Outputs</h3>
+        <p>Intelligence that cannot be measured is a liability. ZULFR transforms model outputs into certified, auditable decision evidence.</p>
+      </div>
+      <div class="card about-card">
+        <span class="icon">⬡</span>
+        <h3>Deterministic Safety</h3>
+        <p>Safety envelopes are defined mathematically and independently of model training — ensuring reliability under adversarial conditions.</p>
+      </div>
+      <div class="card about-card">
+        <span class="icon">◌</span>
+        <h3>Audit-First Design</h3>
+        <p>Every inference step is graph-structured and traceable. Authorization chains are explicit, not inferred from model confidence.</p>
+      </div>
+    </div>
+
+    <div class="philosophy-block">
+      <span class="quote-mark">"</span>
+      <blockquote>
+        Intelligence without measurement is hazard. ZULFR embeds semantic governance into execution architecture, transforming outputs into certified decision evidence that organizations can rely on, defend, and improve.
+      </blockquote>
+    </div>
+
+    <div class="about-section">
+      <h2>About ZULFR</h2>
+      <hr class="divider">
+      <p>ZULFR is a research and standards organization focused on the intersection of formal logic, safety engineering, and artificial intelligence. Founded on the principle that governance must precede capability, ZULFR develops frameworks that treat AI outputs as high-stakes artifacts requiring the same rigor as safety-critical software systems.</p>
+      <p>Our work spans three pillars: theoretical foundations published as peer-reviewed research, practical standards embodied in our governance frameworks, and applied certification methodology for organizations deploying AI in regulated domains.</p>
+      <p>ZULFR does not build general-purpose AI systems. We build the infrastructure that makes AI systems trustworthy.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 2 — RESEARCH
+═══════════════════════════════════════════ -->
+<div id="panel-research" class="panel">
+  <div class="wrap">
+
+    <div class="research-header">
+      <div>
+        <span class="label" style="display:block;margin-bottom:6px">Publications</span>
+        <h2>Research Papers</h2>
+        <p>Peer-reviewed work, technical standards, and working papers from the ZULFR research group.</p>
+      </div>
+      <span class="badge badge-blue">3 Publications</span>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterPapers('all', this)">All</button>
+      <button class="filter-btn" onclick="filterPapers('doi', this)">DOI / Peer-Reviewed</button>
+      <button class="filter-btn" onclick="filterPapers('standard', this)">Technical Standard</button>
+      <button class="filter-btn" onclick="filterPapers('working', this)">Working Paper</button>
+    </div>
+
+    <div class="paper-list" id="paper-list">
+
+      <div class="paper-card" data-type="doi" onclick="togglePaper(this)">
+        <div class="paper-top">
+          <div>
+            <div class="paper-meta">
+              <span class="badge badge-blue">DOI · zenodo.18705930</span>
+              <span class="badge badge-green">Peer-Reviewed</span>
+            </div>
+            <div class="paper-title">Functional Safety is Not a Snapshot</div>
+            <p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p>
+          </div>
+          <span class="paper-expand">⌄</span>
+        </div>
+        <div class="paper-body">
+          <p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p>
+          <p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p>
+          <div class="paper-actions">
+            <a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
+            <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation()">Cite</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-card" data-type="standard" onclick="togglePaper(this)">
+        <div class="paper-top">
+          <div>
+            <div class="paper-meta">
+              <span class="badge badge-amber">Technical Standard</span>
+              <span class="badge badge-blue">DAIS-10</span>
+            </div>
+            <div class="paper-title">DAIS-10 Governance Doctrine</div>
+            <p class="paper-excerpt">Risk-theoretic dominance replacing probabilistic thresholds in data admissibility protocols.</p>
+          </div>
+          <span class="paper-expand">⌄</span>
+        </div>
+        <div class="paper-body">
+          <p>The DAIS-10 Governance Doctrine formalizes the concept of semantic admissibility as a foundational constraint in AI decision pipelines. Rather than relying on probabilistic confidence thresholds — which can be gamed and lack formal grounding — DAIS-10 introduces risk-theoretic dominance as the primary criterion for data acceptance.</p>
+          <p>A data element is admissible if and only if its semantic fingerprint is dominated by the authorized reference class under the current governance context. This approach decouples data quality from model confidence, enabling governance to be applied upstream of inference rather than as a post-hoc filter.</p>
+          <div class="paper-actions">
+            <button class="btn btn-primary" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation()">Request Access</button>
+            <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation(); switchTab('models')">View Model</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-card" data-type="working" onclick="togglePaper(this)">
+        <div class="paper-top">
+          <div>
+            <div class="paper-meta">
+              <span class="badge badge-amber">Working Paper</span>
+            </div>
+            <div class="paper-title">Semantic Integrity in Executive AI</div>
+            <p class="paper-excerpt">Formal measurement systems for governance-first AI workflows in executive decision contexts.</p>
+          </div>
+          <span class="paper-expand">⌄</span>
+        </div>
+        <div class="paper-body">
+          <p>As AI systems are deployed in executive decision support roles — advising on capital allocation, regulatory strategy, and organizational risk — the absence of formal integrity guarantees creates unquantified liability. This working paper proposes a measurement framework for semantic integrity that can be independently audited and certified.</p>
+          <p>We define semantic integrity operationally as the preservation of authorized meaning across the full transformation chain from raw input to decision recommendation. Integrity degrades when transformations introduce unauthorized semantic shifts — a phenomenon we term semantic drift — and we provide formal detection criteria.</p>
+          <div class="paper-actions">
+            <button class="btn btn-primary" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation()">Request Draft</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 3 — MODELS
+═══════════════════════════════════════════ -->
+<div id="panel-models" class="panel">
+  <div class="wrap-lg">
+
+    <div class="models-header">
+      <span class="label" style="display:block;margin-bottom:6px">Governance Frameworks</span>
+      <h2>Active Models</h2>
+      <p>Select a framework to explore its architecture, principles, and implementation specifications.</p>
+    </div>
+
+    <div class="model-selector">
+      <button class="model-pill active" onclick="switchModel('dais')" data-model="dais">
+        <span class="model-pill-dot"></span>
+        DAIS-10 — Data Governance
+      </button>
+      <button class="model-pill" onclick="switchModel('sil')" data-model="sil">
+        <span class="model-pill-dot"></span>
+        SIL-10 — Safety Integrity Logic
+      </button>
+      <button class="model-pill" onclick="switchModel('digrs')" data-model="digrs">
+        <span class="model-pill-dot"></span>
+        DIGRS-10 — Decision Intelligence
+      </button>
+    </div>
+
+    <!-- DAIS-10 -->
+    <div id="model-dais" class="model-detail active">
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Data Admissibility &amp; Integrity Standard</span>
+          <h2>DAIS-10</h2>
+          <p style="margin-top:8px;">Semantic admissibility protocols for AI decision pipelines. DAIS-10 establishes formal criteria for which data elements may enter a governed inference chain, replacing probabilistic thresholds with risk-theoretic dominance.</p>
+        </div>
+        <div class="model-version">v1.0</div>
+      </div>
+      <div class="model-specs">
+        <div class="spec-card">
+          <span class="label">Maturity</span>
+          <div class="spec-value"><span class="badge badge-green">Published</span></div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Domain</span>
+          <div class="spec-value">Data Pipeline Governance</div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Core Mechanism</span>
+          <div class="spec-value">Risk-Theoretic Dominance</div>
+        </div>
+      </div>
+      <div class="model-principles">
+        <div class="principle-item">
+          <span class="principle-num">01</span>
+          <div class="principle-text"><strong>Semantic Fingerprinting</strong>Each data element receives a semantic fingerprint encoding its provenance, type class, and authorized transformation history.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">02</span>
+          <div class="principle-text"><strong>Dominance Criterion</strong>Admissibility is determined by risk-theoretic dominance over an authorized reference class, not model confidence.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">03</span>
+          <div class="principle-text"><strong>Upstream Governance</strong>Data governance is applied before inference, not as a post-processing filter, eliminating a class of adversarial attacks.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">04</span>
+          <div class="principle-text"><strong>Audit Continuity</strong>Every admissibility decision is logged with its dominance proof, enabling full retroactive audit of any downstream output.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIL-10 -->
+    <div id="model-sil" class="model-detail">
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Safety Integrity Logic</span>
+          <h2>SIL-10</h2>
+          <p style="margin-top:8px;">Deterministic safety envelopes independent of model training behavior. SIL-10 defines hard behavioral boundaries that hold regardless of model outputs, implementing safety as a formal constraint layer rather than a training objective.</p>
+        </div>
+        <div class="model-version">v1.0</div>
+      </div>
+      <div class="model-specs">
+        <div class="spec-card">
+          <span class="label">Maturity</span>
+          <div class="spec-value"><span class="badge badge-blue">Draft</span></div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Domain</span>
+          <div class="spec-value">Behavioral Safety</div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Core Mechanism</span>
+          <div class="spec-value">Formal Safety Envelopes</div>
+        </div>
+      </div>
+      <div class="model-principles">
+        <div class="principle-item">
+          <span class="principle-num">01</span>
+          <div class="principle-text"><strong>Training Independence</strong>Safety constraints are defined in a separate formal layer, not embedded in training objectives where they can be overridden.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">02</span>
+          <div class="principle-text"><strong>Deterministic Rejection</strong>Outputs violating the safety envelope are deterministically rejected before delivery — no probabilistic exceptions.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">03</span>
+          <div class="principle-text"><strong>Adversarial Robustness</strong>Envelopes are specified to resist adversarial boundary probing through formal over-approximation of attack surfaces.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">04</span>
+          <div class="principle-text"><strong>Compositional Safety</strong>Safety properties compose across pipeline stages so that the aggregate system preserves each component's safety guarantees.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIGRS-10 -->
+    <div id="model-digrs" class="model-detail">
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Decision Intelligence &amp; Graph Reasoning Standard</span>
+          <h2>DIGRS-10</h2>
+          <p style="margin-top:8px;">Graph-structured AI outputs for auditability and authorization control. DIGRS-10 requires that all AI-generated decision recommendations be expressed as directed acyclic graphs where every node is traceable to governance policy.</p>
+        </div>
+        <div class="model-version">v1.0</div>
+      </div>
+      <div class="model-specs">
+        <div class="spec-card">
+          <span class="label">Maturity</span>
+          <div class="spec-value"><span class="badge badge-blue">Draft</span></div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Domain</span>
+          <div class="spec-value">Decision Architecture</div>
+        </div>
+        <div class="spec-card">
+          <span class="label">Core Mechanism</span>
+          <div class="spec-value">Traceable DAG Outputs</div>
+        </div>
+      </div>
+      <div class="model-principles">
+        <div class="principle-item">
+          <span class="principle-num">01</span>
+          <div class="principle-text"><strong>Graph-Structured Output</strong>Every recommendation is expressed as a DAG, making reasoning paths inspectable by humans and automated auditors.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">02</span>
+          <div class="principle-text"><strong>Policy Traceability</strong>Each inference node in the output graph references the governance policy that authorizes that reasoning step.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">03</span>
+          <div class="principle-text"><strong>Authorization Scoping</strong>Decision scope is bounded by explicit authorization tokens — the system cannot recommend outside its certified domain.</div>
+        </div>
+        <div class="principle-item">
+          <span class="principle-num">04</span>
+          <div class="principle-text"><strong>Certified Evidence</strong>The output graph constitutes legal-grade decision evidence that can be submitted to regulatory bodies or internal audit functions.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 4 — ROADMAP
+═══════════════════════════════════════════ -->
+<div id="panel-future" class="panel">
+  <div class="wrap">
+
+    <div class="future-header">
+      <div>
+        <span class="label" style="display:block;margin-bottom:6px">Development Roadmap</span>
+        <h2>Future Developments</h2>
+        <p>Upcoming standards, research directions, and platform milestones.</p>
+      </div>
+      <span class="badge badge-blue">2025 — 2027</span>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q2 2025</strong>Completed</div>
+        <div class="rm-spine">
+          <div class="rm-dot done"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content done">
+          <h3>DAIS-10 v1.0 Publication</h3>
+          <p>First stable release of the Data Admissibility and Integrity Standard. Includes full formal specification and reference implementation guidelines.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q4 2025</strong>Completed</div>
+        <div class="rm-spine">
+          <div class="rm-dot done"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content done">
+          <h3>Functional Safety Paper — Zenodo</h3>
+          <p>Publication of mosaic aging hazard model research establishing theoretical foundations for continuous-time safety classification in AI systems.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q1 2026</strong>In Progress</div>
+        <div class="rm-spine">
+          <div class="rm-dot active"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content active">
+          <h3>SIL-10 &amp; DIGRS-10 Draft Release</h3>
+          <p>Public draft release of Safety Integrity Logic and Decision Intelligence frameworks for community review and feedback. Open comment period: 90 days.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q3 2026</strong>Planned</div>
+        <div class="rm-spine">
+          <div class="rm-dot"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <h3>ZULFR Certification Program Launch</h3>
+          <p>A formal certification pathway for organizations to achieve ZULFR-compliant AI governance status. Covers DAIS-10, SIL-10, and DIGRS-10 in an integrated audit framework.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q1 2027</strong>Planned</div>
+        <div class="rm-spine">
+          <div class="rm-dot"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <h3>SEMVAL-10 — Semantic Validation Standard</h3>
+          <p>New framework extending DAIS-10 with runtime semantic validation. Enables continuous integrity monitoring of live AI pipelines without interrupting inference.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="rm-time"><strong>Q3 2027</strong>Research</div>
+        <div class="rm-spine">
+          <div class="rm-dot"></div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <h3>Cross-Jurisdiction Regulatory Mapping</h3>
+          <p>Formal alignment study mapping ZULFR frameworks to EU AI Act, NIST AI RMF, and ISO/IEC 42001. Targeting mutual recognition agreements with standards bodies.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="future-vision">
+      <span class="label" style="display:block;margin-bottom:10px">Long-Term Vision</span>
+      <h2>Where ZULFR is Headed</h2>
+      <div class="vision-grid">
+        <div class="vision-card">
+          <h3>Universal Governance Layer</h3>
+          <p>A vendor-agnostic governance layer that any AI system can integrate, providing ZULFR-certified safety, admissibility, and auditability regardless of underlying model architecture.</p>
+        </div>
+        <div class="vision-card">
+          <h3>Real-Time Semantic Monitoring</h3>
+          <p>Continuous inference-time monitoring systems that detect semantic drift, integrity violations, and safety envelope breaches in milliseconds without inference latency penalties.</p>
+        </div>
+        <div class="vision-card">
+          <h3>Regulatory Standard Adoption</h3>
+          <p>Working toward formal adoption of ZULFR frameworks as referenced standards in AI regulatory frameworks across the EU, UK, and North America.</p>
+        </div>
+        <div class="vision-card">
+          <h3>Open Research Commons</h3>
+          <p>A collaborative research commons for governance-first AI, bringing together safety engineers, policymakers, and AI researchers under a shared formal methodology.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANEL 5 — CONTACT
+═══════════════════════════════════════════ -->
+<div id="panel-contact" class="panel">
+  <div class="wrap">
+
+    <div class="contact-header">
+      <span class="label" style="display:block;margin-bottom:6px">Get In Touch</span>
+      <h2>Initiate Inquiry</h2>
+      <p>Technical collaboration, governance certification, research discussion, or framework licensing.</p>
+    </div>
+
+    <div class="contact-layout">
+
+      <div>
+        <h3 style="margin-bottom:4px;font-size:14px;">How can we help?</h3>
+        <p class="small" style="margin-bottom:0;">We respond to all inquiries within 2 business days. For urgent certification matters, indicate in your message.</p>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <span class="ci-icon">◈</span>
+            <div>
+              <div class="ci-label">Technical Collaboration</div>
+              <div class="ci-value">Joint research, integration, API access</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <span class="ci-icon">◎</span>
+            <div>
+              <div class="ci-label">Governance Certification</div>
+              <div class="ci-value">Audit, certification, compliance review</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <span class="ci-icon">⬡</span>
+            <div>
+              <div class="ci-label">Research Discussion</div>
+              <div class="ci-value">Paper review, academic collaboration</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <span class="ci-icon">◌</span>
+            <div>
+              <div class="ci-label">Framework Licensing</div>
+              <div class="ci-value">Commercial use, enterprise deployment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" action="https://formsubmit.co/your@email.com" method="POST">
+        <input type="hidden" name="_subject" value="ZULFR Inquiry">
+        <input type="hidden" name="_captcha" value="false">
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Name</label>
+            <input name="name" required placeholder="Full name">
+          </div>
+          <div class="form-row">
+            <label>Organization</label>
+            <input name="org" placeholder="Company or institution">
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input name="email" type="email" required placeholder="you@organization.com">
+        </div>
+        <div class="form-row">
+          <label>Inquiry Type</label>
+          <select name="type">
+            <option value="">Select a topic...</option>
+            <option>Technical Collaboration</option>
+            <option>Governance Certification</option>
+            <option>Research Discussion</option>
+            <option>Framework Licensing</option>
+            <option>Press / Media</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Message</label>
+          <textarea name="message" placeholder="Describe your inquiry in detail..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────── -->
+<footer class="footer">
+  <span class="wordmark">ZUL<em>FR</em></span>
+  <span class="footer-note">© 2026 · Semantic Intelligence Infrastructure</span>
+  <span class="footer-note">SYSTEMS NOMINAL · v2.0.0</span>
+</footer>
+
+</div><!-- /.app -->
+
+<script src="js/script.js"></script>
+</body>
+</html>
