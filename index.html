@@ -399,13 +399,16 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
 <script>
 /* ── Tab / UI functions ── */
-function switchTab(tab){document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===tab)});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+tab)});window.scrollTo({top:0,behavior:'smooth'})}
+var BACKEND_URL='https://zulfr-backend.onrender.com/send';
+var HEALTH_URL='https://zulfr-backend.onrender.com/';
+var serverWarmed=false;
+function warmServer(){if(serverWarmed)return;fetch(HEALTH_URL,{method:'GET',mode:'cors'}).then(function(){serverWarmed=true;}).catch(function(){});}
+function switchTab(tab){document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===tab)});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+tab)});window.scrollTo({top:0,behavior:'smooth'});if(tab==='contact')warmServer();}
 function togglePaper(card){var e=card.classList.contains('expanded');document.querySelectorAll('.paper-card').forEach(function(c){c.classList.remove('expanded')});if(!e)card.classList.add('expanded')}
 function filterPapers(type,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.paper-card').forEach(function(c){c.style.display=(type==='all'||c.dataset.type===type)?'':'none'})}
 function switchModel(id){document.querySelectorAll('.model-pill').forEach(function(p){p.classList.toggle('active',p.dataset.model===id)});document.querySelectorAll('.model-detail').forEach(function(d){d.classList.toggle('active',d.id==='model-'+id)})}
 
 /* ── Contact form ── */
-var BACKEND_URL='https://zulfr-backend.onrender.com/send';
 function showFeedback(type,msg){var b=document.getElementById('form-feedback'),i=document.getElementById('feedback-icon'),m=document.getElementById('feedback-msg');b.classList.remove('success','error','visible');i.textContent=type==='success'?'✓':'✕';m.textContent=msg;b.classList.add(type,'visible')}
 function clearFieldErrors(){document.querySelectorAll('.form-row input,.form-row textarea,.form-row select').forEach(function(e){e.classList.remove('invalid')});document.querySelectorAll('.field-error').forEach(function(e){e.classList.remove('visible')})}
 function markInvalid(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(i)i.classList.add('invalid');if(e)e.classList.add('visible')}
@@ -414,7 +417,7 @@ function validateForm(d){var v=true;clearFieldErrors();if(!d.name||!d.name.trim(
 function setLoading(on){var b=document.getElementById('submit-btn');if(!b)return;b.disabled=on;b.classList.toggle('loading',on)}
 function resetForm(){var f=document.getElementById('inquiry-form');if(f)f.reset()}
 
-document.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded',function(){warmServer();
   var form=document.getElementById('inquiry-form');
   if(!form)return;
   form.addEventListener('submit',function(e){
