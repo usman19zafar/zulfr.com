@@ -8,6 +8,72 @@
 <meta name="theme-color" content="#0C1A2E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* ── FORM FEEDBACK STATES ───────────────────── */
+.form-feedback {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  align-items: center;
+  gap: 10px;
+}
+.form-feedback.visible { display: flex; }
+.form-feedback.success {
+  background: rgba(62,207,142,.1);
+  border: 1px solid rgba(62,207,142,.25);
+  color: #3ECF8E;
+}
+.form-feedback.error {
+  background: rgba(239,68,68,.08);
+  border: 1px solid rgba(239,68,68,.2);
+  color: #F87171;
+}
+.feedback-icon { font-size: 16px; flex-shrink: 0; }
+
+/* ── SUBMIT BUTTON STATES ───────────────────── */
+.btn-submit-wrap { position: relative; }
+.form-submit {
+  width: 100%;
+  padding: 11px;
+  margin-top: 4px;
+  position: relative;
+  transition: opacity .2s, background .18s;
+}
+.form-submit:disabled { opacity: .6; cursor: not-allowed; }
+.form-submit.loading { color: transparent; }
+.form-submit.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(12,26,46,.3);
+  border-top-color: #0C1A2E;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* ── FIELD ERROR HIGHLIGHT ──────────────────── */
+.form-row input.invalid,
+.form-row textarea.invalid,
+.form-row select.invalid {
+  border-color: rgba(239,68,68,.5);
+  background: rgba(239,68,68,.04);
+}
+.field-error {
+  font-size: 11px;
+  color: #F87171;
+  margin-top: 5px;
+  display: none;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: .04em;
+}
+.field-error.visible { display: block; }
+</style>
 </head>
 <body>
 <div class="app">
@@ -59,8 +125,7 @@
         <span class="label">Semantic Intelligence Platform</span>
       </div>
       <h1 class="hero-title">The Discipline of<br>Measured Intelligence</h1>
-      <p class="hero-sub">ZULFR develops measurable intelligence frameworks across safety, data, semantics, and decision architecture, ensuring intelligence is constrained, auditable, and mathematically measurable at every layer.
-        </p>
+      <p class="hero-sub">ZULFR develops measurable intelligence frameworks across safety, data, semantics, and decision architecture, ensuring intelligence is constrained, auditable, and mathematically measurable at every layer.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" onclick="switchTab('research')">Explore Research</button>
         <button class="btn btn-ghost" onclick="switchTab('models')">View Models</button>
@@ -71,7 +136,7 @@
       <div class="card about-card">
         <span class="icon">◈</span>
         <h3>Semantic Governance</h3>
-          <p>Semantic structure is treated as a primary computational filtering dimension, allowing AI systems to generate higher order meaning from data.</p>
+        <p>Semantic structure is treated as a primary computational filtering dimension, allowing AI systems to generate higher order meaning from data.</p>
       </div>
       <div class="card about-card">
         <span class="icon">◎</span>
@@ -81,12 +146,12 @@
       <div class="card about-card">
         <span class="icon">⬡</span>
         <h3>Deterministic Safety</h3>
-          <p>ZULFR models balance practical deployment with rigorous mathematical foundations, enabling trustworthy functional safety guarantees and defensible evidence of organizational due diligence.</p>
+        <p>ZULFR models balance practical deployment with rigorous mathematical foundations, enabling trustworthy functional safety guarantees and defensible evidence of organizational due diligence.</p>
       </div>
       <div class="card about-card">
         <span class="icon">◌</span>
         <h3>Audit-First Design</h3>
-          <p>Each inference step follows a graph structured representation, ensuring transparency and traceability. Authorization paths are explicitly defined, avoiding automatic or implicit inference from model confidence.</p>
+        <p>Each inference step follows a graph structured representation, ensuring transparency and traceability. Authorization paths are explicitly defined, avoiding automatic or implicit inference from model confidence.</p>
       </div>
     </div>
 
@@ -100,10 +165,10 @@
     <div class="about-section">
       <h2>About ZULFR</h2>
       <hr class="divider">
-        <p>ZULFR is a research and standards initiative focused on the integration of formal logic, reliability engineering, and artificial intelligence. The organization is guided by the principle that system reliability forms the foundation of capability development. ZULFR designs frameworks that treat AI outputs as critical decision artifacts, applying rigorous reliability engineering principles to intelligent systems.</p>
-        <p>At ZULFR, development is undertaken only through the integration of practical experience and mathematical proof of concept. Concepts that cannot be expressed, measured, or validated through rigorous methodology are treated as non operational assets within our framework.</p>
-        <p>ZULFR advances applied certification methodologies for organizations deploying AI in regulated domains, operating on the principle that trustworthy intelligence requires measurable design. The organization does not build general purpose AI systems; instead, it develops the foundational infrastructure that enables AI systems to be reliable, auditable, and defensible in critical environments.</p>
-        <p>ZULFR does not build general-purpose AI systems. We build the infrastructure that makes AI systems trustworthy.</p>
+      <p>ZULFR is a research and standards initiative focused on the integration of formal logic, reliability engineering, and artificial intelligence. The organization is guided by the principle that system reliability forms the foundation of capability development. ZULFR designs frameworks that treat AI outputs as critical decision artifacts, applying rigorous reliability engineering principles to intelligent systems.</p>
+      <p>At ZULFR, development is undertaken only through the integration of practical experience and mathematical proof of concept. Concepts that cannot be expressed, measured, or validated through rigorous methodology are treated as non operational assets within our framework.</p>
+      <p>ZULFR advances applied certification methodologies for organizations deploying AI in regulated domains, operating on the principle that trustworthy intelligence requires measurable design. The organization does not build general purpose AI systems; instead, it develops the foundational infrastructure that enables AI systems to be reliable, auditable, and defensible in critical environments.</p>
+      <p>ZULFR does not build general-purpose AI systems. We build the infrastructure that makes AI systems trustworthy.</p>
     </div>
 
   </div>
@@ -121,7 +186,7 @@
         <h2>Research Papers</h2>
         <p>Research with DOI, technical standards, and working papers from the ZULFR research group.</p>
       </div>
-      <span class="badge badge-blue"> Sample Publications</span>
+      <span class="badge badge-blue">Sample Publications</span>
     </div>
 
     <div class="filter-row">
@@ -137,7 +202,7 @@
           <div>
             <div class="paper-meta">
               <span class="badge badge-blue">DOI · Zenodo.18705930</span>
-              <span class="badge badge-green">theorems</span>
+              <span class="badge badge-green">Theorems</span>
             </div>
             <div class="paper-title">SIL-10: Functional Safety is Not a Snapshot</div>
             <p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p>
@@ -145,8 +210,8 @@
           <span class="paper-expand">⌄</span>
         </div>
         <div class="paper-body">
-            <p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p>
-            <p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p>
+          <p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p>
+          <p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p>
           <div class="paper-actions">
             <a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
           </div>
@@ -158,19 +223,19 @@
           <div>
             <div class="paper-meta">
               <span class="badge badge-amber">Technical Standard</span>
-              <span class="badge badge-blue">DOI-Zenodo.18684292</span>
+              <span class="badge badge-blue">DOI · Zenodo.18684292</span>
             </div>
             <div class="paper-title">DAIS-10: A Doctrine-Aligned Framework for Safety-Dominant Decision Making Under Uncertainty</div>
-              <p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p>
+            <p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p>
           </div>
           <span class="paper-expand">⌄</span>
         </div>
         <div class="paper-body">
-            <p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p>
-            <p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts, while preserving controlled conservativeness through nine compliance constraints.</p>
+          <p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p>
+          <p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts, while preserving controlled conservativeness through nine compliance constraints.</p>
           <div class="paper-actions">
             <a href="https://zenodo.org/records/18684292" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
-              <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation(); switchTab('models')">View Model</button>
+            <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation(); switchTab('models')">View Model</button>
           </div>
         </div>
       </div>
@@ -180,7 +245,7 @@
           <div>
             <div class="paper-meta">
               <span class="badge badge-amber">Short Working Paper</span>
-              <span class="badge badge-blue">DOI-Zenodo.18684292</span> 
+              <span class="badge badge-blue">DOI · Zenodo.18684292</span>
             </div>
             <div class="paper-title">A Modern Cognitive Architecture Framework (CAF)</div>
             <p class="paper-excerpt">Designing How Intelligent Systems Think, Decide and Behave.</p>
@@ -196,6 +261,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -528,48 +594,58 @@
         </div>
       </div>
 
-      <form class="contact-form" action="https://zulfr-backend.onrender.com/send" method="POST">
-  <input type="hidden" name="_subject" value="ZULFR Inquiry">
-  <input type="hidden" name="_captcha" value="false">
+      <!-- ── CONTACT FORM ──────────────────────── -->
+      <form
+        id="inquiry-form"
+        class="contact-form"
+        novalidate
+      >
+        <!-- Feedback banner — shown after submit -->
+        <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite">
+          <span class="feedback-icon" id="feedback-icon"></span>
+          <span id="feedback-msg"></span>
+        </div>
 
-  <div class="form-grid">
-    <div class="form-row">
-      <label>Name</label>
-      <input name="name" required placeholder="Full name">
-    </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" required placeholder="Full name" autocomplete="name">
+            <div class="field-error" id="err-name">Name is required.</div>
+          </div>
+          <div class="form-row">
+            <label for="f-org">Organization</label>
+            <input id="f-org" name="org" placeholder="Company or institution" autocomplete="organization">
+          </div>
+        </div>
 
-    <div class="form-row">
-      <label>Organization</label>
-      <input name="org" placeholder="Company or institution">
-    </div>
-  </div>
+        <div class="form-row">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" required placeholder="you@organization.com" autocomplete="email">
+          <div class="field-error" id="err-email">A valid email address is required.</div>
+        </div>
 
-  <div class="form-row">
-    <label>Email</label>
-    <input name="email" type="email" required placeholder="you@organization.com">
-  </div>
+        <div class="form-row">
+          <label for="f-type">Inquiry Type</label>
+          <select id="f-type" name="type">
+            <option value="">Select a topic...</option>
+            <option>Technical Collaboration</option>
+            <option>Governance Certification</option>
+            <option>Research Discussion</option>
+            <option>Framework Licensing</option>
+            <option>Press / Media</option>
+            <option>Other</option>
+          </select>
+        </div>
 
-  <div class="form-row">
-    <label>Inquiry Type</label>
-    <select name="type">
-      <option value="">Select a topic...</option>
-      <option>Technical Collaboration</option>
-      <option>Governance Certification</option>
-      <option>Research Discussion</option>
-      <option>Framework Licensing</option>
-      <option>Press / Media</option>
-      <option>Other</option>
-    </select>
-  </div>
+        <div class="form-row">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="Describe your inquiry in detail..."></textarea>
+        </div>
 
-  <div class="form-row">
-    <label>Message</label>
-    <textarea name="message" placeholder="Describe your inquiry in detail..."></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary form-submit">Send Message</button>
-</form>
-
+        <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
+          Send Message
+        </button>
+      </form>
 
     </div>
   </div>
