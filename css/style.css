@@ -642,3 +642,9 @@ h3 {
   .form-grid { grid-template-columns: 1fr; }
   .roadmap-item { grid-template-columns: 80px 1px 1fr; }
 }
+/* Fix clipped descenders in hero title */
+.hero-title {
+  margin-bottom: 18px;
+  line-height: 1.18;
+  overflow: visible;
+}
