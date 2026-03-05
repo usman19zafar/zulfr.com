@@ -19,3 +19,8 @@ def send():
         smtp.send_message(msg)
 
     return "Message sent"
+@app.get("/")
+def home():
+    return "ZULFR backend is running."
+
+
