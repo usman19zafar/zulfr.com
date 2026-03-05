@@ -119,15 +119,14 @@
       <div>
         <span class="label" style="display:block;margin-bottom:6px">Publications</span>
         <h2>Research Papers</h2>
-        <p>Peer-reviewed work, technical standards, and working papers from the ZULFR research group.</p>
+        <p>work with DOI, technical standards, and working papers from the ZULFR research group.</p>
       </div>
-      <span class="badge badge-blue">3 Publications</span>
+      <span class="badge badge-blue"> Sample Publications</span>
     </div>
 
     <div class="filter-row">
       <button class="filter-btn active" onclick="filterPapers('all', this)">All</button>
-      <button class="filter-btn" onclick="filterPapers('doi', this)">DOI / Peer-Reviewed</button>
-      <button class="filter-btn" onclick="filterPapers('standard', this)">Technical Standard</button>
+      <button class="filter-btn" onclick="filterPapers('standard', this)">Technical Report</button>
       <button class="filter-btn" onclick="filterPapers('working', this)">Working Paper</button>
     </div>
 
@@ -137,8 +136,8 @@
         <div class="paper-top">
           <div>
             <div class="paper-meta">
-              <span class="badge badge-blue">DOI · zenodo.18705930</span>
-              <span class="badge badge-green">Peer-Reviewed</span>
+              <span class="badge badge-blue">DOI · Zenodo.18705930</span>
+              <span class="badge badge-green">theorems</span>
             </div>
             <div class="paper-title">Functional Safety is Not a Snapshot</div>
             <p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p>
@@ -150,7 +149,6 @@
           <p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p>
           <div class="paper-actions">
             <a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
-            <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation()">Cite</button>
           </div>
         </div>
       </div>
@@ -160,18 +158,18 @@
           <div>
             <div class="paper-meta">
               <span class="badge badge-amber">Technical Standard</span>
-              <span class="badge badge-blue">DAIS-10</span>
+              <span class="badge badge-blue">DOI-Zenodo.18684292</span>
             </div>
-            <div class="paper-title">DAIS-10 Governance Doctrine</div>
-            <p class="paper-excerpt">Risk-theoretic dominance replacing probabilistic thresholds in data admissibility protocols.</p>
+            <div class="paper-title">DAIS-10: A Doctrine-Aligned Framework for Safety-Dominant Decision Making Under Uncertainty</div>
+            <p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p>
           </div>
           <span class="paper-expand">⌄</span>
         </div>
         <div class="paper-body">
-          <p>The DAIS-10 Governance Doctrine formalizes the concept of semantic admissibility as a foundational constraint in AI decision pipelines. Rather than relying on probabilistic confidence thresholds — which can be gamed and lack formal grounding — DAIS-10 introduces risk-theoretic dominance as the primary criterion for data acceptance.</p>
-          <p>A data element is admissible if and only if its semantic fingerprint is dominated by the authorized reference class under the current governance context. This approach decouples data quality from model confidence, enabling governance to be applied upstream of inference rather than as a post-hoc filter.</p>
+          <p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p>
+          <p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts, while preserving controlled conservativeness through nine compliance constraints.</p>
           <div class="paper-actions">
-            <button class="btn btn-primary" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation()">Request Access</button>
+            <a href="https://zenodo.org/records/18684292" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
             <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation(); switchTab('models')">View Model</button>
           </div>
         </div>
