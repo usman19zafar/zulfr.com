@@ -528,48 +528,48 @@
         </div>
       </div>
 
-      <form class="contact-form" action="https://formsubmit.co/your@email.com" method="POST">
-        <input type="hidden" name="_subject" value="ZULFR Inquiry">
-        <input type="hidden" name="_captcha" value="false">
-        <div class="form-grid">
-          <div class="form-row">
-            <label>Name</label>
-            <input name="name" required placeholder="Full name">
-          </div>
-          <div class="form-row">
-            <label>Organization</label>
-            <input name="org" placeholder="Company or institution">
-          </div>
-        </div>
-        <div class="form-row">
-          <label>Email</label>
-          <input name="email" type="email" required placeholder="you@organization.com">
-        </div>
-        <div class="form-row">
-          <label>Inquiry Type</label>
-          <select name="type">
-            <option value="">Select a topic...</option>
-            <option>Technical Collaboration</option>
-            <option>Governance Certification</option>
-            <option>Research Discussion</option>
-            <option>Framework Licensing</option>
-            <option>Press / Media</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label>Message</label>
-          <textarea name="message" placeholder="Describe your inquiry in detail..."></textarea>
-        </div>
-       </div>
+      <form class="contact-form" action="https://zulfr-backend.onrender.com/send" method="POST">
+  <input type="hidden" name="_subject" value="ZULFR Inquiry">
+  <input type="hidden" name="_captcha" value="false">
 
-          <button type="submit" class="btn btn-primary form-submit">Send Message</button>
-         <form action="https://zulfr-backend.onrender.com/send" method="POST" class="contact-form">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-          </form>
+  <div class="form-grid">
+    <div class="form-row">
+      <label>Name</label>
+      <input name="name" required placeholder="Full name">
+    </div>
+
+    <div class="form-row">
+      <label>Organization</label>
+      <input name="org" placeholder="Company or institution">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Email</label>
+    <input name="email" type="email" required placeholder="you@organization.com">
+  </div>
+
+  <div class="form-row">
+    <label>Inquiry Type</label>
+    <select name="type">
+      <option value="">Select a topic...</option>
+      <option>Technical Collaboration</option>
+      <option>Governance Certification</option>
+      <option>Research Discussion</option>
+      <option>Framework Licensing</option>
+      <option>Press / Media</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label>Message</label>
+    <textarea name="message" placeholder="Describe your inquiry in detail..."></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+</form>
+
 
     </div>
   </div>
