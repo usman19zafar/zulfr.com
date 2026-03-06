@@ -145,10 +145,40 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .media-section{margin-bottom:24px}
 .media-section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .media-box{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-.image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
-.image-item{border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--bg);aspect-ratio:16/10;transition:border-color .2s,box-shadow .2s}
-.image-item:hover{border-color:var(--acc-mid);box-shadow:0 4px 20px rgba(77,170,223,.1)}
-.image-item img{width:100%;height:100%;object-fit:cover;display:block}
+/* ── IMAGE BUTTON GRID ── */
+.image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.image-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  padding:18px 14px;border-radius:6px;
+  border:1px solid var(--border);background:var(--bg);
+  cursor:pointer;text-decoration:none;
+  transition:border-color .2s,background .2s,box-shadow .2s,transform .15s;
+  min-height:88px;position:relative;overflow:hidden;
+}
+.image-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--acc-soft),transparent 70%);
+  opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.image-btn:hover{
+  border-color:var(--acc-mid);background:var(--bg-float);
+  box-shadow:0 4px 20px rgba(77,170,223,.12);transform:translateY(-2px);
+}
+.image-btn:hover::before{opacity:1}
+.image-btn-icon{font-size:20px;line-height:1;color:var(--acc);flex-shrink:0}
+.image-btn-name{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--white);letter-spacing:.06em;text-align:center;
+  word-break:break-all;line-height:1.4;
+}
+.image-btn-sub{
+  font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.image-btn-arrow{
+  font-size:10px;color:var(--acc);font-family:'JetBrains Mono',monospace;
+  letter-spacing:.1em;opacity:.7;
+}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .video-item{border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--bg);aspect-ratio:16/9}
 .video-item:hover{border-color:var(--acc-mid);box-shadow:0 4px 20px rgba(77,170,223,.1)}
@@ -185,14 +215,31 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .contact-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px}
 .contact-header h2{margin-bottom:6px}
 .contact-header p{font-size:13px;color:var(--muted)}
-.contact-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:start}
-.contact-info-list{display:flex;flex-direction:column;gap:12px;margin-top:24px}
-.contact-info-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;transition:border-color .2s,box-shadow .2s}
+/* FIX: stretch both columns to equal height */
+.contact-layout{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:32px;
+  align-items:stretch; /* was start — now stretch for equal height */
+}
+.contact-left{display:flex;flex-direction:column;}
+.contact-info-list{display:flex;flex-direction:column;gap:12px;margin-top:24px;flex:1}
+.contact-info-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;transition:border-color .2s,box-shadow .2s;flex:1}
 .contact-info-item:hover{border-color:var(--acc-mid);box-shadow:0 0 16px rgba(77,170,223,.06)}
 .ci-icon{font-size:16px;flex-shrink:0;padding-top:1px}
 .ci-label{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
 .ci-value{font-size:13px;color:var(--white);font-weight:500}
-.contact-email-card{background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));border:1px solid rgba(77,170,223,.2);border-radius:var(--radius);padding:36px;text-align:center;box-shadow:0 0 48px rgba(77,170,223,.07),inset 0 1px 0 rgba(77,170,223,.09);position:relative;overflow:hidden}
+/* Email card: full height, flex column with centered content */
+.contact-email-card{
+  background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));
+  border:1px solid rgba(77,170,223,.2);
+  border-radius:var(--radius);
+  padding:36px;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:center;
+  box-shadow:0 0 48px rgba(77,170,223,.07),inset 0 1px 0 rgba(77,170,223,.09);
+  position:relative;overflow:hidden;
+}
 .contact-email-card::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(240,192,64,.07),transparent 70%);top:-60px;right:-60px;pointer-events:none}
 .contact-label-gold{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:12px}
 .contact-email-link{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:.02em;display:block;margin-bottom:14px;transition:all .2s;text-shadow:0 0 20px rgba(240,192,64,.25)}
@@ -388,19 +435,14 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ PANEL 4 — MEDIA ══
-     HOW TO ADD CONTENT:
-     Images → paste raw GitHub URL into the images array (up to 100)
-     Videos → paste YouTube video ID into the videos array (up to 19)
-     Empty strings are hidden automatically.
-══ -->
+<!-- ══ PANEL 4 — MEDIA ══ -->
 <div id="panel-media" class="panel">
   <div class="wrap-lg">
     <div class="media-header">
       <div><span class="label" style="display:block;margin-bottom:6px">Visual Documentation</span><h2>Media</h2><p>Research imagery, development documentation, and video resources from ZULFR.</p></div>
       <span class="badge badge-blue">ZULFR Archive</span>
     </div>
-    <!-- IMAGES (80%) -->
+    <!-- IMAGES -->
     <div class="media-section">
       <div class="media-section-header">
         <span class="label">Images</span>
@@ -411,7 +453,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="media-empty" id="image-empty" style="display:none">No images added yet</div>
       </div>
     </div>
-    <!-- VIDEOS (20%) -->
+    <!-- VIDEOS -->
     <div class="media-section">
       <div class="media-section-header">
         <span class="label">Videos</span>
@@ -454,7 +496,8 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   <div class="wrap">
     <div class="contact-header"><span class="label" style="display:block;margin-bottom:6px">Get In Touch</span><h2>Initiate Inquiry</h2><p>Technical collaboration, governance certification, research discussion, or framework licensing.</p></div>
     <div class="contact-layout">
-      <div>
+      <!-- LEFT COLUMN -->
+      <div class="contact-left">
         <h3 style="margin-bottom:4px;font-size:14px;">How can we help?</h3>
         <p class="small" style="margin-bottom:0;">We respond to all inquiries within 2 business days.</p>
         <div class="contact-info-list">
@@ -464,6 +507,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
           <div class="contact-info-item"><span class="ci-icon">◌</span><div><div class="ci-label">Framework Licensing</div><div class="ci-value">Commercial use, enterprise deployment</div></div></div>
         </div>
       </div>
+      <!-- RIGHT COLUMN -->
       <div class="contact-email-card">
         <span class="contact-label-gold">Contact</span>
         <a href="mailto:info@zulfr.com" class="contact-email-link">info@zulfr.com</a>
@@ -483,7 +527,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 </footer>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Tab switching ── */
 function switchTab(t){document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t)});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+t)});window.scrollTo({top:0,behavior:'smooth'});}
 function togglePaper(c){var e=c.classList.contains('expanded');document.querySelectorAll('.paper-card').forEach(function(x){x.classList.remove('expanded')});if(!e)c.classList.add('expanded');}
@@ -494,160 +538,106 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
    MEDIA CONTENT
    ── Images: paste raw GitHub URL (up to 100)
    ── Videos: paste YouTube video ID (up to 19)
-      e.g. for youtube.com/watch?v=Q4_BTrXGURY
-      the ID is: Q4_BTrXGURY
-   Empty strings are hidden automatically.
+      Empty strings are hidden automatically.
 ══════════════════════════════════════════════ */
 var IMAGES = [
-      /* slot 1 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
-      /* slot 2 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
-      /* slot 3 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-3.jpg',
-      /* slot 4 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-4.jpg',
-      /* slot 5 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-5.jpg',
-      /* slot 6 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-6.jpg',
-      /* slot 7 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-7.jpg',
-      /* slot 8 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-8.jpg',
-      /* slot 9 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-9.jpg',
-      /* slot 10 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-10.jpg',
-      /* slot 11 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-11.jpg',
-      /* slot 12 */'',
-      /* slot 13 */'',
-      /* slot 14 */'',
-      /* slot 15 */'',
-      /* slot 16 */'',
-      /* slot 17 */'',
-      /* slot 18 */'',
-      /* slot 19 */'',
-      /* slot 20 */'',
-      /* slot 21 */'',
-      /* slot 22 */'',
-      /* slot 23 */'',
-      /* slot 24 */'',
-      /* slot 25 */'',
-      /* slot 26 */'',
-      /* slot 27 */'',
-      /* slot 28 */'',
-      /* slot 29 */'',
-      /* slot 30 */'',
-      /* slot 31 */'',
-      /* slot 32 */'',
-      /* slot 33 */'',
-      /* slot 34 */'',
-      /* slot 35 */'',
-      /* slot 36 */'',
-      /* slot 37 */'',
-      /* slot 38 */'',
-      /* slot 39 */'',
-      /* slot 40 */'',
-      /* slot 41 */'',
-      /* slot 42 */'',
-      /* slot 43 */'',
-      /* slot 44 */'',
-      /* slot 45 */'',
-      /* slot 46 */'',
-      /* slot 47 */'',
-      /* slot 48 */'',
-      /* slot 49 */'',
-      /* slot 50 */'',
-      /* slot 51 */'',
-      /* slot 52 */'',
-      /* slot 53 */'',
-      /* slot 54 */'',
-      /* slot 55 */'',
-      /* slot 56 */'',
-      /* slot 57 */'',
-      /* slot 58 */'',
-      /* slot 59 */'',
-      /* slot 60 */'',
-      /* slot 61 */'',
-      /* slot 62 */'',
-      /* slot 63 */'',
-      /* slot 64 */'',
-      /* slot 65 */'',
-      /* slot 66 */'',
-      /* slot 67 */'',
-      /* slot 68 */'',
-      /* slot 69 */'',
-      /* slot 70 */'',
-      /* slot 71 */'',
-      /* slot 72 */'',
-      /* slot 73 */'',
-      /* slot 74 */'',
-      /* slot 75 */'',
-      /* slot 76 */'',
-      /* slot 77 */'',
-      /* slot 78 */'',
-      /* slot 79 */'',
-      /* slot 80 */'',
-      /* slot 81 */'',
-      /* slot 82 */'',
-      /* slot 83 */'',
-      /* slot 84 */'',
-      /* slot 85 */'',
-      /* slot 86 */'',
-      /* slot 87 */'',
-      /* slot 88 */'',
-      /* slot 89 */'',
-      /* slot 90 */'',
-      /* slot 91 */'',
-      /* slot 92 */'',
-      /* slot 93 */'',
-      /* slot 94 */'',
-      /* slot 95 */'',
-      /* slot 96 */'',
-      /* slot 97 */'',
-      /* slot 98 */'',
-      /* slot 99 */'',
-      /* slot 100 */''
+  /* slot 1  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
+  /* slot 2  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
+  /* slot 3  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-3.jpg',
+  /* slot 4  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-4.jpg',
+  /* slot 5  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-5.jpg',
+  /* slot 6  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-6.jpg',
+  /* slot 7  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-7.jpg',
+  /* slot 8  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-8.jpg',
+  /* slot 9  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-9.jpg',
+  /* slot 10 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-10.jpg',
+  /* slot 11 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-11.jpg',
+  /* slot 12 */'',/* slot 13 */'',/* slot 14 */'',/* slot 15 */'',
+  /* slot 16 */'',/* slot 17 */'',/* slot 18 */'',/* slot 19 */'',/* slot 20 */'',
+  /* slot 21 */'',/* slot 22 */'',/* slot 23 */'',/* slot 24 */'',/* slot 25 */'',
+  /* slot 26 */'',/* slot 27 */'',/* slot 28 */'',/* slot 29 */'',/* slot 30 */'',
+  /* slot 31 */'',/* slot 32 */'',/* slot 33 */'',/* slot 34 */'',/* slot 35 */'',
+  /* slot 36 */'',/* slot 37 */'',/* slot 38 */'',/* slot 39 */'',/* slot 40 */'',
+  /* slot 41 */'',/* slot 42 */'',/* slot 43 */'',/* slot 44 */'',/* slot 45 */'',
+  /* slot 46 */'',/* slot 47 */'',/* slot 48 */'',/* slot 49 */'',/* slot 50 */'',
+  /* slot 51 */'',/* slot 52 */'',/* slot 53 */'',/* slot 54 */'',/* slot 55 */'',
+  /* slot 56 */'',/* slot 57 */'',/* slot 58 */'',/* slot 59 */'',/* slot 60 */'',
+  /* slot 61 */'',/* slot 62 */'',/* slot 63 */'',/* slot 64 */'',/* slot 65 */'',
+  /* slot 66 */'',/* slot 67 */'',/* slot 68 */'',/* slot 69 */'',/* slot 70 */'',
+  /* slot 71 */'',/* slot 72 */'',/* slot 73 */'',/* slot 74 */'',/* slot 75 */'',
+  /* slot 76 */'',/* slot 77 */'',/* slot 78 */'',/* slot 79 */'',/* slot 80 */'',
+  /* slot 81 */'',/* slot 82 */'',/* slot 83 */'',/* slot 84 */'',/* slot 85 */'',
+  /* slot 86 */'',/* slot 87 */'',/* slot 88 */'',/* slot 89 */'',/* slot 90 */'',
+  /* slot 91 */'',/* slot 92 */'',/* slot 93 */'',/* slot 94 */'',/* slot 95 */'',
+  /* slot 96 */'',/* slot 97 */'',/* slot 98 */'',/* slot 99 */'',/* slot 100 */''
 ];
 
 var VIDEOS = [
-  /* slot 1 */'Q4_BTrXGURY',
-  /* slot 2 */'',
-  /* slot 3 */'',
-  /* slot 4 */'',
-  /* slot 5 */'',
-  /* slot 6 */'',
-  /* slot 7 */'',
-  /* slot 8 */'',
-  /* slot 9 */'',
-  /* slot 10 */'',
-  /* slot 11 */'',
-  /* slot 12 */'',
-  /* slot 13 */'',
-  /* slot 14 */'',
-  /* slot 15 */'',
-  /* slot 16 */'',
-  /* slot 17 */'',
-  /* slot 18 */'',
-  /* slot 19 */''
+  /* slot 1  */'Q4_BTrXGURY',
+  /* slot 2  */'',/* slot 3  */'',/* slot 4  */'',/* slot 5  */'',
+  /* slot 6  */'',/* slot 7  */'',/* slot 8  */'',/* slot 9  */'',
+  /* slot 10 */'',/* slot 11 */'',/* slot 12 */'',/* slot 13 */'',
+  /* slot 14 */'',/* slot 15 */'',/* slot 16 */'',/* slot 17 */'',
+  /* slot 18 */'',/* slot 19 */''
 ];
 
-/* Build grids — skip empty strings */
+/* ── Extract a clean label from a GitHub URL or plain filename ── */
+function labelFromUrl(url) {
+  var parts = url.split('/');
+  var file = parts[parts.length - 1];
+  /* Remove extension */
+  var name = file.replace(/\.[^.]+$/, '');
+  /* Replace hyphens/underscores with spaces, capitalise */
+  return name.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+}
+
+/* ── Build image button grid ── */
 (function(){
-  var ig=document.getElementById('image-grid'),ie=document.getElementById('image-empty'),ic=document.getElementById('img-count');
-  var filled=IMAGES.filter(function(u){return u.trim()!=='';});
-  ic.textContent=filled.length+' item'+(filled.length===1?'':'s');
-  if(!filled.length){ig.style.display='none';ie.style.display='flex';return;}
-  filled.forEach(function(url){
-    var d=document.createElement('div');d.className='image-item';
-    var i=document.createElement('img');i.src=url;i.alt='ZULFR media';i.loading='lazy';
-    d.appendChild(i);ig.appendChild(d);
+  var ig = document.getElementById('image-grid');
+  var ie = document.getElementById('image-empty');
+  var ic = document.getElementById('img-count');
+  var filled = IMAGES.filter(function(u){ return u.trim() !== ''; });
+  ic.textContent = filled.length + ' item' + (filled.length === 1 ? '' : 's');
+  if (!filled.length) { ig.style.display = 'none'; ie.style.display = 'flex'; return; }
+  filled.forEach(function(url, idx) {
+    var label = labelFromUrl(url);
+    var a = document.createElement('a');
+    a.className = 'image-btn';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.title = 'Open ' + label + ' in new tab';
+    a.innerHTML =
+      '<span class="image-btn-icon">🖼</span>' +
+      '<span class="image-btn-name">' + label + '</span>' +
+      '<span class="image-btn-sub">Image · ' + (idx + 1) + ' / ' + filled.length + '</span>' +
+      '<span class="image-btn-arrow">↗ Open</span>';
+    ig.appendChild(a);
   });
 })();
 
+/* ── Build video button grid ── */
 (function(){
-  var vg=document.getElementById('video-grid'),ve=document.getElementById('video-empty'),vc=document.getElementById('vid-count');
-  var filled=VIDEOS.filter(function(v){return v.trim()!=='';});
-  vc.textContent=filled.length+' item'+(filled.length===1?'':'s');
-  if(!filled.length){vg.style.display='none';ve.style.display='flex';return;}
-  filled.forEach(function(id){
-    var d=document.createElement('div');d.className='video-item';
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube.com/embed/'+id;
-    f.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
-    f.allowFullscreen=true;f.loading='lazy';
-    d.appendChild(f);vg.appendChild(d);
+  var vg = document.getElementById('video-grid');
+  var ve = document.getElementById('video-empty');
+  var vc = document.getElementById('vid-count');
+  var filled = VIDEOS.filter(function(v){ return v.trim() !== ''; });
+  vc.textContent = filled.length + ' item' + (filled.length === 1 ? '' : 's');
+  if (!filled.length) { vg.style.display = 'none'; ve.style.display = 'flex'; return; }
+  filled.forEach(function(id, idx) {
+    var url = 'https://www.youtube.com/watch?v=' + id;
+    var a = document.createElement('a');
+    a.className = 'image-btn';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.title = 'Watch video on YouTube';
+    a.innerHTML =
+      '<span class="image-btn-icon">▶</span>' +
+      '<span class="image-btn-name">Video ' + (idx + 1) + '</span>' +
+      '<span class="image-btn-sub">YouTube · ' + id + '</span>' +
+      '<span class="image-btn-arrow">↗ Watch</span>';
+    vg.appendChild(a);
   });
 })();
 </script>
