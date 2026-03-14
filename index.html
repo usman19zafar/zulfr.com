@@ -6,16 +6,10 @@
 <title>ZULFR | Semantic Intelligence</title>
 <meta name="description" content="ZULFR research platform for measurable AI governance and semantic intelligence infrastructure.">
 <meta name="theme-color" content="#0C1A2E">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0C1A2E;--bg-raised:#112040;--bg-float:#162848;--bg-hover:#1A2F52;
-  --border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);
-  --acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);
-  --green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;
-  --white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;
-  --tab-h:52px;--radius:8px;
-}
+/* ── ORIGINAL SITE STYLES — ZERO CHANGES ───────────────────────────────── */
+:root{--bg:#0C1A2E;--bg-raised:#112040;--bg-float:#162848;--bg-hover:#1A2F52;--border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);--acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);--green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;--white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;--tab-h:52px;--radius:8px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;-webkit-font-smoothing:antialiased}
@@ -25,7 +19,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(-
 .wrap-lg{max-width:1100px;margin:0 auto;padding:0 32px}
 .wordmark{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;color:var(--white);text-decoration:none;user-select:none}
 .wordmark em{color:var(--acc);font-style:normal}
-/* TOPBAR */
 .topbar{background:rgba(12,26,46,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
 .topbar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:var(--tab-h);gap:0}
 .topbar-brand{margin-right:36px;flex-shrink:0}
@@ -34,42 +27,35 @@ body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(-
 @keyframes scan{to{left:200%}}
 .status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2.5s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(62,207,142,.4)}50%{opacity:.6;box-shadow:0 0 0 4px rgba(62,207,142,0)}}
-/* TABS */
 .tabs{display:flex;align-items:center;gap:2px}
 .tab{display:inline-flex;align-items:center;gap:7px;padding:0 16px;height:var(--tab-h);font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:color .18s,border-color .18s,background .18s;white-space:nowrap;letter-spacing:.01em}
 .tab:hover{color:var(--white);background:rgba(255,255,255,.03)}
 .tab.active{color:var(--white);border-bottom-color:var(--acc)}
+/* Universe tab uses purple accent when active */
+.tab[data-tab="universe"].active{border-bottom-color:#b8b0ff;color:#d4ceff}
 .tab-icon{font-size:15px;line-height:1}
-/* PANELS */
 .panel{display:none}
 .panel.active{display:block}
-/* TYPE */
 h1{font-family:'Syne',sans-serif;font-size:clamp(34px,4.5vw,52px);font-weight:700;line-height:1.1;letter-spacing:-.02em;background:linear-gradient(135deg,var(--white) 0%,var(--white) 45%,var(--acc) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:var(--white);letter-spacing:-.01em}
 h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:var(--white)}
 .label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
 .small{font-size:13px;color:var(--muted);line-height:1.6}
-/* CARDS */
 .card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:border-color .3s,box-shadow .3s,transform .2s;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;inset:-1px;border-radius:var(--radius);background:linear-gradient(135deg,var(--acc-soft),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
 .card:hover{border-color:var(--acc-mid);box-shadow:0 0 32px rgba(77,170,223,.1),inset 0 1px 0 rgba(77,170,223,.08);transform:translateY(-2px)}
 .card:hover::before{opacity:1}
-/* DIVIDERS */
 .divider{border:none;border-top:1px solid var(--border);margin:36px 0}
 .section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--acc),transparent);margin:48px 0;opacity:.35}
-/* BADGES */
 .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
 .badge-blue{background:var(--acc-soft);color:var(--acc)}
 .badge-green{background:rgba(62,207,142,.1);color:var(--green)}
 .badge-amber{background:rgba(245,166,35,.1);color:var(--amber)}
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;text-decoration:none;transition:all .18s;letter-spacing:.01em}
 .btn-primary{background:var(--acc);color:#0C1A2E;box-shadow:0 0 16px rgba(77,170,223,.25)}
 .btn-primary:hover{background:#6EC0EC;box-shadow:0 0 28px rgba(77,170,223,.45);transform:translateY(-1px)}
 .btn-ghost{background:transparent;border:1px solid var(--border-md);color:var(--text)}
 .btn-ghost:hover{background:var(--bg-hover);color:var(--white);border-color:var(--acc-mid)}
-
-/* ── OVERVIEW ── */
 .hero-section{padding:56px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px;position:relative}
 .hero-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(77,170,223,.11) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black,transparent);pointer-events:none}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px}
@@ -88,8 +74,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .about-section{margin-top:48px}
 .about-section h2{margin-bottom:16px}
 .about-section p{font-size:14px;color:var(--muted);line-height:1.75;max-width:700px;margin-bottom:12px}
-
-/* ── RESEARCH ── */
 .research-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .research-header h2{margin-bottom:4px}
 .research-header p{font-size:13px;color:var(--muted)}
@@ -110,8 +94,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .paper-card.expanded .paper-body{display:block}
 .paper-body p{font-size:13px;color:var(--text);line-height:1.72;margin-bottom:16px}
 .paper-actions{display:flex;gap:10px;flex-wrap:wrap}
-
-/* ── MODELS ── */
 .models-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
 .models-header h2{margin-bottom:6px}
 .models-header p{font-size:13px;color:var(--muted)}
@@ -137,55 +119,26 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .principle-text{font-size:13px;color:var(--muted);line-height:1.6}
 .principle-text strong{color:var(--white);font-weight:500;display:block;margin-bottom:3px}
 .model-media-btn{margin-top:20px}
-
-/* ── MEDIA ── */
 .media-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .media-header h2{margin-bottom:4px}
 .media-header p{font-size:13px;color:var(--muted)}
 .media-section{margin-bottom:24px}
 .media-section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .media-box{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-/* ── IMAGE BUTTON GRID ── */
 .image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.image-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-  padding:18px 14px;border-radius:6px;
-  border:1px solid var(--border);background:var(--bg);
-  cursor:pointer;text-decoration:none;
-  transition:border-color .2s,background .2s,box-shadow .2s,transform .15s;
-  min-height:88px;position:relative;overflow:hidden;
-}
-.image-btn::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--acc-soft),transparent 70%);
-  opacity:0;transition:opacity .2s;pointer-events:none;
-}
-.image-btn:hover{
-  border-color:var(--acc-mid);background:var(--bg-float);
-  box-shadow:0 4px 20px rgba(77,170,223,.12);transform:translateY(-2px);
-}
+.image-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg);cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,box-shadow .2s,transform .15s;min-height:88px;position:relative;overflow:hidden}
+.image-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--acc-soft),transparent 70%);opacity:0;transition:opacity .2s;pointer-events:none}
+.image-btn:hover{border-color:var(--acc-mid);background:var(--bg-float);box-shadow:0 4px 20px rgba(77,170,223,.12);transform:translateY(-2px)}
 .image-btn:hover::before{opacity:1}
 .image-btn-icon{font-size:20px;line-height:1;color:var(--acc);flex-shrink:0}
-.image-btn-name{
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--white);letter-spacing:.06em;text-align:center;
-  word-break:break-all;line-height:1.4;
-}
-.image-btn-sub{
-  font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;
-  letter-spacing:.08em;text-transform:uppercase;
-}
-.image-btn-arrow{
-  font-size:10px;color:var(--acc);font-family:'JetBrains Mono',monospace;
-  letter-spacing:.1em;opacity:.7;
-}
+.image-btn-name{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--white);letter-spacing:.06em;text-align:center;word-break:break-all;line-height:1.4}
+.image-btn-sub{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.image-btn-arrow{font-size:10px;color:var(--acc);font-family:'JetBrains Mono',monospace;letter-spacing:.1em;opacity:.7}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .video-item{border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--bg);aspect-ratio:16/9}
 .video-item:hover{border-color:var(--acc-mid);box-shadow:0 4px 20px rgba(77,170,223,.1)}
 .video-item iframe{width:100%;height:100%;display:block;border:none}
 .media-empty{display:flex;align-items:center;justify-content:center;min-height:80px;color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-
-/* ── ROADMAP ── */
 .future-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
 .future-header h2{margin-bottom:4px}
 .future-header p{font-size:13px;color:var(--muted)}
@@ -210,50 +163,99 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .vision-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
 .vision-card h3{font-size:14px;margin-bottom:8px}
 .vision-card p{font-size:13px;color:var(--muted);line-height:1.6}
-
-/* ── CONTACT ── */
 .contact-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px}
 .contact-header h2{margin-bottom:6px}
 .contact-header p{font-size:13px;color:var(--muted)}
-/* FIX: stretch both columns to equal height */
-.contact-layout{
-  display:grid;
-  grid-template-columns:1fr 1.2fr;
-  gap:32px;
-  align-items:stretch; /* was start — now stretch for equal height */
-}
-.contact-left{display:flex;flex-direction:column;}
+.contact-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:stretch}
+.contact-left{display:flex;flex-direction:column}
 .contact-info-list{display:flex;flex-direction:column;gap:12px;margin-top:24px;flex:1}
 .contact-info-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;transition:border-color .2s,box-shadow .2s;flex:1}
 .contact-info-item:hover{border-color:var(--acc-mid);box-shadow:0 0 16px rgba(77,170,223,.06)}
 .ci-icon{font-size:16px;flex-shrink:0;padding-top:1px}
 .ci-label{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
 .ci-value{font-size:13px;color:var(--white);font-weight:500}
-/* Email card: full height, flex column with centered content */
-.contact-email-card{
-  background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));
-  border:1px solid rgba(77,170,223,.2);
-  border-radius:var(--radius);
-  padding:36px;
-  display:flex;flex-direction:column;justify-content:center;
-  text-align:center;
-  box-shadow:0 0 48px rgba(77,170,223,.07),inset 0 1px 0 rgba(77,170,223,.09);
-  position:relative;overflow:hidden;
-}
+.contact-email-card{background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));border:1px solid rgba(77,170,223,.2);border-radius:var(--radius);padding:36px;display:flex;flex-direction:column;justify-content:center;text-align:center;box-shadow:0 0 48px rgba(77,170,223,.07),inset 0 1px 0 rgba(77,170,223,.09);position:relative;overflow:hidden}
 .contact-email-card::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(240,192,64,.07),transparent 70%);top:-60px;right:-60px;pointer-events:none}
 .contact-label-gold{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:12px}
 .contact-email-link{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:.02em;display:block;margin-bottom:14px;transition:all .2s;text-shadow:0 0 20px rgba(240,192,64,.25)}
 .contact-email-link:hover{color:#fff;text-shadow:0 0 28px rgba(240,192,64,.6);transform:scale(1.02)}
 .contact-note{font-size:13px;color:var(--muted);line-height:1.7}
 .contact-request-note{font-size:12px;color:var(--muted);line-height:1.72;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);text-align:left}
-
-/* FOOTER */
 .footer{border-top:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .footer-note{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
-
-/* RESPONSIVE */
 @media(max-width:860px){.about-grid,.model-specs,.model-principles,.contact-layout,.vision-grid{grid-template-columns:1fr}.model-hero{grid-template-columns:1fr}.model-version{text-align:left}h1{font-size:34px}}
 @media(max-width:640px){.tab{padding:0 10px;font-size:12px;gap:5px}.tab-label{display:none}.roadmap-item{grid-template-columns:80px 1px 1fr}}
+
+/* ── UNIVERSE PANEL — ALL PREFIXED u- — ZERO COLLISION ─────────────────── */
+#panel-universe{background:#04040a;--ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;--uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;--uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787}
+#panel-universe.active{padding:0}
+.u-hero{width:100%;min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 24px 48px}
+#u-bg{position:absolute;inset:0;width:100%;height:100%}
+.u-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
+.u-eye{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.4em;color:var(--ud);text-transform:uppercase;text-align:center;margin-bottom:20px}
+.u-bh{width:300px;height:300px;margin:0 auto 36px;position:relative}
+#u-bh{position:absolute;inset:0;width:100%;height:100%}
+.u-h1{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:700;color:#eeeef8;text-align:center;line-height:1.15;margin-bottom:10px;letter-spacing:-.01em}
+.u-h1 b{color:#c0b8ff}
+.u-sub{font-family:'Inter',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:300;color:var(--um);text-align:center;margin-bottom:22px;letter-spacing:.04em}
+.u-chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.u-cn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 0}
+.u-ca{font-family:'JetBrains Mono',monospace;font-size:9px;color:#1e1e38;padding:0 7px}
+.u-cta{display:flex;gap:10px}
+.u-tick{background:#07070f;border-top:1px solid var(--ub);border-bottom:1px solid var(--ub);padding:11px 0;overflow:hidden}
+.u-tick-r{display:flex;gap:48px;white-space:nowrap;animation:utick 30s linear infinite}
+.u-ti{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;display:flex;align-items:center;gap:8px;color:var(--ud)}
+.u-td{width:4px;height:4px;border-radius:50%;display:inline-block;flex-shrink:0}
+@keyframes utick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.u-peer{background:#07070f;border-bottom:1px solid var(--ub);padding:13px 24px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.u-ps{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--ud)}
+.u-pdv{width:1px;height:28px;background:var(--ub)}
+.u-psc{display:flex;flex-direction:column;align-items:center;gap:2px}
+.u-pv{font-family:'JetBrains Mono',monospace;font-size:13px}
+.u-pl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase}
+.u-hr{border:none;border-top:1px solid var(--ub);margin:0}
+.u-slbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.35em;color:var(--ud);text-transform:uppercase;text-align:center;margin-bottom:44px;display:block}
+.u-mw{width:100%;max-width:1200px;margin:0 auto;padding:48px 24px 72px;background:#04040a}
+.u-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ub);border:1px solid var(--ub)}
+.u-mb{background:#080810;padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
+.u-mb:hover{background:#0d0d1c}
+.u-mb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;opacity:0;transition:opacity .3s}
+.u-mb:hover::before{opacity:1}
+.u-a1::before{background:var(--uc1)}.u-a2::before{background:var(--uc2)}.u-a3::before{background:var(--uc3)}.u-a4::before{background:var(--uc4)}
+.u-a5::before{background:var(--uc5)}.u-a6::before{background:var(--uc6)}.u-a7::before{background:var(--uc7)}.u-a8::before{background:var(--uc8)}
+.u-bl2{border-left:1px solid var(--ub)}.u-bt2{border-top:1px solid var(--ub)}
+.u-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--ud);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.u-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.u-stk{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:#1e1e35}
+.u-nm{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:#eeeef8;margin-bottom:3px;letter-spacing:-.01em}
+.u-dm{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase;margin-bottom:14px}
+.u-ut{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--us);line-height:1.8;margin-bottom:16px}
+.u-bn{border-top:1px solid var(--ub);padding-top:12px}
+.u-bnl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.22em;color:var(--ud);text-transform:uppercase;margin-bottom:5px}
+.u-bnt{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:var(--um);line-height:1.7;font-style:italic}
+.u-sr{display:flex;align-items:center;gap:6px;margin-top:7px}
+.u-sbg{flex:1;height:2px;background:#18182e;border-radius:1px;overflow:hidden}
+.u-sf{height:100%;border-radius:1px}
+.u-sv{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);min-width:26px;text-align:right}
+.u-bdg{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;padding:2px 7px;border-radius:2px;border:1px solid;display:inline-block;margin-bottom:8px}
+.u-live{color:#69db7c;border-color:#69db7c33;background:#0a1f0a}
+.u-fut{color:#4fc3f7;border-color:#4fc3f733;background:#0a141f}
+.u-mxw{width:100%;max-width:1200px;margin:0 auto;padding:0 24px 72px;background:#04040a}
+.u-mx{width:100%;border-collapse:collapse;font-size:11px}
+.u-mx th{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.2em;color:var(--ud);text-transform:uppercase;padding:11px 14px;text-align:left;border-bottom:1px solid var(--ub);font-weight:400}
+.u-mx td{padding:13px 14px;border-bottom:1px solid #0c0c18;vertical-align:top;color:var(--us);line-height:1.6;font-size:11px}
+.u-mx tr:hover td{background:#09091a}
+.u-mm{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em}
+.u-ew{width:100%;max-width:660px;margin:0 auto;padding:0 24px 72px;background:#04040a}
+.u-et{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:#eeeef8;line-height:1.3;margin-bottom:22px;letter-spacing:-.01em}
+.u-et em{font-style:normal;color:#c0b8ff}
+.u-ep{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--us);line-height:2;margin-bottom:18px}
+.u-ep strong{color:#c8c6e2;font-weight:500}
+.u-eq{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--um);line-height:2;border-left:1px solid #1e1e38;padding-left:20px;margin:26px 0;letter-spacing:.03em}
+.u-gw{width:100%;max-width:1200px;margin:0 auto;padding:0 24px 72px;background:#04040a}
+.u-fw{background:#04040a}
+.u-ft{border-top:1px solid var(--ub);padding:32px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;width:100%}
+.u-fn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)}
 </style>
 </head>
 <body>
@@ -262,9 +264,10 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 <header class="topbar">
   <div class="topbar-inner">
     <div class="topbar-brand">
-      <a href="#" class="wordmark" onclick="switchTab('home');return false;">ZUL<em>FR</em></a>
+      <a href="#" class="wordmark" onclick="switchTab('universe');return false;">ZUL<em>FR</em></a>
     </div>
     <nav class="tabs" role="tablist">
+      <button class="tab" onclick="switchTab('universe')" data-tab="universe"><span class="tab-icon">⬡</span><span class="tab-label">Universe</span></button>
       <button class="tab active" onclick="switchTab('home')" data-tab="home"><span class="tab-icon">⬡</span><span class="tab-label">Overview</span></button>
       <button class="tab" onclick="switchTab('research')" data-tab="research"><span class="tab-icon">◈</span><span class="tab-label">Research</span></button>
       <button class="tab" onclick="switchTab('models')" data-tab="models"><span class="tab-icon">⬡</span><span class="tab-label">Models</span></button>
@@ -278,7 +281,214 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
 <main class="page">
 
-<!-- ══ PANEL 1 — OVERVIEW ══ -->
+<!-- ══════════════════════════════════════════════════════════════════════
+     UNIVERSE TAB — cover panel — added to original site
+══════════════════════════════════════════════════════════════════════════ -->
+<div id="panel-universe" class="panel">
+
+  <div class="u-hero">
+    <canvas id="u-bg"></canvas>
+    <div class="u-inner">
+      <div class="u-eye">Zulfr.com &nbsp;·&nbsp; Usman Zafar Ph.D &nbsp;·&nbsp; 2026</div>
+      <div class="u-bh"><canvas id="u-bh" width="600" height="600"></canvas></div>
+      <div class="u-h1">Eight Models.<br><b>One Gravitational Field.</b></div>
+      <div class="u-sub">Eight governance engines controlling the full intelligence stack.</div>
+      <div class="u-chain">
+        <span class="u-cn" style="color:var(--uc1)">Data</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc2)">Models</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc3)">Safety</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc4)">AI</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc5)">Cognition</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc6)">Agents</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc7)">Decisions</span><span class="u-ca">→</span>
+        <span class="u-cn" style="color:var(--uc8)">Governance</span>
+      </div>
+      <div class="u-cta">
+        <button class="btn btn-primary" onclick="switchTab('research')">Explore Research</button>
+        <button class="btn btn-ghost" onclick="switchTab('models')">View Models</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KAST10 recursive audit ticker -->
+  <div class="u-tick"><div class="u-tick-r" id="u-ticker"></div></div>
+
+  <!-- Peer review scores from ChatGPT + Gemini -->
+  <div class="u-peer">
+    <div class="u-ps">ChatGPT · Gemini peer review</div>
+    <div class="u-pdv"></div>
+    <div class="u-psc"><span class="u-pv" style="color:#c0b8ff">9.5</span><span class="u-pl">Concept</span></div>
+    <div class="u-psc"><span class="u-pv" style="color:var(--uc6)">9.0</span><span class="u-pl">Visual</span></div>
+    <div class="u-psc"><span class="u-pv" style="color:var(--uc2)">8.5</span><span class="u-pl">Code</span></div>
+    <div class="u-psc"><span class="u-pv" style="color:var(--uc3)">9.9</span><span class="u-pl">Performance</span></div>
+    <div class="u-pdv"></div>
+    <div class="u-psc"><span class="u-pv" style="color:#eeeef8">9.7</span><span class="u-pl">Overall</span></div>
+  </div>
+
+  <div class="u-hr"></div>
+
+  <!-- Eight model cards -->
+  <div class="u-mw">
+    <span class="u-slbl">The Eight Sovereign Models</span>
+    <div class="u-grid">
+
+      <div class="u-mb u-a1" onmouseenter="uPulse(0)">
+        <span class="u-bdg u-live">LIVE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc1)"></span>DAIS10<span class="u-stk">&nbsp;&nbsp;01 · DATA</span></div>
+        <div class="u-nm">Data Governance Schema</div><div class="u-dm">Data Infrastructure</div>
+        <div class="u-ut">Gives semantic meaning to raw data. Controls data drifting, pipeline breakages, and schema violations before they propagate upstream. The foundation without which no other model has reliable inputs.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Pipelines stop breaking silently. Data means the same thing everywhere. Engineers stop rebuilding what already existed three teams ago.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:92%;background:linear-gradient(90deg,#1e5f7a,var(--uc1))"></div></div><span class="u-sv">92%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:88%;background:linear-gradient(90deg,#1e5f7a,var(--uc1))"></div></div><span class="u-sv">88%</span></div>
+      </div>
+
+      <div class="u-mb u-a2 u-bl2" onmouseenter="uPulse(1)">
+        <span class="u-bdg u-live">LIVE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc2)"></span>DiGRs10<span class="u-stk">&nbsp;&nbsp;02 · MODELS</span></div>
+        <div class="u-nm">Model Selection Governance</div><div class="u-dm">Machine Learning &amp; Data Science</div>
+        <div class="u-ut">Governs which model is selected for which problem — and why. Prevents selection bias, capability mismatch, and deployment of architectures correct in benchmarks but wrong in production.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Model choices become auditable decisions, not tribal knowledge. Wrong architecture selection becomes a preventable event, not a quarterly retraining cost.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:85%;background:linear-gradient(90deg,#1b5e20,var(--uc2))"></div></div><span class="u-sv">85%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:79%;background:linear-gradient(90deg,#1b5e20,var(--uc2))"></div></div><span class="u-sv">79%</span></div>
+      </div>
+
+      <div class="u-mb u-a3 u-bt2" onmouseenter="uPulse(2)">
+        <span class="u-bdg u-live">LIVE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc3)"></span>SIS10<span class="u-stk">&nbsp;&nbsp;03 · SAFETY</span></div>
+        <div class="u-nm">Functional Safety Governance</div><div class="u-dm">Safety-Critical Systems</div>
+        <div class="u-ut">Governs the safety of lives and assets where failure is not recoverable. Aviation, energy grids, surgical robotics, autonomous vehicles, nuclear control. Maps to IEC 61508 Safety Integrity Levels 1–4.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Eliminates unknown-unknowns in high-stakes automation. The cost of an incident moves from catastrophic to bounded and governable.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:97%;background:linear-gradient(90deg,#7a3e00,var(--uc3))"></div></div><span class="u-sv">97%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:94%;background:linear-gradient(90deg,#7a3e00,var(--uc3))"></div></div><span class="u-sv">94%</span></div>
+      </div>
+
+      <div class="u-mb u-a4 u-bt2 u-bl2" onmouseenter="uPulse(3)">
+        <span class="u-bdg u-live">LIVE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc4)"></span>TRUE10<span class="u-stk">&nbsp;&nbsp;04 · AI</span></div>
+        <div class="u-nm">AI Data Generation Governance</div><div class="u-dm">Information Integrity</div>
+        <div class="u-ut">Places a door for structural response generation. Cube engine scores governance structure deterministically. Groq scores content semantically. Accumulated index. Live at spec true10-v0.1.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">AI-generated documents become auditable. A hollow document scores 45. A genuinely governed document scores 85. The gap is now measurable, not assumed.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:90%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">90%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:96%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">96%</span></div>
+      </div>
+
+      <div class="u-mb u-a5 u-bt2" onmouseenter="uPulse(4)">
+        <span class="u-bdg u-fut">FUTURE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc5)"></span>BLOC10<span class="u-stk">&nbsp;&nbsp;05 · COGNITION</span></div>
+        <div class="u-nm">Cognitive Engineering Governance</div><div class="u-dm">Human–AI Boundary</div>
+        <div class="u-ut">Governs the binary limitation of organic limitation. Identifies where human cognitive bandwidth ends and machine precision must begin — and governs the handover moment.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Organisations stop pretending humans can monitor everything AI does. The boundary is drawn, documented, and governed. Cognitive overload becomes a managed variable.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:78%;background:linear-gradient(90deg,#3a0070,var(--uc5))"></div></div><span class="u-sv">78%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:83%;background:linear-gradient(90deg,#3a0070,var(--uc5))"></div></div><span class="u-sv">83%</span></div>
+      </div>
+
+      <div class="u-mb u-a6 u-bt2 u-bl2" onmouseenter="uPulse(5)">
+        <span class="u-bdg u-fut">FUTURE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc6)"></span>KAD10<span class="u-stk">&nbsp;&nbsp;06 · AGENTS</span></div>
+        <div class="u-nm">Agentic Perception Governance</div><div class="u-dm">Agent Systems &amp; Failure Science</div>
+        <div class="u-ut">Studies how human and AI agents perceive, decide, and fail — together. Governs interaction patterns before they cascade into systemic failures across interconnected autonomous systems.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Agent failures become predictable events with documented remediation paths. Multi-agent systems have governance before they have their first incident.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:81%;background:linear-gradient(90deg,#004d55,var(--uc6))"></div></div><span class="u-sv">81%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:75%;background:linear-gradient(90deg,#004d55,var(--uc6))"></div></div><span class="u-sv">75%</span></div>
+      </div>
+
+      <div class="u-mb u-a7 u-bt2" onmouseenter="uPulse(6)">
+        <span class="u-bdg u-fut">FUTURE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc7)"></span>CAF10<span class="u-stk">&nbsp;&nbsp;07 · DECISIONS</span></div>
+        <div class="u-nm">Organisational Decision Governance</div><div class="u-dm">Design &amp; Decision Sciences</div>
+        <div class="u-ut">Deep evaluation of design and decision sciences. Captures the gap between intended strategy and executed outcome — makes that gap measurable, traceable, and correctable across the organisation.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Bad decisions leave evidence. Good decisions leave reproducible patterns. The organisation learns from both instead of repeating both on an annual cycle.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:88%;background:linear-gradient(90deg,#7a5500,var(--uc7))"></div></div><span class="u-sv">88%</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:86%;background:linear-gradient(90deg,#7a5500,var(--uc7))"></div></div><span class="u-sv">86%</span></div>
+      </div>
+
+      <div class="u-mb u-a8 u-bt2 u-bl2" onmouseenter="uPulse(7)">
+        <span class="u-bdg u-fut">FUTURE</span>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc8)"></span>KAST10<span class="u-stk">&nbsp;&nbsp;08 · GOVERNANCE</span></div>
+        <div class="u-nm">Governance of Governance</div><div class="u-dm">Meta-Governance · The Apex</div>
+        <div class="u-ut">The rule book about rules. KAST10 governs how all other governance models are designed, validated, challenged, and evolved. Recursive authority — governs itself and every model below it.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Prevents governance obsolescence — the system self-corrects as regulatory gravity shifts. No model becomes untouchable dogma. Every rule has a rule governing it.</div></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:100%;background:linear-gradient(90deg,#7a0000,var(--uc8))"></div></div><span class="u-sv">∞</span></div>
+        <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:100%;background:linear-gradient(90deg,#7a0000,var(--uc8))"></div></div><span class="u-sv">∞</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="u-hr"></div>
+
+  <!-- Platform matrix -->
+  <div class="u-mxw" style="padding-top:56px">
+    <span class="u-slbl">Platform Matrix</span>
+    <table class="u-mx">
+      <thead><tr><th>Model</th><th>Stack Layer</th><th>Governs</th><th>Primary Clients</th><th>Reg. Alignment</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><span class="u-mm" style="color:var(--uc1)">DAIS10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">01 · DATA</td><td>Schema, drift, pipelines</td><td>Data engineers, CDOs, platform teams</td><td>GDPR Art.5, DAMA-DMBOK</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc2)">DiGRs10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">02 · MODELS</td><td>Model selection logic</td><td>ML leads, data science heads, AI directors</td><td>SR 11-7, EU AI Act Art.9</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc3)">SIS10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">03 · SAFETY</td><td>Functional safety, lives, assets</td><td>Aviation, energy, healthcare, automotive</td><td>IEC 61508, ISO 26262</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc4)">TRUE10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">04 · AI</td><td>AI document generation, integrity</td><td>Regulatory bodies, AI labs, ESG, media</td><td>EU AI Act Art.13, FCA</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc5)">BLOC10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">05 · COGNITION</td><td>Human–AI cognitive boundary</td><td>CHRO, cognitive systems designers</td><td>ISO 9241-210, IEEE 7010</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc6)">KAD10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">06 · AGENTS</td><td>Agentic perception, multi-agent failure</td><td>AI safety teams, agent deployment leads</td><td>EU AI Act Art.14, NIST RMF</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc7)">CAF10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">07 · DECISIONS</td><td>Organisational decision quality</td><td>C-suite, board directors, strategy officers</td><td>ISO 31000, King IV</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc8)">KAST10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">08 · GOVERNANCE</td><td>Governance of all governance</td><td>Standards bodies, NIST, OECD, ISO, FCA</td><td>ISO 38500, COBIT, ITIL v4</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="u-hr"></div>
+
+  <!-- Essay -->
+  <div class="u-ew" style="padding-top:68px">
+    <span class="u-slbl">Why a Black Hole</span>
+    <div class="u-et">Potential and applications<br><em>are not a category.</em><br>They are a singularity.</div>
+    <div class="u-ep">A black hole is the only structure in physics with infinite gravitational reach and zero visible surface. You cannot see it directly. You see what falls into it.</div>
+    <div class="u-ep">Zulfr is built the same way. <strong>The visible surface is eight models.</strong> The invisible gravity is the proposition underneath: every system needs governance, and governance itself needs governance.</div>
+    <div class="u-eq">
+      "There is no industry that does not process data.<br>
+      There is no process that does not make decisions.<br>
+      There is no decision that does not need accountability.<br>
+      Accountability without structure is just intention."
+    </div>
+    <div class="u-ep">The eight models are not a taxonomy. They are a <strong>stack</strong>. Pull out any single model and the stack above it becomes ungoverned. That is not a gap in the product — it is a sales argument. Every client who buys TRUE10 eventually needs DiGRs10. Every client who buys SIS10 needs KAST10. The platform sells itself recursively.</div>
+  </div>
+
+  <div class="u-hr"></div>
+
+  <!-- Gravitational reach table -->
+  <div class="u-gw" style="padding-top:56px;padding-bottom:72px">
+    <span class="u-slbl" style="margin-bottom:26px">Gravitational Reach — Industries in Orbit</span>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:780px">
+        <thead><tr>
+          <td style="padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--ud);text-transform:uppercase;border-bottom:1px solid var(--ub);width:150px">Industry</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc1);text-align:center;border-bottom:1px solid var(--ub)">DAIS</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc2);text-align:center;border-bottom:1px solid var(--ub)">DiGRs</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc3);text-align:center;border-bottom:1px solid var(--ub)">SIS</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc4);text-align:center;border-bottom:1px solid var(--ub)">TRUE</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc5);text-align:center;border-bottom:1px solid var(--ub)">BLOC</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc6);text-align:center;border-bottom:1px solid var(--ub)">KAD</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc7);text-align:center;border-bottom:1px solid var(--ub)">CAF</td>
+          <td style="padding:10px 8px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--uc8);text-align:center;border-bottom:1px solid var(--ub)">KAST</td>
+        </tr></thead>
+        <tbody id="u-gtbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Universe footer -->
+  <div class="u-fw">
+    <div class="u-ft">
+      <span class="u-fn">ZULFR.COM &nbsp;·&nbsp; USMAN ZAFAR PH.D</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)">EIGHT MODELS · ONE PLATFORM · INFINITE SCOPE</span>
+      <span class="u-fn">2026 · ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+
+</div>
+<!-- ── end panel-universe ── -->
+
+
+<!-- ══ PANEL 1 — OVERVIEW — ORIGINAL, UNCHANGED ══════════════════════════ -->
 <div id="panel-home" class="panel active">
   <div class="wrap">
     <div class="hero-section">
@@ -310,7 +520,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ PANEL 2 — RESEARCH ══ -->
+<!-- ══ PANEL 2 — RESEARCH — ORIGINAL ═════════════════════════════════════ -->
 <div id="panel-research" class="panel">
   <div class="wrap">
     <div class="research-header">
@@ -324,70 +534,22 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
     </div>
     <div class="paper-list">
       <div class="paper-card" data-type="doi" onclick="togglePaper(this)">
-        <div class="paper-top">
-          <div>
-            <div class="paper-meta">
-              <span class="badge badge-green">Theorems</span>
-              <span class="badge badge-blue">DOI · Zenodo.18705930</span>
-            </div>
-            <div class="paper-title">SIS-10: Functional Safety is Not a Snapshot</div>
-            <p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p>
-          </div>
-          <span class="paper-expand">⌄</span>
-        </div>
-        <div class="paper-body">
-          <p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p>
-          <p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p>
-          <div class="paper-actions"><a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a></div>
-        </div>
+        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-green">Theorems</span><span class="badge badge-blue">DOI · Zenodo.18705930</span></div><div class="paper-title">SIS-10: Functional Safety is Not a Snapshot</div><p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p></div><span class="paper-expand">⌄</span></div>
+        <div class="paper-body"><p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p><p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p><div class="paper-actions"><a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a></div></div>
       </div>
       <div class="paper-card" data-type="standard" onclick="togglePaper(this)">
-        <div class="paper-top">
-          <div>
-            <div class="paper-meta">
-              <span class="badge badge-amber">Technical Standard</span>
-              <span class="badge badge-blue">DOI · Zenodo.18684292</span>
-            </div>
-            <div class="paper-title">DAIS-10: A Doctrine-Aligned Framework for Safety-Dominant Decision Making Under Uncertainty</div>
-            <p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p>
-          </div>
-          <span class="paper-expand">⌄</span>
-        </div>
-        <div class="paper-body">
-          <p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p>
-          <p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts, while preserving controlled conservativeness through nine compliance constraints.</p>
-          <div class="paper-actions">
-            <a href="https://zenodo.org/records/18684292" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a>
-            <button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation();switchTab('models')">View Model</button>
-          </div>
-        </div>
+        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-amber">Technical Standard</span><span class="badge badge-blue">DOI · Zenodo.18684292</span></div><div class="paper-title">DAIS-10: A Doctrine-Aligned Framework for Safety-Dominant Decision Making Under Uncertainty</div><p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p></div><span class="paper-expand">⌄</span></div>
+        <div class="paper-body"><p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p><p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts, while preserving controlled conservativeness through nine compliance constraints.</p><div class="paper-actions"><a href="https://zenodo.org/records/18684292" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a><button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation();switchTab('models')">View Model</button></div></div>
       </div>
       <div class="paper-card" data-type="working" onclick="togglePaper(this)">
-        <div class="paper-top">
-          <div>
-            <div class="paper-meta">
-              <span class="badge badge-amber">Short Working Paper</span>
-              <span class="badge badge-blue">DOI · Zenodo.18684292</span>
-            </div>
-            <div class="paper-title">A Modern Cognitive Architecture Framework (CAF)</div>
-            <p class="paper-excerpt">Designing How Intelligent Systems Think, Decide and Behave.</p>
-          </div>
-          <span class="paper-expand">⌄</span>
-        </div>
-        <div class="paper-body">
-          <p>As AI systems are deployed in executive decision support roles — advising on capital allocation, regulatory strategy, and organizational risk — the absence of formal integrity guarantees creates unquantified liability. This working paper proposes a measurement framework for semantic integrity that can be independently audited and certified.</p>
-          <p>We define semantic integrity operationally as the preservation of authorized meaning across the full transformation chain from raw input to decision recommendation. Integrity degrades when transformations introduce unauthorized semantic shifts — a phenomenon we term semantic drift — and we provide formal detection criteria.</p>
-          <div class="paper-actions">
-            <a href="https://zenodo.org/me/uploads?q=&f=shared_with_me%3Afalse&l=list&p=1&s=10&sort=newest" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access All Papers</a>
-            <span class="badge badge-amber">Future Model</span>
-          </div>
-        </div>
+        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-amber">Short Working Paper</span><span class="badge badge-blue">DOI · Zenodo.18684292</span></div><div class="paper-title">A Modern Cognitive Architecture Framework (CAF)</div><p class="paper-excerpt">Designing How Intelligent Systems Think, Decide and Behave.</p></div><span class="paper-expand">⌄</span></div>
+        <div class="paper-body"><p>As AI systems are deployed in executive decision support roles — advising on capital allocation, regulatory strategy, and organizational risk — the absence of formal integrity guarantees creates unquantified liability. This working paper proposes a measurement framework for semantic integrity that can be independently audited and certified.</p><p>We define semantic integrity operationally as the preservation of authorized meaning across the full transformation chain from raw input to decision recommendation. Integrity degrades when transformations introduce unauthorized semantic shifts — a phenomenon we term semantic drift — and we provide formal detection criteria.</p><div class="paper-actions"><a href="https://zenodo.org/me/uploads?q=&f=shared_with_me%3Afalse&l=list&p=1&s=10&sort=newest" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access All Papers</a><span class="badge badge-amber">Future Model</span></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ PANEL 3 — MODELS ══ -->
+<!-- ══ PANEL 3 — MODELS — ORIGINAL ═══════════════════════════════════════ -->
 <div id="panel-models" class="panel">
   <div class="wrap-lg">
     <div class="models-header"><span class="label" style="display:block;margin-bottom:6px">Governance Frameworks</span><h2>Active Models</h2><p>Select a framework to explore its architecture, principles, and implementation specifications.</p></div>
@@ -396,7 +558,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <button class="model-pill" onclick="switchModel('sis')" data-model="sis"><span class="model-pill-dot"></span>SIS-10 — Safety Integrity Logic</button>
       <button class="model-pill" onclick="switchModel('digrs')" data-model="digrs"><span class="model-pill-dot"></span>DIGRS-10 — Decision Intelligence</button>
     </div>
-    <!-- DAIS-10 -->
     <div id="model-dais" class="model-detail active">
       <div class="model-hero"><div><span class="label" style="display:block;margin-bottom:10px">Data Admissibility &amp; Integrity Standard</span><h2>DAIS-10</h2><p style="margin-top:8px;">Semantic admissibility protocols for AI decision pipelines. DAIS-10 establishes formal criteria for which data elements may enter a governed inference chain, replacing probabilistic thresholds with risk-theoretic dominance.</p></div><div class="model-version">v1.0</div></div>
       <div class="model-specs"><div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-green">Published</span></div></div><div class="spec-card"><span class="label">Domain</span><div class="spec-value">Data Pipeline Governance</div></div><div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Risk-Theoretic Dominance</div></div></div>
@@ -408,7 +569,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
       <div class="model-media-btn"><button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button></div>
     </div>
-    <!-- SIS-10 -->
     <div id="model-sis" class="model-detail">
       <div class="model-hero"><div><span class="label" style="display:block;margin-bottom:10px">Safety Integrity Logic</span><h2>SIS-10</h2><p style="margin-top:8px;">Deterministic safety envelopes independent of model training behavior. SIS-10 defines hard behavioral boundaries that hold regardless of model outputs, implementing safety as a formal constraint layer rather than a training objective.</p></div><div class="model-version">v1.0</div></div>
       <div class="model-specs"><div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-blue">Draft</span></div></div><div class="spec-card"><span class="label">Domain</span><div class="spec-value">Behavioral Safety</div></div><div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Formal Safety Envelopes</div></div></div>
@@ -420,7 +580,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
       <div class="model-media-btn"><button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button></div>
     </div>
-    <!-- DIGRS-10 -->
     <div id="model-digrs" class="model-detail">
       <div class="model-hero"><div><span class="label" style="display:block;margin-bottom:10px">Decision Intelligence &amp; Graph Reasoning Standard</span><h2>DIGRS-10</h2><p style="margin-top:8px;">Graph-structured AI outputs for auditability and authorization control. DIGRS-10 requires that all AI-generated decision recommendations be expressed as directed acyclic graphs where every node is traceable to governance policy.</p></div><div class="model-version">v1.0</div></div>
       <div class="model-specs"><div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-blue">Draft</span></div></div><div class="spec-card"><span class="label">Domain</span><div class="spec-value">Decision Architecture</div></div><div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Traceable DAG Outputs</div></div></div>
@@ -435,39 +594,16 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ PANEL 4 — MEDIA ══ -->
+<!-- ══ PANEL 4 — MEDIA — ORIGINAL ════════════════════════════════════════ -->
 <div id="panel-media" class="panel">
   <div class="wrap-lg">
-    <div class="media-header">
-      <div><span class="label" style="display:block;margin-bottom:6px">Visual Documentation</span><h2>Media</h2><p>Research imagery, development documentation, and video resources from ZULFR.</p></div>
-      <span class="badge badge-blue">ZULFR Archive</span>
-    </div>
-    <!-- IMAGES -->
-    <div class="media-section">
-      <div class="media-section-header">
-        <span class="label">Images</span>
-        <span class="badge badge-blue" id="img-count"></span>
-      </div>
-      <div class="media-box">
-        <div class="image-grid" id="image-grid"></div>
-        <div class="media-empty" id="image-empty" style="display:none">No images added yet</div>
-      </div>
-    </div>
-    <!-- VIDEOS -->
-    <div class="media-section">
-      <div class="media-section-header">
-        <span class="label">Videos</span>
-        <span class="badge badge-blue" id="vid-count"></span>
-      </div>
-      <div class="media-box">
-        <div class="video-grid" id="video-grid"></div>
-        <div class="media-empty" id="video-empty" style="display:none">No videos added yet</div>
-      </div>
-    </div>
+    <div class="media-header"><div><span class="label" style="display:block;margin-bottom:6px">Visual Documentation</span><h2>Media</h2><p>Research imagery, development documentation, and video resources from ZULFR.</p></div><span class="badge badge-blue">ZULFR Archive</span></div>
+    <div class="media-section"><div class="media-section-header"><span class="label">Images</span><span class="badge badge-blue" id="img-count"></span></div><div class="media-box"><div class="image-grid" id="image-grid"></div><div class="media-empty" id="image-empty" style="display:none">No images added yet</div></div></div>
+    <div class="media-section"><div class="media-section-header"><span class="label">Videos</span><span class="badge badge-blue" id="vid-count"></span></div><div class="media-box"><div class="video-grid" id="video-grid"></div><div class="media-empty" id="video-empty" style="display:none">No videos added yet</div></div></div>
   </div>
 </div>
 
-<!-- ══ PANEL 5 — ROADMAP ══ -->
+<!-- ══ PANEL 5 — ROADMAP — ORIGINAL ══════════════════════════════════════ -->
 <div id="panel-future" class="panel">
   <div class="wrap">
     <div class="future-header"><div><span class="label" style="display:block;margin-bottom:6px">Development Roadmap</span><h2>Future Developments</h2><p>Upcoming standards, research directions, and platform milestones.</p></div><span class="badge badge-blue">2025 — 2027</span></div>
@@ -491,12 +627,11 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ PANEL 6 — CONTACT ══ -->
+<!-- ══ PANEL 6 — CONTACT — ORIGINAL ══════════════════════════════════════ -->
 <div id="panel-contact" class="panel">
   <div class="wrap">
     <div class="contact-header"><span class="label" style="display:block;margin-bottom:6px">Get In Touch</span><h2>Initiate Inquiry</h2><p>Technical collaboration, governance certification, research discussion, or framework licensing.</p></div>
     <div class="contact-layout">
-      <!-- LEFT COLUMN -->
       <div class="contact-left">
         <h3 style="margin-bottom:4px;font-size:14px;">How can we help?</h3>
         <p class="small" style="margin-bottom:0;">We respond to all inquiries within 2 business days.</p>
@@ -507,11 +642,10 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
           <div class="contact-info-item"><span class="ci-icon">◌</span><div><div class="ci-label">Framework Licensing</div><div class="ci-value">Commercial use, enterprise deployment</div></div></div>
         </div>
       </div>
-      <!-- RIGHT COLUMN -->
       <div class="contact-email-card">
         <span class="contact-label-gold">Contact</span>
         <a href="mailto:info@zulfr.com" class="contact-email-link">info@zulfr.com</a>
-        <p class="contact-note">We will be pleased to respond to your inquiry. Our response time is within 2 business days.</p>
+        <p class="contact-note">We will be pleased to respond to your inquiry.</p>
         <p class="contact-request-note">Please mention research discussions, consulting services, certification requirements, framework licensing, or technical collaboration in your message so we can direct your inquiry to the right team.</p>
         <p class="contact-note">Corporate Office: Milton, Ontario, Canada.</p>
       </div>
@@ -528,20 +662,16 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 </footer>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── Tab switching ── */
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+/* ── ORIGINAL SITE JS — ZERO CHANGES ───────────────────────────────────── */
 function switchTab(t){document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t)});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+t)});window.scrollTo({top:0,behavior:'smooth'});}
 function togglePaper(c){var e=c.classList.contains('expanded');document.querySelectorAll('.paper-card').forEach(function(x){x.classList.remove('expanded')});if(!e)c.classList.add('expanded');}
 function filterPapers(type,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.paper-card').forEach(function(c){c.style.display=(type==='all'||c.dataset.type===type)?'':'none'});}
 function switchModel(id){document.querySelectorAll('.model-pill').forEach(function(p){p.classList.toggle('active',p.dataset.model===id)});document.querySelectorAll('.model-detail').forEach(function(d){d.classList.toggle('active',d.id==='model-'+id)});}
 
-/* ══════════════════════════════════════════════
-   MEDIA CONTENT
-   ── Images: paste raw GitHub URL (up to 100)
-   ── Videos: paste YouTube video ID (up to 19)
-      Empty strings are hidden automatically.
-══════════════════════════════════════════════ */
-var IMAGES = [
+/* ── ORIGINAL MEDIA DATA — ZERO CHANGES ────────────────────────────────── */
+var IMAGES=[
   /* slot 1  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
   /* slot 2  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
   /* slot 3  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-3.jpg',
@@ -566,12 +696,7 @@ var IMAGES = [
   /* slot 22 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-11.jpg',
   /* slot 23 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-12.jpg',
   /* slot 24 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg',
-  /* slot 25 */'',
-  /* slot 26 */'',
-  /* slot 27 */'',
-  /* slot 28 */'',
-  /* slot 29 */'',
-  /* slot 30 */'',
+  /* slot 25 */'',/* slot 26 */'',/* slot 27 */'',/* slot 28 */'',/* slot 29 */'',/* slot 30 */'',
   /* slot 31 */'',/* slot 32 */'',/* slot 33 */'',/* slot 34 */'',/* slot 35 */'',
   /* slot 36 */'',/* slot 37 */'',/* slot 38 */'',/* slot 39 */'',/* slot 40 */'',
   /* slot 41 */'',/* slot 42 */'',/* slot 43 */'',/* slot 44 */'',/* slot 45 */'',
@@ -587,8 +712,7 @@ var IMAGES = [
   /* slot 91 */'',/* slot 92 */'',/* slot 93 */'',/* slot 94 */'',/* slot 95 */'',
   /* slot 96 */'',/* slot 97 */'',/* slot 98 */'',/* slot 99 */'',/* slot 100 */''
 ];
-
-var VIDEOS = [
+var VIDEOS=[
   /* slot 1  */'Q4_BTrXGURY',
   /* slot 2  */'egDEU0hQ5Qc',/* slot 3  */'',/* slot 4  */'',/* slot 5  */'',
   /* slot 6  */'',/* slot 7  */'',/* slot 8  */'',/* slot 9  */'',
@@ -596,66 +720,185 @@ var VIDEOS = [
   /* slot 14 */'',/* slot 15 */'',/* slot 16 */'',/* slot 17 */'',
   /* slot 18 */'',/* slot 19 */''
 ];
-
-/* ── Extract a clean label from a GitHub URL or plain filename ── */
-function labelFromUrl(url) {
-  var parts = url.split('/');
-  var file = parts[parts.length - 1];
-  /* Remove extension */
-  var name = file.replace(/\.[^.]+$/, '');
-  /* Replace hyphens/underscores with spaces, capitalise */
-  return name.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
-}
-
-/* ── Build image button grid ── */
+function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.replace(/\.[^.]+$/,'');return n.replace(/[-_]/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
 (function(){
-  var ig = document.getElementById('image-grid');
-  var ie = document.getElementById('image-empty');
-  var ic = document.getElementById('img-count');
-  var filled = IMAGES.filter(function(u){ return u.trim() !== ''; });
-  ic.textContent = filled.length + ' item' + (filled.length === 1 ? '' : 's');
-  if (!filled.length) { ig.style.display = 'none'; ie.style.display = 'flex'; return; }
-  filled.forEach(function(url, idx) {
-    var label = labelFromUrl(url);
-    var a = document.createElement('a');
-    a.className = 'image-btn';
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.title = 'Open ' + label + ' in new tab';
-    a.innerHTML =
-      '<span class="image-btn-icon">🖼</span>' +
-      '<span class="image-btn-name">' + label + '</span>' +
-      '<span class="image-btn-sub">Image · ' + (idx + 1) + ' / ' + filled.length + '</span>' +
-      '<span class="image-btn-arrow">↗ Open</span>';
+  var ig=document.getElementById('image-grid'),ie=document.getElementById('image-empty'),ic=document.getElementById('img-count');
+  var filled=IMAGES.filter(function(u){return u.trim()!=='';});
+  ic.textContent=filled.length+' item'+(filled.length===1?'':'s');
+  if(!filled.length){ig.style.display='none';ie.style.display='flex';return;}
+  filled.forEach(function(url,idx){
+    var label=labelFromUrl(url);var a=document.createElement('a');
+    a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Open '+label+' in new tab';
+    a.innerHTML='<span class="image-btn-icon">🖼</span><span class="image-btn-name">'+label+'</span><span class="image-btn-sub">Image · '+(idx+1)+' / '+filled.length+'</span><span class="image-btn-arrow">↗ Open</span>';
     ig.appendChild(a);
   });
 })();
-
-/* ── Build video button grid ── */
 (function(){
-  var vg = document.getElementById('video-grid');
-  var ve = document.getElementById('video-empty');
-  var vc = document.getElementById('vid-count');
-  var filled = VIDEOS.filter(function(v){ return v.trim() !== ''; });
-  vc.textContent = filled.length + ' item' + (filled.length === 1 ? '' : 's');
-  if (!filled.length) { vg.style.display = 'none'; ve.style.display = 'flex'; return; }
-  filled.forEach(function(id, idx) {
-    var url = 'https://www.youtube.com/watch?v=' + id;
-    var a = document.createElement('a');
-    a.className = 'image-btn';
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.title = 'Watch video on YouTube';
-    a.innerHTML =
-      '<span class="image-btn-icon">▶</span>' +
-      '<span class="image-btn-name">Video ' + (idx + 1) + '</span>' +
-      '<span class="image-btn-sub">YouTube · ' + id + '</span>' +
-      '<span class="image-btn-arrow">↗ Watch</span>';
+  var vg=document.getElementById('video-grid'),ve=document.getElementById('video-empty'),vc=document.getElementById('vid-count');
+  var filled=VIDEOS.filter(function(v){return v.trim()!=='';});
+  vc.textContent=filled.length+' item'+(filled.length===1?'':'s');
+  if(!filled.length){vg.style.display='none';ve.style.display='flex';return;}
+  filled.forEach(function(id,idx){
+    var url='https://www.youtube.com/watch?v='+id;var a=document.createElement('a');
+    a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Watch video on YouTube';
+    a.innerHTML='<span class="image-btn-icon">▶</span><span class="image-btn-name">Video '+(idx+1)+'</span><span class="image-btn-sub">YouTube · '+id+'</span><span class="image-btn-arrow">↗ Watch</span>';
     vg.appendChild(a);
   });
 })();
+
+/* ── UNIVERSE ENGINE — IIFE, zero global pollution ──────────────────────
+   Only window.uPulse is exposed for inline onmouseenter attributes.
+────────────────────────────────────────────────────────────────────────── */
+(function(){
+  var MDL=[
+    {id:'DAIS10', c:'#4fc3f7',a:0},
+    {id:'DiGRs10',c:'#69db7c',a:Math.PI*.25},
+    {id:'SIS10',  c:'#ffa94d',a:Math.PI*.5},
+    {id:'TRUE10', c:'#f78fb3',a:Math.PI*.75},
+    {id:'BLOC10', c:'#b197fc',a:Math.PI},
+    {id:'KAD10',  c:'#63e6be',a:Math.PI*1.25},
+    {id:'CAF10',  c:'#ffd43b',a:Math.PI*1.5},
+    {id:'KAST10', c:'#ff8787',a:Math.PI*1.75},
+  ];
+
+  /* Background star canvas — replaces all 200 DOM star nodes */
+  var bgC=document.getElementById('u-bg'),bgCtx=bgC.getContext('2d'),stars=[],bgt=0;
+  function resizeBg(){
+    bgC.width=bgC.offsetWidth||window.innerWidth;
+    bgC.height=bgC.offsetHeight||window.innerHeight;
+    stars=[];
+    for(var i=0;i<180;i++){
+      stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,
+        r:Math.random()*1.2+0.5,ps:Math.random()*.018+.004,po:Math.random()*Math.PI*2});
+    }
+  }
+  resizeBg();window.addEventListener('resize',resizeBg);
+  function drawBg(){
+    bgCtx.clearRect(0,0,bgC.width,bgC.height);
+    stars.forEach(function(s){
+      bgCtx.globalAlpha=Math.max(0.04,0.08+Math.sin(bgt*s.ps+s.po)*0.07);
+      bgCtx.fillStyle='#fff';bgCtx.fillRect(s.x,s.y,s.r,s.r);
+    });
+    bgCtx.globalAlpha=1;bgt++;requestAnimationFrame(drawBg);
+  }
+  drawBg();
+
+  /* Black hole canvas */
+  var bhC=document.getElementById('u-bh'),ctx=bhC.getContext('2d');
+  var W=600,H=600,cx=W/2,cy=H/2,pulseR=0,pulsingModel=null,t=0;
+  window.uPulse=function(i){pulseR=1;pulsingModel=MDL[i]||null;};
+
+  function drawBH(){
+    ctx.clearRect(0,0,W,H);
+    /* Accretion rings */
+    [{r:95,a:.07,c:'#9f8fff'},{r:110,a:.05,c:'#b197fc'},{r:126,a:.03,c:'#7c6fe0'},{r:148,a:.02,c:'#5544aa'}].forEach(function(rg){
+      ctx.beginPath();ctx.arc(cx,cy,rg.r,0,Math.PI*2);ctx.strokeStyle=rg.c;ctx.lineWidth=8;
+      ctx.globalAlpha=rg.a+Math.sin(t*.8)*.012;ctx.stroke();ctx.globalAlpha=1;
+    });
+    /* Orbit circles */
+    [210,240].forEach(function(r,i){
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#3030a0';ctx.lineWidth=.5;
+      ctx.globalAlpha=i===0?.08:.05;ctx.stroke();ctx.globalAlpha=1;
+    });
+    /* Gravity threads */
+    MDL.forEach(function(m){
+      var r=218,mx=cx+Math.cos(m.a+t*.0003)*r,my=cy+Math.sin(m.a+t*.0003)*r;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx,my);
+      var g=ctx.createLinearGradient(cx,cy,mx,my);
+      g.addColorStop(0,m.c+'00');g.addColorStop(.5,m.c+'0a');g.addColorStop(1,m.c+'00');
+      ctx.strokeStyle=g;ctx.lineWidth=.6;ctx.globalAlpha=.45;ctx.stroke();ctx.globalAlpha=1;
+    });
+    /* Orbiting nodes */
+    MDL.forEach(function(m,i){
+      var spd=.00022+i*.000028,r=218+Math.sin(t*.0012+i)*5,ang=m.a+t*spd;
+      var mx=cx+Math.cos(ang)*r,my=cy+Math.sin(ang)*r;
+      var grd=ctx.createRadialGradient(mx,my,0,mx,my,20);
+      grd.addColorStop(0,m.c+'2a');grd.addColorStop(1,m.c+'00');
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(mx,my,20,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(mx,my,9,0,Math.PI*2);ctx.fillStyle='#08081a';ctx.fill();
+      ctx.strokeStyle=m.c;ctx.lineWidth=1.2;ctx.globalAlpha=.8;ctx.stroke();ctx.globalAlpha=1;
+      /* Label — 10px bold, clearly readable on dark canvas */
+      ctx.font='600 10px "JetBrains Mono",monospace';
+      ctx.fillStyle=m.c;ctx.globalAlpha=.85;ctx.textAlign='center';
+      ctx.fillText(m.id,mx+Math.cos(ang)*26,my+Math.sin(ang)*26+4);ctx.globalAlpha=1;
+    });
+    /* Hover pulse ring */
+    if(pulseR>0){
+      ctx.beginPath();ctx.arc(cx,cy,pulseR,0,Math.PI*2);
+      ctx.strokeStyle=(pulsingModel?pulsingModel.c:'#9f8fff')+'66';
+      ctx.lineWidth=1.5;ctx.globalAlpha=Math.max(0,1-pulseR/280);ctx.stroke();ctx.globalAlpha=1;
+      pulseR+=2.2;if(pulseR>280)pulseR=0;
+    }
+    /* Event horizon */
+    ctx.beginPath();ctx.arc(cx,cy,70,0,Math.PI*2);
+    var eh=ctx.createRadialGradient(cx,cy,38,cx,cy,70);
+    eh.addColorStop(0,'transparent');eh.addColorStop(1,'#9f8fff12');
+    ctx.fillStyle=eh;ctx.fill();ctx.strokeStyle='#9f8fff';ctx.lineWidth=.5;
+    ctx.globalAlpha=.28+Math.sin(t*.55)*.06;ctx.stroke();ctx.globalAlpha=1;
+    /* Singularity */
+    ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
+    var pg=ctx.createRadialGradient(cx,cy,0,cx,cy,36);
+    pg.addColorStop(0,'#1a0a3a');pg.addColorStop(1,'transparent');
+    ctx.fillStyle=pg;ctx.globalAlpha=.35+Math.sin(t*.45)*.12;ctx.fill();ctx.globalAlpha=1;
+    ctx.font='500 9px "JetBrains Mono",monospace';
+    ctx.fillStyle='#a090ff';ctx.globalAlpha=.6;ctx.textAlign='center';
+    ctx.fillText('ZULFR',cx,cy-5);ctx.fillText('PLATFORM',cx,cy+8);ctx.globalAlpha=1;
+    t++;requestAnimationFrame(drawBH);
+  }
+  drawBH();
+
+  /* KAST10 recursive audit ticker */
+  var auditEvents=[
+    {m:'DAIS10', c:'#4fc3f7',r:'ok',  msg:'Schema drift check — no drift detected'},
+    {m:'DiGRs10',c:'#69db7c',r:'ok',  msg:'Model selection audit — rationale documented'},
+    {m:'SIS10',  c:'#ffa94d',r:'ok',  msg:'Safety level verify — SIL-3 IEC 61508 aligned'},
+    {m:'TRUE10', c:'#f78fb3',r:'ok',  msg:'Hypercube integrity — 100/100 cells active'},
+    {m:'BLOC10', c:'#b197fc',r:'warn',msg:'Cognitive boundary — 87% human bandwidth'},
+    {m:'KAD10',  c:'#63e6be',r:'ok',  msg:'Agent perception scan — patterns nominal'},
+    {m:'CAF10',  c:'#ffd43b',r:'warn',msg:'Decision gap analysis — 12% gap, review recommended'},
+    {m:'KAST10', c:'#ff8787',r:'ok',  msg:'Self-audit — recursive governance check passed'},
+  ];
+  var ticker=document.getElementById('u-ticker');
+  auditEvents.concat(auditEvents).forEach(function(e){
+    var div=document.createElement('div');div.className='u-ti';
+    var w=e.r==='warn';
+    div.innerHTML=
+      '<span class="u-td" style="background:'+(w?'#ffa94d':'#69db7c')+'"></span>'+
+      '<span style="color:'+(w?'#ffa94d55':'#69db7c55')+'">KAST10</span>'+
+      '<span style="color:#1e1e38;padding:0 4px">→</span>'+
+      '<span style="color:'+e.c+'">'+e.m+'</span>'+
+      '<span style="color:#33334a;margin-left:4px">'+e.msg+'</span>';
+    ticker.appendChild(div);
+  });
+
+  /* Gravitational reach table */
+  var IND=[
+    {n:'Financial Services',   s:[95,90,60,95,70,88,95,100]},
+    {n:'Healthcare & Life Sci.',s:[92,88,99,80,85,90,88,100]},
+    {n:'Aviation & Aerospace', s:[88,82,100,75,90,95,80,100]},
+    {n:'AI & Technology',      s:[98,99,85,100,95,99,92,100]},
+    {n:'Energy & Utilities',   s:[90,78,98,72,80,85,85,100]},
+    {n:'Media & Publishing',   s:[80,75,40,100,75,70,80,100]},
+    {n:'Regulatory Bodies',    s:[85,80,88,98,80,90,90,100]},
+    {n:'Consulting & Advisory',s:[88,90,70,95,85,85,98,100]},
+    {n:'Manufacturing',        s:[90,82,95,65,88,88,85,100]},
+    {n:'Education & Research', s:[85,88,60,90,78,80,82,100]},
+  ];
+  var CL=['#4fc3f7','#69db7c','#ffa94d','#f78fb3','#b197fc','#63e6be','#ffd43b','#ff8787'];
+  var gtb=document.getElementById('u-gtbody');
+  IND.forEach(function(ind){
+    var tr=document.createElement('tr');
+    var h='<td style="padding:10px 14px;font-size:11px;color:#5a5a7a;border-bottom:1px solid #0c0c18">'+ind.n+'</td>';
+    ind.s.forEach(function(sc,i){
+      h+='<td style="padding:8px;border-bottom:1px solid #0c0c18;text-align:center">'+
+        '<div style="height:3px;background:#14142a;border-radius:1px;overflow:hidden;margin-bottom:4px">'+
+        '<div style="height:100%;width:'+sc+'%;background:'+CL[i]+';opacity:.65;border-radius:1px"></div></div>'+
+        '<span style="font-family:JetBrains Mono,monospace;font-size:8px;color:#50507a;letter-spacing:.05em">'+sc+'</span></td>';
+    });
+    tr.innerHTML=h;gtb.appendChild(tr);
+  });
+})();
+/* ── end universe IIFE ── */
 </script>
 </body>
 </html>
