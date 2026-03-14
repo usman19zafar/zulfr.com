@@ -8,13 +8,26 @@
 <meta name="theme-color" content="#0C1A2E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ── ORIGINAL SITE STYLES — ZERO CHANGES ───────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   ORIGINAL SITE STYLES — UNCHANGED
+═══════════════════════════════════════════════════════════════ */
 :root{--bg:#0C1A2E;--bg-raised:#112040;--bg-float:#162848;--bg-hover:#1A2F52;--border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);--acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);--green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;--white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;--tab-h:52px;--radius:8px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;-webkit-font-smoothing:antialiased}
 .app{display:flex;flex-direction:column;min-height:100vh}
-.page{flex:1;padding:48px 0 80px}
+
+/* ── TAB BUG FIX ──────────────────────────────────────────────
+   Root cause: .page had padding:48px 0 80px on <main>.
+   When universe panel is active with padding:0 override,
+   other panels inside the same <main> lost their spacing.
+   Fix: Remove padding from <main class="page">, give each
+   non-universe panel its own .page-padded wrapper.
+   Universe panel manages its own padding internally.
+────────────────────────────────────────────────────────────── */
+.page{flex:1;padding:0}                       /* padding now on each panel, not main */
+.page-padded{padding:48px 0 80px}             /* applied to every non-universe panel */
+
 .wrap{max-width:980px;margin:0 auto;padding:0 32px}
 .wrap-lg{max-width:1100px;margin:0 auto;padding:0 32px}
 .wordmark{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;color:var(--white);text-decoration:none;user-select:none}
@@ -31,8 +44,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(-
 .tab{display:inline-flex;align-items:center;gap:7px;padding:0 16px;height:var(--tab-h);font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:color .18s,border-color .18s,background .18s;white-space:nowrap;letter-spacing:.01em}
 .tab:hover{color:var(--white);background:rgba(255,255,255,.03)}
 .tab.active{color:var(--white);border-bottom-color:var(--acc)}
-/* Universe tab uses purple accent when active */
-.tab[data-tab="universe"].active{border-bottom-color:#b8b0ff;color:#d4ceff}
+.tab[data-tab="universe"].active{border-bottom-color:#F0C040;color:#F0C040}
 .tab-icon{font-size:15px;line-height:1}
 .panel{display:none}
 .panel.active{display:block}
@@ -186,15 +198,44 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 @media(max-width:860px){.about-grid,.model-specs,.model-principles,.contact-layout,.vision-grid{grid-template-columns:1fr}.model-hero{grid-template-columns:1fr}.model-version{text-align:left}h1{font-size:34px}}
 @media(max-width:640px){.tab{padding:0 10px;font-size:12px;gap:5px}.tab-label{display:none}.roadmap-item{grid-template-columns:80px 1px 1fr}}
 
-/* ── UNIVERSE PANEL — ALL PREFIXED u- — ZERO COLLISION ─────────────────── */
-#panel-universe{background:#0C1A2E;--ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;--uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;--uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787}
-#panel-universe.active{padding:0}
+/* ═══════════════════════════════════════════════════════════════
+   UNIVERSE PANEL — ALL u- PREFIXED — ZERO COLLISION
+   Visual changes applied:
+   · Black hole canvas 30% bigger (300→390px)
+   · Eyebrow text larger + gold
+   · Peer review label gold
+   · "The Eight Dimensions" heading gold
+   · Model ID + stack text gold, font 2pt larger
+═══════════════════════════════════════════════════════════════ */
+#panel-universe{
+  background:#04040a;
+  --ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;
+  --uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;
+  --uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787;
+}
+/* Universe panel gets zero padding — it controls all its own spacing */
+#panel-universe{padding:0}
+
 .u-hero{width:100%;min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 24px 48px}
 #u-bg{position:absolute;inset:0;width:100%;height:100%}
 .u-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
-.u-eye{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.4em;color:var(--ud);text-transform:uppercase;text-align:center;margin-bottom:20px}
-.u-bh{width:300px;height:300px;margin:0 auto 36px;position:relative}
+
+/* ① Eyebrow — bigger font, gold color */
+.u-eye{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;                /* was 9px — larger */
+  letter-spacing:.35em;
+  color:#F0C040;                 /* gold */
+  text-transform:uppercase;
+  text-align:center;
+  margin-bottom:20px;
+  font-weight:500;
+}
+
+/* ② Black hole container 30% bigger: 300→390px */
+.u-bh{width:390px;height:390px;margin:0 auto 36px;position:relative}
 #u-bh{position:absolute;inset:0;width:100%;height:100%}
+
 .u-h1{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:700;color:#eeeef8;text-align:center;line-height:1.15;margin-bottom:10px;letter-spacing:-.01em}
 .u-h1 b{color:#c0b8ff}
 .u-sub{font-family:'Inter',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:300;color:var(--um);text-align:center;margin-bottom:22px;letter-spacing:.04em}
@@ -202,19 +243,42 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-cn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 0}
 .u-ca{font-family:'JetBrains Mono',monospace;font-size:9px;color:#1e1e38;padding:0 7px}
 .u-cta{display:flex;gap:10px}
+
 .u-tick{background:#07070f;border-top:1px solid var(--ub);border-bottom:1px solid var(--ub);padding:11px 0;overflow:hidden}
 .u-tick-r{display:flex;gap:48px;white-space:nowrap;animation:utick 30s linear infinite}
 .u-ti{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;display:flex;align-items:center;gap:8px;color:var(--ud)}
 .u-td{width:4px;height:4px;border-radius:50%;display:inline-block;flex-shrink:0}
 @keyframes utick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ③ Peer review bar — label gold */
 .u-peer{background:#07070f;border-bottom:1px solid var(--ub);padding:13px 24px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
-.u-ps{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--ud)}
+.u-ps{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:.2em;
+  color:#F0C040;                 /* gold */
+  font-weight:500;
+}
 .u-pdv{width:1px;height:28px;background:var(--ub)}
 .u-psc{display:flex;flex-direction:column;align-items:center;gap:2px}
 .u-pv{font-family:'JetBrains Mono',monospace;font-size:13px}
 .u-pl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase}
+
 .u-hr{border:none;border-top:1px solid var(--ub);margin:0}
-.u-slbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.35em;color:var(--ud);text-transform:uppercase;text-align:center;margin-bottom:44px;display:block}
+
+/* ④ Section labels — gold */
+.u-slbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;                /* slightly larger */
+  letter-spacing:.35em;
+  color:#F0C040;                 /* gold */
+  font-weight:500;
+  text-transform:uppercase;
+  text-align:center;
+  margin-bottom:44px;
+  display:block;
+}
+
 .u-mw{width:100%;max-width:1200px;margin:0 auto;padding:48px 24px 72px;background:#04040a}
 .u-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ub);border:1px solid var(--ub)}
 .u-mb{background:#080810;padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
@@ -224,9 +288,30 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-a1::before{background:var(--uc1)}.u-a2::before{background:var(--uc2)}.u-a3::before{background:var(--uc3)}.u-a4::before{background:var(--uc4)}
 .u-a5::before{background:var(--uc5)}.u-a6::before{background:var(--uc6)}.u-a7::before{background:var(--uc7)}.u-a8::before{background:var(--uc8)}
 .u-bl2{border-left:1px solid var(--ub)}.u-bt2{border-top:1px solid var(--ub)}
-.u-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--ud);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+
+/* ⑤ Model ID row — gold, font 2pt bigger (was 9px → 11px) */
+.u-id{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;                /* +2pt */
+  letter-spacing:.22em;
+  color:#F0C040;                 /* gold */
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+}
 .u-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.u-stk{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:#1e1e35}
+
+/* ⑥ Stack label next to model ID — also gold, same size */
+.u-stk{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;                /* +2pt */
+  letter-spacing:.15em;
+  color:#F0C040;                 /* gold */
+  opacity:.65;
+}
+
 .u-nm{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:#eeeef8;margin-bottom:3px;letter-spacing:-.01em}
 .u-dm{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase;margin-bottom:14px}
 .u-ut{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--us);line-height:1.8;margin-bottom:16px}
@@ -240,6 +325,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-bdg{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;padding:2px 7px;border-radius:2px;border:1px solid;display:inline-block;margin-bottom:8px}
 .u-live{color:#69db7c;border-color:#69db7c33;background:#0a1f0a}
 .u-fut{color:#4fc3f7;border-color:#4fc3f733;background:#0a141f}
+
 .u-mxw{width:100%;max-width:1200px;margin:0 auto;padding:0 24px 72px;background:#04040a}
 .u-mx{width:100%;border-collapse:collapse;font-size:11px}
 .u-mx th{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.2em;color:var(--ud);text-transform:uppercase;padding:11px 14px;text-align:left;border-bottom:1px solid var(--ub);font-weight:400}
@@ -281,18 +367,16 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
 <main class="page">
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     UNIVERSE TAB — cover panel — added to original site
-══════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ UNIVERSE PANEL ══════════════════════════════════════════════════════ -->
 <div id="panel-universe" class="panel active">
 
   <div class="u-hero">
     <canvas id="u-bg"></canvas>
     <div class="u-inner">
       <div class="u-eye">Zulfr.com &nbsp;·&nbsp; Usman Zafar Ph.D &nbsp;·&nbsp; 2026</div>
-      <div class="u-bh"><canvas id="u-bh" width="600" height="600"></canvas></div>
-      <div class="u-h1">Series-10,<br><b>Engineering & Safety Cosmos.</b></div>
-      <div class="u-sub">Governance architecture for the intelligence age..</div>
+      <div class="u-bh"><canvas id="u-bh" width="780" height="780"></canvas></div>
+      <div class="u-h1">Series-10,<br><b>Engineering &amp; Safety Cosmos.</b></div>
+      <div class="u-sub">Governance architecture for the intelligence age.</div>
       <div class="u-chain">
         <span class="u-cn" style="color:var(--uc1)">Data</span><span class="u-ca">→</span>
         <span class="u-cn" style="color:var(--uc2)">Models</span><span class="u-ca">→</span>
@@ -310,10 +394,8 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
     </div>
   </div>
 
-  <!-- KAST10 recursive audit ticker -->
   <div class="u-tick"><div class="u-tick-r" id="u-ticker"></div></div>
 
-  <!-- Peer review scores from ChatGPT + Gemini -->
   <div class="u-peer">
     <div class="u-ps">ChatGPT · Gemini peer review</div>
     <div class="u-pdv"></div>
@@ -327,7 +409,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
   <div class="u-hr"></div>
 
-  <!-- Eight model cards -->
   <div class="u-mw">
     <span class="u-slbl">The Eight Dimensions</span>
     <div class="u-grid">
@@ -417,7 +498,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
   <div class="u-hr"></div>
 
-  <!-- Platform matrix -->
   <div class="u-mxw" style="padding-top:56px">
     <span class="u-slbl">Platform Matrix</span>
     <table class="u-mx">
@@ -437,7 +517,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
   <div class="u-hr"></div>
 
-  <!-- Essay -->
   <div class="u-ew" style="padding-top:68px">
     <span class="u-slbl">Why a Black Hole</span>
     <div class="u-et">Potential and applications<br><em>are not a category.</em><br>They are a singularity.</div>
@@ -454,7 +533,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
   <div class="u-hr"></div>
 
-  <!-- Gravitational reach table -->
   <div class="u-gw" style="padding-top:56px;padding-bottom:72px">
     <span class="u-slbl" style="margin-bottom:26px">Gravitational Reach — Industries in Orbit</span>
     <div style="overflow-x:auto">
@@ -474,13 +552,22 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </table>
     </div>
   </div>
+
+  <div class="u-fw">
+    <div class="u-ft">
+      <span class="u-fn">ZULFR.COM &nbsp;·&nbsp; USMAN ZAFAR PH.D</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)">EIGHT MODELS · ONE PLATFORM · INFINITE SCOPE</span>
+      <span class="u-fn">2026 · ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+
 </div>
-  
-<!-- ── end panel-universe ── -->
+<!-- end panel-universe -->
 
 
-<!-- ══ PANEL 1 — OVERVIEW — ORIGINAL, UNCHANGED ══════════════════════════ -->
+<!-- ══ OVERVIEW ════════════════════════════════════════════════════════════ -->
 <div id="panel-home" class="panel">
+  <div class="page-padded">
   <div class="wrap">
     <div class="hero-section">
       <div class="hero-eyebrow"><span class="label">Semantic Intelligence Platform</span></div>
@@ -509,10 +596,12 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <p>ZULFR does not build general-purpose AI systems. We build the infrastructure that makes AI systems trustworthy.</p>
     </div>
   </div>
+  </div>
 </div>
 
-<!-- ══ PANEL 2 — RESEARCH — ORIGINAL ═════════════════════════════════════ -->
+<!-- ══ RESEARCH ════════════════════════════════════════════════════════════ -->
 <div id="panel-research" class="panel">
+  <div class="page-padded">
   <div class="wrap">
     <div class="research-header">
       <div><span class="label" style="display:block;margin-bottom:6px">Publications</span><h2>Research Papers</h2><p>Research with DOI, technical standards, and working papers from the ZULFR research group.</p></div>
@@ -538,10 +627,12 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
     </div>
   </div>
+  </div>
 </div>
 
-<!-- ══ PANEL 3 — MODELS — ORIGINAL ═══════════════════════════════════════ -->
+<!-- ══ MODELS ══════════════════════════════════════════════════════════════ -->
 <div id="panel-models" class="panel">
+  <div class="page-padded">
   <div class="wrap-lg">
     <div class="models-header"><span class="label" style="display:block;margin-bottom:6px">Governance Frameworks</span><h2>Active Models</h2><p>Select a framework to explore its architecture, principles, and implementation specifications.</p></div>
     <div class="model-selector">
@@ -583,19 +674,23 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <div class="model-media-btn"><button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button></div>
     </div>
   </div>
+  </div>
 </div>
 
-<!-- ══ PANEL 4 — MEDIA — ORIGINAL ════════════════════════════════════════ -->
+<!-- ══ MEDIA ═══════════════════════════════════════════════════════════════ -->
 <div id="panel-media" class="panel">
+  <div class="page-padded">
   <div class="wrap-lg">
     <div class="media-header"><div><span class="label" style="display:block;margin-bottom:6px">Visual Documentation</span><h2>Media</h2><p>Research imagery, development documentation, and video resources from ZULFR.</p></div><span class="badge badge-blue">ZULFR Archive</span></div>
     <div class="media-section"><div class="media-section-header"><span class="label">Images</span><span class="badge badge-blue" id="img-count"></span></div><div class="media-box"><div class="image-grid" id="image-grid"></div><div class="media-empty" id="image-empty" style="display:none">No images added yet</div></div></div>
     <div class="media-section"><div class="media-section-header"><span class="label">Videos</span><span class="badge badge-blue" id="vid-count"></span></div><div class="media-box"><div class="video-grid" id="video-grid"></div><div class="media-empty" id="video-empty" style="display:none">No videos added yet</div></div></div>
   </div>
+  </div>
 </div>
 
-<!-- ══ PANEL 5 — ROADMAP — ORIGINAL ══════════════════════════════════════ -->
+<!-- ══ ROADMAP ════════════════════════════════════════════════════════════ -->
 <div id="panel-future" class="panel">
+  <div class="page-padded">
   <div class="wrap">
     <div class="future-header"><div><span class="label" style="display:block;margin-bottom:6px">Development Roadmap</span><h2>Future Developments</h2><p>Upcoming standards, research directions, and platform milestones.</p></div><span class="badge badge-blue">2025 — 2027</span></div>
     <div class="roadmap">
@@ -616,10 +711,12 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
     </div>
   </div>
+  </div>
 </div>
 
-<!-- ══ PANEL 6 — CONTACT — ORIGINAL ══════════════════════════════════════ -->
+<!-- ══ CONTACT ════════════════════════════════════════════════════════════ -->
 <div id="panel-contact" class="panel">
+  <div class="page-padded">
   <div class="wrap">
     <div class="contact-header"><span class="label" style="display:block;margin-bottom:6px">Get In Touch</span><h2>Initiate Inquiry</h2><p>Technical collaboration, governance certification, research discussion, or framework licensing.</p></div>
     <div class="contact-layout">
@@ -642,6 +739,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
     </div>
   </div>
+  </div>
 </div>
 
 </main>
@@ -655,91 +753,65 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
-/* ── ORIGINAL SITE JS — ZERO CHANGES ───────────────────────────────────── */
-function switchTab(t){document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t)});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+t)});window.scrollTo({top:0,behavior:'smooth'});}
+/* ── ORIGINAL SITE JS ─────────────────────────────────────────────────── */
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t)});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+t)});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function togglePaper(c){var e=c.classList.contains('expanded');document.querySelectorAll('.paper-card').forEach(function(x){x.classList.remove('expanded')});if(!e)c.classList.add('expanded');}
 function filterPapers(type,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.paper-card').forEach(function(c){c.style.display=(type==='all'||c.dataset.type===type)?'':'none'});}
 function switchModel(id){document.querySelectorAll('.model-pill').forEach(function(p){p.classList.toggle('active',p.dataset.model===id)});document.querySelectorAll('.model-detail').forEach(function(d){d.classList.toggle('active',d.id==='model-'+id)});}
 
-/* ── ORIGINAL MEDIA DATA — ZERO CHANGES ────────────────────────────────── */
+/* ── MEDIA DATA ───────────────────────────────────────────────────────── */
 var IMAGES=[
-  /* slot 1  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
-  /* slot 2  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
-  /* slot 3  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-3.jpg',
-  /* slot 4  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-4.jpg',
-  /* slot 5  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-5.jpg',
-  /* slot 6  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-6.jpg',
-  /* slot 7  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-7.jpg',
-  /* slot 8  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-8.jpg',
-  /* slot 9  */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-9.jpg',
-  /* slot 10 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-10.jpg',
-  /* slot 11 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-11.jpg',
-  /* slot 12 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-1.jpg',
-  /* slot 13 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-2.jpg',
-  /* slot 14 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-3.jpg',
-  /* slot 15 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-4.jpg',
-  /* slot 16 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-5.jpg',
-  /* slot 17 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-6.jpg',
-  /* slot 18 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-7.jpg',
-  /* slot 19 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-8.jpg',
-  /* slot 20 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-9.jpg',
-  /* slot 21 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-10.jpg',
-  /* slot 22 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-11.jpg',
-  /* slot 23 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-12.jpg',
-  /* slot 24 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg',
-  /* slot 25 */'',/* slot 26 */'',/* slot 27 */'',/* slot 28 */'',/* slot 29 */'',/* slot 30 */'',
-  /* slot 31 */'',/* slot 32 */'',/* slot 33 */'',/* slot 34 */'',/* slot 35 */'',
-  /* slot 36 */'',/* slot 37 */'',/* slot 38 */'',/* slot 39 */'',/* slot 40 */'',
-  /* slot 41 */'',/* slot 42 */'',/* slot 43 */'',/* slot 44 */'',/* slot 45 */'',
-  /* slot 46 */'',/* slot 47 */'',/* slot 48 */'',/* slot 49 */'',/* slot 50 */'',
-  /* slot 51 */'',/* slot 52 */'',/* slot 53 */'',/* slot 54 */'',/* slot 55 */'',
-  /* slot 56 */'',/* slot 57 */'',/* slot 58 */'',/* slot 59 */'',/* slot 60 */'',
-  /* slot 61 */'',/* slot 62 */'',/* slot 63 */'',/* slot 64 */'',/* slot 65 */'',
-  /* slot 66 */'',/* slot 67 */'',/* slot 68 */'',/* slot 69 */'',/* slot 70 */'',
-  /* slot 71 */'',/* slot 72 */'',/* slot 73 */'',/* slot 74 */'',/* slot 75 */'',
-  /* slot 76 */'',/* slot 77 */'',/* slot 78 */'',/* slot 79 */'',/* slot 80 */'',
-  /* slot 81 */'',/* slot 82 */'',/* slot 83 */'',/* slot 84 */'',/* slot 85 */'',
-  /* slot 86 */'',/* slot 87 */'',/* slot 88 */'',/* slot 89 */'',/* slot 90 */'',
-  /* slot 91 */'',/* slot 92 */'',/* slot 93 */'',/* slot 94 */'',/* slot 95 */'',
-  /* slot 96 */'',/* slot 97 */'',/* slot 98 */'',/* slot 99 */'',/* slot 100 */''
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-3.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-4.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-5.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-6.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-7.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-8.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-9.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-10.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-11.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-1.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-2.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-3.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-4.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-5.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-6.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-7.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-8.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-9.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-10.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-11.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-12.jpg',
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg',
+  '','','','','','','','','','','','','','','','','','','','','','','','','',
+  '','','','','','','','','','','','','','','','','','','','','','','','','',
+  '','','','','','','','','','','','','','','','','','','','','','','','','',
+  ''
 ];
-var VIDEOS=[
-  /* slot 1  */'Q4_BTrXGURY',
-  /* slot 2  */'egDEU0hQ5Qc',/* slot 3  */'',/* slot 4  */'',/* slot 5  */'',
-  /* slot 6  */'',/* slot 7  */'',/* slot 8  */'',/* slot 9  */'',
-  /* slot 10 */'',/* slot 11 */'',/* slot 12 */'',/* slot 13 */'',
-  /* slot 14 */'',/* slot 15 */'',/* slot 16 */'',/* slot 17 */'',
-  /* slot 18 */'',/* slot 19 */''
-];
+var VIDEOS=['Q4_BTrXGURY','egDEU0hQ5Qc','','','','','','','','','','','','','','','','',''];
 function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.replace(/\.[^.]+$/,'');return n.replace(/[-_]/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
 (function(){
   var ig=document.getElementById('image-grid'),ie=document.getElementById('image-empty'),ic=document.getElementById('img-count');
   var filled=IMAGES.filter(function(u){return u.trim()!=='';});
   ic.textContent=filled.length+' item'+(filled.length===1?'':'s');
   if(!filled.length){ig.style.display='none';ie.style.display='flex';return;}
-  filled.forEach(function(url,idx){
-    var label=labelFromUrl(url);var a=document.createElement('a');
-    a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Open '+label+' in new tab';
-    a.innerHTML='<span class="image-btn-icon">🖼</span><span class="image-btn-name">'+label+'</span><span class="image-btn-sub">Image · '+(idx+1)+' / '+filled.length+'</span><span class="image-btn-arrow">↗ Open</span>';
-    ig.appendChild(a);
-  });
+  filled.forEach(function(url,idx){var label=labelFromUrl(url);var a=document.createElement('a');a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Open '+label+' in new tab';a.innerHTML='<span class="image-btn-icon">🖼</span><span class="image-btn-name">'+label+'</span><span class="image-btn-sub">Image · '+(idx+1)+' / '+filled.length+'</span><span class="image-btn-arrow">↗ Open</span>';ig.appendChild(a);});
 })();
 (function(){
   var vg=document.getElementById('video-grid'),ve=document.getElementById('video-empty'),vc=document.getElementById('vid-count');
   var filled=VIDEOS.filter(function(v){return v.trim()!=='';});
   vc.textContent=filled.length+' item'+(filled.length===1?'':'s');
   if(!filled.length){vg.style.display='none';ve.style.display='flex';return;}
-  filled.forEach(function(id,idx){
-    var url='https://www.youtube.com/watch?v='+id;var a=document.createElement('a');
-    a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Watch video on YouTube';
-    a.innerHTML='<span class="image-btn-icon">▶</span><span class="image-btn-name">Video '+(idx+1)+'</span><span class="image-btn-sub">YouTube · '+id+'</span><span class="image-btn-arrow">↗ Watch</span>';
-    vg.appendChild(a);
-  });
+  filled.forEach(function(id,idx){var url='https://www.youtube.com/watch?v='+id;var a=document.createElement('a');a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Watch video on YouTube';a.innerHTML='<span class="image-btn-icon">▶</span><span class="image-btn-name">Video '+(idx+1)+'</span><span class="image-btn-sub">YouTube · '+id+'</span><span class="image-btn-arrow">↗ Watch</span>';vg.appendChild(a);});
 })();
 
-/* ── UNIVERSE ENGINE — IIFE, zero global pollution ──────────────────────
-   Only window.uPulse is exposed for inline onmouseenter attributes.
-────────────────────────────────────────────────────────────────────────── */
+/* ── UNIVERSE ENGINE — IIFE ───────────────────────────────────────────── */
 (function(){
   var MDL=[
     {id:'DAIS10', c:'#4fc3f7',a:0},
@@ -752,93 +824,87 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
     {id:'KAST10', c:'#ff8787',a:Math.PI*1.75},
   ];
 
-  /* Background star canvas — replaces all 200 DOM star nodes */
+  /* Star canvas */
   var bgC=document.getElementById('u-bg'),bgCtx=bgC.getContext('2d'),stars=[],bgt=0;
   function resizeBg(){
     bgC.width=bgC.offsetWidth||window.innerWidth;
     bgC.height=bgC.offsetHeight||window.innerHeight;
     stars=[];
-    for(var i=0;i<180;i++){
-      stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,
-        r:Math.random()*1.2+0.5,ps:Math.random()*.018+.004,po:Math.random()*Math.PI*2});
-    }
+    for(var i=0;i<180;i++)stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,r:Math.random()*1.2+0.5,ps:Math.random()*.018+.004,po:Math.random()*Math.PI*2});
   }
   resizeBg();window.addEventListener('resize',resizeBg);
   function drawBg(){
     bgCtx.clearRect(0,0,bgC.width,bgC.height);
-    stars.forEach(function(s){
-      bgCtx.globalAlpha=Math.max(0.04,0.08+Math.sin(bgt*s.ps+s.po)*0.07);
-      bgCtx.fillStyle='#fff';bgCtx.fillRect(s.x,s.y,s.r,s.r);
-    });
+    stars.forEach(function(s){bgCtx.globalAlpha=Math.max(0.04,0.08+Math.sin(bgt*s.ps+s.po)*0.07);bgCtx.fillStyle='#fff';bgCtx.fillRect(s.x,s.y,s.r,s.r);});
     bgCtx.globalAlpha=1;bgt++;requestAnimationFrame(drawBg);
   }
   drawBg();
 
-  /* Black hole canvas */
+  /* Black hole canvas — coordinate space 780×780 matches the 30% bigger container */
   var bhC=document.getElementById('u-bh'),ctx=bhC.getContext('2d');
-  var W=600,H=600,cx=W/2,cy=H/2,pulseR=0,pulsingModel=null,t=0;
+  var W=780,H=780,cx=W/2,cy=H/2,pulseR=0,pulsingModel=null,t=0;
   window.uPulse=function(i){pulseR=1;pulsingModel=MDL[i]||null;};
 
   function drawBH(){
     ctx.clearRect(0,0,W,H);
-    /* Accretion rings */
-    [{r:95,a:.07,c:'#9f8fff'},{r:110,a:.05,c:'#b197fc'},{r:126,a:.03,c:'#7c6fe0'},{r:148,a:.02,c:'#5544aa'}].forEach(function(rg){
-      ctx.beginPath();ctx.arc(cx,cy,rg.r,0,Math.PI*2);ctx.strokeStyle=rg.c;ctx.lineWidth=8;
+    /* Accretion rings — scaled 30% */
+    [{r:124,a:.07,c:'#9f8fff'},{r:143,a:.05,c:'#b197fc'},{r:164,a:.03,c:'#7c6fe0'},{r:193,a:.02,c:'#5544aa'}].forEach(function(rg){
+      ctx.beginPath();ctx.arc(cx,cy,rg.r,0,Math.PI*2);ctx.strokeStyle=rg.c;ctx.lineWidth=10;
       ctx.globalAlpha=rg.a+Math.sin(t*.8)*.012;ctx.stroke();ctx.globalAlpha=1;
     });
-    /* Orbit circles */
-    [210,240].forEach(function(r,i){
-      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#3030a0';ctx.lineWidth=.5;
+    /* Orbit paths */
+    [273,312].forEach(function(r,i){
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#3030a0';ctx.lineWidth=.6;
       ctx.globalAlpha=i===0?.08:.05;ctx.stroke();ctx.globalAlpha=1;
     });
     /* Gravity threads */
     MDL.forEach(function(m){
-      var r=218,mx=cx+Math.cos(m.a+t*.0003)*r,my=cy+Math.sin(m.a+t*.0003)*r;
+      var r=284,mx=cx+Math.cos(m.a+t*.0003)*r,my=cy+Math.sin(m.a+t*.0003)*r;
       ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx,my);
       var g=ctx.createLinearGradient(cx,cy,mx,my);
       g.addColorStop(0,m.c+'00');g.addColorStop(.5,m.c+'0a');g.addColorStop(1,m.c+'00');
-      ctx.strokeStyle=g;ctx.lineWidth=.6;ctx.globalAlpha=.45;ctx.stroke();ctx.globalAlpha=1;
+      ctx.strokeStyle=g;ctx.lineWidth=.7;ctx.globalAlpha=.45;ctx.stroke();ctx.globalAlpha=1;
     });
-    /* Orbiting nodes */
+    /* Orbiting nodes — scaled 30% */
     MDL.forEach(function(m,i){
-      var spd=.00022+i*.000028,r=218+Math.sin(t*.0012+i)*5,ang=m.a+t*spd;
+      var spd=.00022+i*.000028,r=284+Math.sin(t*.0012+i)*6,ang=m.a+t*spd;
       var mx=cx+Math.cos(ang)*r,my=cy+Math.sin(ang)*r;
-      var grd=ctx.createRadialGradient(mx,my,0,mx,my,20);
+      var grd=ctx.createRadialGradient(mx,my,0,mx,my,26);
       grd.addColorStop(0,m.c+'2a');grd.addColorStop(1,m.c+'00');
-      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(mx,my,20,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(mx,my,9,0,Math.PI*2);ctx.fillStyle='#08081a';ctx.fill();
-      ctx.strokeStyle=m.c;ctx.lineWidth=1.2;ctx.globalAlpha=.8;ctx.stroke();ctx.globalAlpha=1;
-      /* Label — 10px bold, clearly readable on dark canvas */
-      ctx.font='600 10px "JetBrains Mono",monospace';
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(mx,my,26,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(mx,my,12,0,Math.PI*2);ctx.fillStyle='#08081a';ctx.fill();
+      ctx.strokeStyle=m.c;ctx.lineWidth=1.5;ctx.globalAlpha=.8;ctx.stroke();ctx.globalAlpha=1;
+      /* Label — bigger font to match 30% scale */
+      ctx.font='600 13px "JetBrains Mono",monospace';
       ctx.fillStyle=m.c;ctx.globalAlpha=.85;ctx.textAlign='center';
-      ctx.fillText(m.id,mx+Math.cos(ang)*26,my+Math.sin(ang)*26+4);ctx.globalAlpha=1;
+      ctx.fillText(m.id,mx+Math.cos(ang)*34,my+Math.sin(ang)*34+5);ctx.globalAlpha=1;
     });
-    /* Hover pulse ring */
+    /* Hover pulse */
     if(pulseR>0){
       ctx.beginPath();ctx.arc(cx,cy,pulseR,0,Math.PI*2);
       ctx.strokeStyle=(pulsingModel?pulsingModel.c:'#9f8fff')+'66';
-      ctx.lineWidth=1.5;ctx.globalAlpha=Math.max(0,1-pulseR/280);ctx.stroke();ctx.globalAlpha=1;
-      pulseR+=2.2;if(pulseR>280)pulseR=0;
+      ctx.lineWidth=2;ctx.globalAlpha=Math.max(0,1-pulseR/364);ctx.stroke();ctx.globalAlpha=1;
+      pulseR+=2.8;if(pulseR>364)pulseR=0;
     }
     /* Event horizon */
-    ctx.beginPath();ctx.arc(cx,cy,70,0,Math.PI*2);
-    var eh=ctx.createRadialGradient(cx,cy,38,cx,cy,70);
+    ctx.beginPath();ctx.arc(cx,cy,91,0,Math.PI*2);
+    var eh=ctx.createRadialGradient(cx,cy,50,cx,cy,91);
     eh.addColorStop(0,'transparent');eh.addColorStop(1,'#9f8fff12');
-    ctx.fillStyle=eh;ctx.fill();ctx.strokeStyle='#9f8fff';ctx.lineWidth=.5;
+    ctx.fillStyle=eh;ctx.fill();ctx.strokeStyle='#9f8fff';ctx.lineWidth=.6;
     ctx.globalAlpha=.28+Math.sin(t*.55)*.06;ctx.stroke();ctx.globalAlpha=1;
     /* Singularity */
-    ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
-    var pg=ctx.createRadialGradient(cx,cy,0,cx,cy,36);
+    ctx.beginPath();ctx.arc(cx,cy,47,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
+    var pg=ctx.createRadialGradient(cx,cy,0,cx,cy,47);
     pg.addColorStop(0,'#1a0a3a');pg.addColorStop(1,'transparent');
     ctx.fillStyle=pg;ctx.globalAlpha=.35+Math.sin(t*.45)*.12;ctx.fill();ctx.globalAlpha=1;
-    ctx.font='500 9px "JetBrains Mono",monospace';
+    ctx.font='500 12px "JetBrains Mono",monospace';
     ctx.fillStyle='#a090ff';ctx.globalAlpha=.6;ctx.textAlign='center';
-    ctx.fillText('ZULFR',cx,cy-5);ctx.fillText('PLATFORM',cx,cy+8);ctx.globalAlpha=1;
+    ctx.fillText('ZULFR',cx,cy-6);ctx.fillText('PLATFORM',cx,cy+10);ctx.globalAlpha=1;
     t++;requestAnimationFrame(drawBH);
   }
   drawBH();
 
-  /* KAST10 recursive audit ticker */
+  /* Audit ticker */
   var auditEvents=[
     {m:'DAIS10', c:'#4fc3f7',r:'ok',  msg:'Schema drift check — no drift detected'},
     {m:'DiGRs10',c:'#69db7c',r:'ok',  msg:'Model selection audit — rationale documented'},
@@ -851,18 +917,12 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
   ];
   var ticker=document.getElementById('u-ticker');
   auditEvents.concat(auditEvents).forEach(function(e){
-    var div=document.createElement('div');div.className='u-ti';
-    var w=e.r==='warn';
-    div.innerHTML=
-      '<span class="u-td" style="background:'+(w?'#ffa94d':'#69db7c')+'"></span>'+
-      '<span style="color:'+(w?'#ffa94d55':'#69db7c55')+'">KAST10</span>'+
-      '<span style="color:#1e1e38;padding:0 4px">→</span>'+
-      '<span style="color:'+e.c+'">'+e.m+'</span>'+
-      '<span style="color:#33334a;margin-left:4px">'+e.msg+'</span>';
+    var div=document.createElement('div');div.className='u-ti';var w=e.r==='warn';
+    div.innerHTML='<span class="u-td" style="background:'+(w?'#ffa94d':'#69db7c')+'"></span><span style="color:'+(w?'#ffa94d55':'#69db7c55')+'">KAST10</span><span style="color:#1e1e38;padding:0 4px">→</span><span style="color:'+e.c+'">'+e.m+'</span><span style="color:#33334a;margin-left:4px">'+e.msg+'</span>';
     ticker.appendChild(div);
   });
 
-  /* Gravitational reach table */
+  /* Gravity table */
   var IND=[
     {n:'Financial Services',   s:[95,90,60,95,70,88,95,100]},
     {n:'Healthcare & Life Sci.',s:[92,88,99,80,85,90,88,100]},
@@ -880,16 +940,10 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
   IND.forEach(function(ind){
     var tr=document.createElement('tr');
     var h='<td style="padding:10px 14px;font-size:11px;color:#5a5a7a;border-bottom:1px solid #0c0c18">'+ind.n+'</td>';
-    ind.s.forEach(function(sc,i){
-      h+='<td style="padding:8px;border-bottom:1px solid #0c0c18;text-align:center">'+
-        '<div style="height:3px;background:#14142a;border-radius:1px;overflow:hidden;margin-bottom:4px">'+
-        '<div style="height:100%;width:'+sc+'%;background:'+CL[i]+';opacity:.65;border-radius:1px"></div></div>'+
-        '<span style="font-family:JetBrains Mono,monospace;font-size:8px;color:#50507a;letter-spacing:.05em">'+sc+'</span></td>';
-    });
+    ind.s.forEach(function(sc,i){h+='<td style="padding:8px;border-bottom:1px solid #0c0c18;text-align:center"><div style="height:3px;background:#14142a;border-radius:1px;overflow:hidden;margin-bottom:4px"><div style="height:100%;width:'+sc+'%;background:'+CL[i]+';opacity:.65;border-radius:1px"></div></div><span style="font-family:JetBrains Mono,monospace;font-size:8px;color:#50507a;letter-spacing:.05em">'+sc+'</span></td>';});
     tr.innerHTML=h;gtb.appendChild(tr);
   });
 })();
-/* ── end universe IIFE ── */
 </script>
 </body>
 </html>
