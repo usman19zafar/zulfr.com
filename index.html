@@ -3,31 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZULFR | Semantic Intelligence</title>
-<meta name="description" content="ZULFR research platform for measurable AI governance and semantic intelligence infrastructure.">
+<title>ZULFR | A Measurement Institute</title>
+<meta name="description" content="ZULFR — A Measurement Institute. Deterministic governance frameworks for the intelligence age. TRUE100, ALIGN100, and the Series-10 platform.">
 <meta name="theme-color" content="#0C1A2E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   ORIGINAL SITE STYLES — UNCHANGED
-═══════════════════════════════════════════════════════════════ */
 :root{--bg:#0C1A2E;--bg-raised:#112040;--bg-float:#162848;--bg-hover:#1A2F52;--border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);--acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);--green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;--white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;--tab-h:52px;--radius:8px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;-webkit-font-smoothing:antialiased}
 .app{display:flex;flex-direction:column;min-height:100vh}
-
-/* ── TAB BUG FIX ──────────────────────────────────────────────
-   Root cause: .page had padding:48px 0 80px on <main>.
-   When universe panel is active with padding:0 override,
-   other panels inside the same <main> lost their spacing.
-   Fix: Remove padding from <main class="page">, give each
-   non-universe panel its own .page-padded wrapper.
-   Universe panel manages its own padding internally.
-────────────────────────────────────────────────────────────── */
-.page{flex:1;padding:0}                       /* padding now on each panel, not main */
-.page-padded{padding:48px 0 80px}             /* applied to every non-universe panel */
-
+.page{flex:1;padding:0}
+.page-padded{padding:48px 0 80px}
 .wrap{max-width:980px;margin:0 auto;padding:0 32px}
 .wrap-lg{max-width:1100px;margin:0 auto;padding:0 32px}
 .wordmark{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;color:var(--white);text-decoration:none;user-select:none}
@@ -63,11 +50,15 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .badge-blue{background:var(--acc-soft);color:var(--acc)}
 .badge-green{background:rgba(62,207,142,.1);color:var(--green)}
 .badge-amber{background:rgba(245,166,35,.1);color:var(--amber)}
+.badge-gold{background:rgba(240,192,64,.1);color:var(--gold)}
+.badge-red{background:rgba(255,100,100,.1);color:#ff6464}
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;text-decoration:none;transition:all .18s;letter-spacing:.01em}
 .btn-primary{background:var(--acc);color:#0C1A2E;box-shadow:0 0 16px rgba(77,170,223,.25)}
 .btn-primary:hover{background:#6EC0EC;box-shadow:0 0 28px rgba(77,170,223,.45);transform:translateY(-1px)}
 .btn-ghost{background:transparent;border:1px solid var(--border-md);color:var(--text)}
 .btn-ghost:hover{background:var(--bg-hover);color:var(--white);border-color:var(--acc-mid)}
+.btn-gold{background:transparent;border:1px solid rgba(240,192,64,.4);color:var(--gold)}
+.btn-gold:hover{background:rgba(240,192,64,.08);border-color:var(--gold);transform:translateY(-1px)}
 .hero-section{padding:56px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px;position:relative}
 .hero-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(77,170,223,.11) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black,transparent);pointer-events:none}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px}
@@ -151,30 +142,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .video-item:hover{border-color:var(--acc-mid);box-shadow:0 4px 20px rgba(77,170,223,.1)}
 .video-item iframe{width:100%;height:100%;display:block;border:none}
 .media-empty{display:flex;align-items:center;justify-content:center;min-height:80px;color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-.future-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
-.future-header h2{margin-bottom:4px}
-.future-header p{font-size:13px;color:var(--muted)}
-.roadmap{display:flex;flex-direction:column;gap:0}
-.roadmap-item{display:grid;grid-template-columns:120px 1px 1fr;gap:0 24px;padding-bottom:32px}
-.roadmap-item:last-child{padding-bottom:0}
-.rm-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding-top:4px;text-align:right;line-height:1.4}
-.rm-time strong{display:block;color:var(--white);font-size:12px;margin-bottom:2px}
-.rm-spine{position:relative}
-.rm-dot{width:10px;height:10px;border-radius:50%;background:var(--bg-raised);border:2px solid var(--border-md);position:absolute;top:4px;left:50%;transform:translateX(-50%);z-index:1}
-.rm-dot.done{background:var(--green);border-color:var(--green)}
-.rm-dot.active{background:var(--acc);border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
-.rm-line{position:absolute;top:14px;bottom:-28px;left:50%;transform:translateX(-50%);width:1px;background:var(--border)}
-.roadmap-item:last-child .rm-line{display:none}
-.rm-content{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px}
-.rm-content.done{border-left:3px solid var(--green)}
-.rm-content.active{border-left:3px solid var(--acc)}
-.rm-content h3{font-size:14px;margin-bottom:6px}
-.rm-content p{font-size:13px;color:var(--muted);line-height:1.6}
-.future-vision{margin-top:48px;padding-top:48px;border-top:1px solid var(--border)}
-.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-.vision-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
-.vision-card h3{font-size:14px;margin-bottom:8px}
-.vision-card p{font-size:13px;color:var(--muted);line-height:1.6}
 .contact-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px}
 .contact-header h2{margin-bottom:6px}
 .contact-header p{font-size:13px;color:var(--muted)}
@@ -199,43 +166,35 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 @media(max-width:640px){.tab{padding:0 10px;font-size:12px;gap:5px}.tab-label{display:none}.roadmap-item{grid-template-columns:80px 1px 1fr}}
 
 /* ═══════════════════════════════════════════════════════════════
-   UNIVERSE PANEL — ALL u- PREFIXED — ZERO COLLISION
-   Visual changes applied:
-   · Black hole canvas 30% bigger (300→390px)
-   · Eyebrow text larger + gold
-   · Peer review label gold
-   · "The Eight Dimensions" heading gold
-   · Model ID + stack text gold, font 2pt larger
+   UNIVERSE PANEL
 ═══════════════════════════════════════════════════════════════ */
-#panel-universe{
-  background:#04040a;
-  --ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;
-  --uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;
-  --uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787;
-}
-/* Universe panel gets zero padding — it controls all its own spacing */
+#panel-universe{background:#04040a;--ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;--uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;--uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787;}
 #panel-universe{padding:0}
-
 .u-hero{width:100%;min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 24px 48px}
 #u-bg{position:absolute;inset:0;width:100%;height:100%}
 .u-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
 
-/* ① Eyebrow — bigger font, gold color */
-.u-eye{
+/* ── MEASUREMENT INSTITUTE BLOCK ─────────────────────────────── */
+.u-institute{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  margin-bottom:20px;
+}
+.u-institute-line{
   font-family:'JetBrains Mono',monospace;
-  font-size:12px;                /* was 9px — larger */
+  font-size:14px;
   letter-spacing:.35em;
-  color:#F0C040;                 /* gold */
+  color:#F0C040;
   text-transform:uppercase;
   text-align:center;
-  margin-bottom:20px;
   font-weight:500;
+  line-height:1.4;
 }
 
-/* ② Black hole container 30% bigger: 300→390px */
 .u-bh{width:390px;height:390px;margin:0 auto 36px;position:relative}
 #u-bh{position:absolute;inset:0;width:100%;height:100%}
-
 .u-h1{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:700;color:#eeeef8;text-align:center;line-height:1.15;margin-bottom:10px;letter-spacing:-.01em}
 .u-h1 b{color:#c0b8ff}
 .u-sub{font-family:'Inter',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:300;color:var(--um);text-align:center;margin-bottom:22px;letter-spacing:.04em}
@@ -243,42 +202,19 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-cn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 0}
 .u-ca{font-family:'JetBrains Mono',monospace;font-size:9px;color:#1e1e38;padding:0 7px}
 .u-cta{display:flex;gap:10px}
-
 .u-tick{background:#07070f;border-top:1px solid var(--ub);border-bottom:1px solid var(--ub);padding:11px 0;overflow:hidden}
 .u-tick-r{display:flex;gap:48px;white-space:nowrap;animation:utick 30s linear infinite}
 .u-ti{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;display:flex;align-items:center;gap:8px;color:var(--ud)}
 .u-td{width:4px;height:4px;border-radius:50%;display:inline-block;flex-shrink:0}
 @keyframes utick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* ③ Peer review bar — label gold */
 .u-peer{background:#07070f;border-bottom:1px solid var(--ub);padding:13px 24px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
-.u-ps{
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;
-  letter-spacing:.2em;
-  color:#F0C040;                 /* gold */
-  font-weight:500;
-}
+.u-ps{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:#F0C040;font-weight:500;}
 .u-pdv{width:1px;height:28px;background:var(--ub)}
 .u-psc{display:flex;flex-direction:column;align-items:center;gap:2px}
 .u-pv{font-family:'JetBrains Mono',monospace;font-size:13px}
 .u-pl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase}
-
 .u-hr{border:none;border-top:1px solid var(--ub);margin:0}
-
-/* ④ Section labels — gold */
-.u-slbl{
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;                /* slightly larger */
-  letter-spacing:.35em;
-  color:#F0C040;                 /* gold */
-  font-weight:500;
-  text-transform:uppercase;
-  text-align:center;
-  margin-bottom:44px;
-  display:block;
-}
-
+.u-slbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.35em;color:#F0C040;font-weight:500;text-transform:uppercase;text-align:center;margin-bottom:44px;display:block;}
 .u-mw{width:100%;max-width:1200px;margin:0 auto;padding:48px 24px 72px;background:#04040a}
 .u-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ub);border:1px solid var(--ub)}
 .u-mb{background:#080810;padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
@@ -288,30 +224,9 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-a1::before{background:var(--uc1)}.u-a2::before{background:var(--uc2)}.u-a3::before{background:var(--uc3)}.u-a4::before{background:var(--uc4)}
 .u-a5::before{background:var(--uc5)}.u-a6::before{background:var(--uc6)}.u-a7::before{background:var(--uc7)}.u-a8::before{background:var(--uc8)}
 .u-bl2{border-left:1px solid var(--ub)}.u-bt2{border-top:1px solid var(--ub)}
-
-/* ⑤ Model ID row — gold, font 2pt bigger (was 9px → 11px) */
-.u-id{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;                /* +2pt */
-  letter-spacing:.22em;
-  color:#F0C040;                 /* gold */
-  margin-bottom:8px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:600;
-}
+.u-id{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:#F0C040;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-weight:600;}
 .u-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-
-/* ⑥ Stack label next to model ID — also gold, same size */
-.u-stk{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;                /* +2pt */
-  letter-spacing:.15em;
-  color:#F0C040;                 /* gold */
-  opacity:.65;
-}
-
+.u-stk{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;color:#F0C040;opacity:.65;}
 .u-nm{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:#eeeef8;margin-bottom:3px;letter-spacing:-.01em}
 .u-dm{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud);text-transform:uppercase;margin-bottom:14px}
 .u-ut{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--us);line-height:1.8;margin-bottom:16px}
@@ -325,7 +240,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-bdg{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.18em;padding:2px 7px;border-radius:2px;border:1px solid;display:inline-block;margin-bottom:8px}
 .u-live{color:#69db7c;border-color:#69db7c33;background:#0a1f0a}
 .u-fut{color:#4fc3f7;border-color:#4fc3f733;background:#0a141f}
-
 .u-mxw{width:100%;max-width:1200px;margin:0 auto;padding:0 24px 72px;background:#04040a}
 .u-mx{width:100%;border-collapse:collapse;font-size:11px}
 .u-mx th{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.2em;color:var(--ud);text-transform:uppercase;padding:11px 14px;text-align:left;border-bottom:1px solid var(--ub);font-weight:400}
@@ -342,6 +256,88 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-fw{background:#04040a}
 .u-ft{border-top:1px solid var(--ub);padding:32px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;width:100%}
 .u-fn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESEARCH RECORD (LAB) PANEL
+═══════════════════════════════════════════════════════════════ */
+.lab-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.lab-header h2{margin-bottom:4px}
+.lab-header p{font-size:13px;color:var(--muted);max-width:580px;line-height:1.65}
+.lab-submit-bar{background:rgba(240,192,64,.04);border:1px solid rgba(240,192,64,.2);border-radius:var(--radius);padding:16px 24px;margin-bottom:36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.lab-submit-text{font-size:13px;color:var(--muted)}
+.lab-submit-text strong{color:var(--gold);font-weight:500}
+.lab-results{display:flex;flex-direction:column;gap:20px}
+.lab-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.lab-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Result Card */
+.result-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.result-card:hover{border-color:var(--acc-mid);box-shadow:0 4px 24px rgba(77,170,223,.08)}
+.result-card-header{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.result-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.result-card-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:4px;line-height:1.3}
+.result-card-subtitle{font-size:13px;color:var(--muted);font-style:italic}
+.result-card-info{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.1em;margin-top:6px}
+.result-card-body{padding:24px 28px}
+.result-score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:20px}
+.result-score-table{width:100%;border-collapse:collapse;font-size:12px}
+.result-score-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.result-score-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text);vertical-align:middle}
+.result-score-table tr:last-child td{border-bottom:none}
+.result-score-table tr:hover td{background:rgba(255,255,255,.02)}
+.score-model{font-weight:500;color:var(--white);font-size:12px}
+.score-val{font-family:'JetBrains Mono',monospace;font-size:11px}
+.score-fail{color:#ff6464}
+.score-pass{color:var(--green)}
+.score-strong{color:var(--acc)}
+.result-finding{background:rgba(77,170,223,.04);border:1px solid rgba(77,170,223,.12);border-left:3px solid var(--acc);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text);line-height:1.65}
+.result-finding strong{color:var(--white)}
+.result-links{display:flex;gap:10px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
+
+/* Archive section */
+.archive-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;opacity:.65;transition:opacity .2s,border-color .2s}
+.archive-card:hover{opacity:1;border-color:var(--border-md)}
+.archive-card-left h3{font-size:14px;color:var(--white);margin-bottom:4px}
+.archive-card-left p{font-size:12px;color:var(--muted)}
+.archive-card-links{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Evaluation service */
+.eval-service{background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));border:1px solid rgba(240,192,64,.2);border-radius:var(--radius);padding:32px;margin-top:36px;position:relative;overflow:hidden}
+.eval-service::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(240,192,64,.06),transparent 70%);top:-60px;right:-60px;pointer-events:none}
+.eval-service h3{font-family:'Syne',sans-serif;font-size:18px;color:var(--gold);margin-bottom:6px}
+.eval-service p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:560px}
+.eval-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.eval-step{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:14px 16px}
+.eval-step-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.2em;margin-bottom:6px}
+.eval-step p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
+.eval-confidential{background:rgba(62,207,142,.04);border:1px solid rgba(62,207,142,.15);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--muted);line-height:1.65;margin-top:16px}
+.eval-confidential strong{color:var(--green)}
+
+/* Roadmap styles kept for reference — now replaced by Lab */
+.future-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.future-header h2{margin-bottom:4px}
+.future-header p{font-size:13px;color:var(--muted)}
+.roadmap{display:flex;flex-direction:column;gap:0}
+.roadmap-item{display:grid;grid-template-columns:120px 1px 1fr;gap:0 24px;padding-bottom:32px}
+.roadmap-item:last-child{padding-bottom:0}
+.rm-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding-top:4px;text-align:right;line-height:1.4}
+.rm-time strong{display:block;color:var(--white);font-size:12px;margin-bottom:2px}
+.rm-spine{position:relative}
+.rm-dot{width:10px;height:10px;border-radius:50%;background:var(--bg-raised);border:2px solid var(--border-md);position:absolute;top:4px;left:50%;transform:translateX(-50%);z-index:1}
+.rm-dot.done{background:var(--green);border-color:var(--green)}
+.rm-dot.active{background:var(--acc);border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+.rm-line{position:absolute;top:14px;bottom:-28px;left:50%;transform:translateX(-50%);width:1px;background:var(--border)}
+.roadmap-item:last-child .rm-line{display:none}
+.rm-content{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px}
+.rm-content.done{border-left:3px solid var(--green)}
+.rm-content.active{border-left:3px solid var(--acc)}
+.rm-content h3{font-size:14px;margin-bottom:6px}
+.rm-content p{font-size:13px;color:var(--muted);line-height:1.6}
+.future-vision{margin-top:48px;padding-top:48px;border-top:1px solid var(--border)}
+.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.vision-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
+.vision-card h3{font-size:14px;margin-bottom:8px}
+.vision-card p{font-size:13px;color:var(--muted);line-height:1.6}
 </style>
 </head>
 <body>
@@ -358,7 +354,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <button class="tab" onclick="switchTab('research')" data-tab="research"><span class="tab-icon">◈</span><span class="tab-label">Research</span></button>
       <button class="tab" onclick="switchTab('models')" data-tab="models"><span class="tab-icon">⬡</span><span class="tab-label">Models</span></button>
       <button class="tab" onclick="switchTab('media')" data-tab="media"><span class="tab-icon">▣</span><span class="tab-label">Media</span></button>
-      <button class="tab" onclick="switchTab('future')" data-tab="future"><span class="tab-icon">◎</span><span class="tab-label">Roadmap</span></button>
+      <button class="tab" onclick="switchTab('lab')" data-tab="lab"><span class="tab-icon">◎</span><span class="tab-label">Research Record</span></button>
       <button class="tab" onclick="switchTab('contact')" data-tab="contact"><span class="tab-icon">◌</span><span class="tab-label">Contact</span></button>
     </nav>
     <div class="topbar-status"><span class="status-dot"></span>SYSTEMS NOMINAL</div>
@@ -373,9 +369,16 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   <div class="u-hero">
     <canvas id="u-bg"></canvas>
     <div class="u-inner">
-      <div class="u-eye">Zulfr.com &nbsp;·&nbsp; Dr. Usman Zafar &nbsp;·&nbsp; 2026</div>
+
+      <!-- ★ MEASUREMENT INSTITUTE BLOCK — THREE LINES ★ -->
+      <div class="u-institute">
+        <div class="u-institute-line">A Measurement Institute.</div>
+        <div class="u-institute-line">by</div>
+        <div class="u-institute-line">Dr. Usman Zafar</div>
+      </div>
+
       <div class="u-bh"><canvas id="u-bh" width="780" height="780"></canvas></div>
-      <div class="u-h1">Series-10,<br><b>Engineering &amp; Safety Cosmos.</b></div>
+      <div class="u-h1">Measurement is our Business.<br><b>Engineering &amp; Safety Cosmos.</b></div>
       <div class="u-sub">Governance architecture for the intelligence age.</div>
       <div class="u-chain">
         <span class="u-cn" style="color:var(--uc1)">Data</span><span class="u-ca">→</span>
@@ -390,6 +393,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <div class="u-cta">
         <button class="btn btn-primary" onclick="switchTab('research')">Explore Research</button>
         <button class="btn btn-ghost" onclick="switchTab('models')">View Models</button>
+        <button class="btn btn-gold" onclick="switchTab('lab')">Research Record</button>
       </div>
     </div>
   </div>
@@ -445,10 +449,10 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
       <div class="u-mb u-a4 u-bt2 u-bl2" onmouseenter="uPulse(3)">
         <span class="u-bdg u-live">LIVE</span>
-        <div class="u-id"><span class="u-dot" style="background:var(--uc4)"></span>TRUE10<span class="u-stk">&nbsp;&nbsp;04 · AI</span></div>
-        <div class="u-nm">AI Data Generation Governance</div><div class="u-dm">Information Integrity</div>
-        <div class="u-ut">Places a door for structural response generation. Cube engine scores governance structure deterministically. Groq scores content semantically. Accumulated index. Live at spec true10-v0.1.</div>
-        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">AI-generated documents become auditable. A hollow document scores 45. A genuinely governed document scores 85. The gap is now measurable, not assumed.</div></div>
+        <div class="u-id"><span class="u-dot" style="background:var(--uc4)"></span>TRUE100<span class="u-stk">&nbsp;&nbsp;04 · AI</span></div>
+        <div class="u-nm">AI Governance Reactor</div><div class="u-dm">Information Integrity · 2044-Proof</div>
+        <div class="u-ut">Deterministic hypercube-based governance engine for AI-generated content. Five frontier models tested — all scored NON-COMPLIANT. A governed document scores 90+. The gap is now measured, not assumed.</div>
+        <div class="u-bn"><div class="u-bnl">Visible Benefit</div><div class="u-bnt">Five frontier AI models scored 25–28/100. A governed reference document scored 90+. The Governance-Alignment Gap is measurable, repeatable, and systemic.</div></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:90%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">90%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:96%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">96%</span></div>
       </div>
@@ -506,7 +510,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <tr><td><span class="u-mm" style="color:var(--uc1)">DAIS10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">01 · DATA</td><td>Schema, drift, pipelines</td><td>Data engineers, CDOs, platform teams</td><td>GDPR Art.5, DAMA-DMBOK</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
         <tr><td><span class="u-mm" style="color:var(--uc2)">DiGRs10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">02 · MODELS</td><td>Model selection logic</td><td>ML leads, data science heads, AI directors</td><td>SR 11-7, EU AI Act Art.9</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
         <tr><td><span class="u-mm" style="color:var(--uc3)">SIS10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">03 · SAFETY</td><td>Functional safety, lives, assets</td><td>Aviation, energy, healthcare, automotive</td><td>IEC 61508, ISO 26262</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
-        <tr><td><span class="u-mm" style="color:var(--uc4)">TRUE10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">04 · AI</td><td>AI document generation, integrity</td><td>Regulatory bodies, AI labs, ESG, media</td><td>EU AI Act Art.13, FCA</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
+        <tr><td><span class="u-mm" style="color:var(--uc4)">TRUE100</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">04 · AI</td><td>AI document generation, integrity</td><td>Regulatory bodies, AI labs, ESG, media</td><td>EU AI Act Art.13, FCA</td><td><span style="color:#69db7c;font-family:'JetBrains Mono',monospace;font-size:9px">LIVE</span></td></tr>
         <tr><td><span class="u-mm" style="color:var(--uc5)">BLOC10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">05 · COGNITION</td><td>Human–AI cognitive boundary</td><td>CHRO, cognitive systems designers</td><td>ISO 9241-210, IEEE 7010</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
         <tr><td><span class="u-mm" style="color:var(--uc6)">KAD10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">06 · AGENTS</td><td>Agentic perception, multi-agent failure</td><td>AI safety teams, agent deployment leads</td><td>EU AI Act Art.14, NIST RMF</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
         <tr><td><span class="u-mm" style="color:var(--uc7)">CAF10</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ud)">07 · DECISIONS</td><td>Organisational decision quality</td><td>C-suite, board directors, strategy officers</td><td>ISO 31000, King IV</td><td><span style="color:var(--uc1);font-family:'JetBrains Mono',monospace;font-size:9px">FUTURE</span></td></tr>
@@ -528,7 +532,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       There is no decision that does not need accountability.<br>
       Accountability without structure is just intention."
     </div>
-    <div class="u-ep">The eight models are not a taxonomy. They are a <strong>stack</strong>. Pull out any single model and the stack above it becomes ungoverned. That is not a gap in the product — it is a sales argument. Every client who buys TRUE10 eventually needs DiGRs10. Every client who buys SIS10 needs KAST10. The platform sells itself recursively.</div>
+    <div class="u-ep">The eight models are not a taxonomy. They are a <strong>stack</strong>. Pull out any single model and the stack above it becomes ungoverned. That is not a gap in the product — it is a sales argument. Every client who buys TRUE100 eventually needs DiGRs10. Every client who buys SIS10 needs KAST10. The platform sells itself recursively.</div>
   </div>
 
   <div class="u-hr"></div>
@@ -555,9 +559,9 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
   <div class="u-fw">
     <div class="u-ft">
-      <span class="u-fn">ZULFR.COM &nbsp;·&nbsp; USMAN ZAFAR Ph.D</span>
+      <span class="u-fn">ZULFR.COM &nbsp;·&nbsp; A MEASUREMENT INSTITUTE</span>
       <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)">EIGHT MODELS · ONE PLATFORM · INFINITE SCOPE</span>
-      <span class="u-fn">2026 · ALL RIGHTS RESERVED</span>
+      <span class="u-fn">DR. USMAN ZAFAR Ph.D &nbsp;·&nbsp; 2026 · ALL RIGHTS RESERVED</span>
     </div>
   </div>
 
@@ -570,29 +574,30 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   <div class="page-padded">
   <div class="wrap">
     <div class="hero-section">
-      <div class="hero-eyebrow"><span class="label">Semantic Intelligence Platform</span></div>
-      <h1 class="hero-title">The Discipline of<br>Measured Intelligence</h1>
-      <p class="hero-sub">ZULFR develops measurable intelligence frameworks across safety, data, semantics, and decision architecture, ensuring intelligence remains constrained, auditable, and mathematically verifiable. These frameworks produce operational decision-governance tools demonstrated in the media resources.</p>
+      <div class="hero-eyebrow"><span class="label">A Measurement Institute</span></div>
+      <h1 class="hero-title">Measurement is our Business.<br>Engineering &amp; Safety Cosmos.</h1>
+      <p class="hero-sub">Governance architecture for the intelligence age. ZULFR develops deterministic measurement frameworks across safety, data, semantics, and decision architecture — ensuring intelligence remains constrained, auditable, and mathematically verifiable.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" onclick="switchTab('research')">Explore Research</button>
         <button class="btn btn-ghost" onclick="switchTab('models')">View Models</button>
+        <button class="btn btn-gold" onclick="switchTab('lab')">Research Record</button>
       </div>
     </div>
     <div class="about-grid">
-      <div class="card about-card"><span class="icon">◈</span><h3>Semantic Governance</h3><p>Semantic structure is treated as a primary computational filtering dimension, allowing AI systems to generate higher order meaning from data.</p></div>
-      <div class="card about-card"><span class="icon">◎</span><h3>Measurable Outputs</h3><p>Intelligence that cannot be measured is a liability. ZULFR transforms model outputs into certified, auditable decision evidence.</p></div>
+      <div class="card about-card"><span class="icon">◈</span><h3>Deterministic Measurement</h3><p>Every framework produces scores that are deterministic, version-controlled, and fully auditable. Intelligence that cannot be measured is a liability.</p></div>
+      <div class="card about-card"><span class="icon">◎</span><h3>Certified Evaluation</h3><p>ZULFR issues certified governance evaluation reports. Your document is evaluated, scored, and returned with a signed report. Private. Confidential. Permanent.</p></div>
       <div class="card about-card"><span class="icon">⬡</span><h3>Deterministic Safety</h3><p>ZULFR models balance practical deployment with rigorous mathematical foundations, enabling trustworthy functional safety guarantees and defensible evidence of organizational due diligence.</p></div>
       <div class="card about-card"><span class="icon">◌</span><h3>Audit-First Design</h3><p>Each inference step follows a graph structured representation, ensuring transparency and traceability. Authorization paths are explicitly defined, avoiding automatic or implicit inference from model confidence.</p></div>
     </div>
     <div class="philosophy-block">
       <span class="quote-mark">"</span>
-      <blockquote>Measurement is our BUSINESS. Intelligence without measurement is hazard. ZULFR turns outputs into defensible decision evidence.</blockquote>
+      <blockquote>Measurement is our Business. Intelligence without measurement is hazard. ZULFR turns outputs into defensible decision evidence.</blockquote>
     </div>
     <div class="about-section">
       <h2>About ZULFR</h2><hr class="divider">
-      <p>ZULFR is a research and standards initiative focused on the integration of formal logic, reliability engineering, and artificial intelligence. The organization is guided by the principle that system reliability forms the foundation of capability development. ZULFR designs frameworks that treat AI outputs as critical decision artifacts, applying rigorous reliability engineering principles to intelligent systems.</p>
-      <p>At ZULFR, development is undertaken only through the integration of practical experience and mathematical proof of concept. Concepts that cannot be expressed, measured, or validated through rigorous methodology are treated as non operational assets within our framework.</p>
-      <p>ZULFR advances applied certification methodologies for organizations deploying AI in regulated domains, operating on the principle that trustworthy intelligence requires measurable design. The organization does not build general purpose AI systems; instead, it develops the foundational infrastructure that enables AI systems to be reliable, auditable, and defensible in critical environments.</p>
+      <p>ZULFR is a measurement institute focused on the integration of formal logic, reliability engineering, and artificial intelligence. The organization is guided by the principle that system reliability forms the foundation of capability development. ZULFR designs frameworks that treat AI outputs as critical decision artifacts, applying rigorous reliability engineering principles to intelligent systems.</p>
+      <p>At ZULFR, development is undertaken only through the integration of practical experience and mathematical proof of concept. Concepts that cannot be expressed, measured, or validated through rigorous methodology are treated as non-operational assets within our framework.</p>
+      <p>ZULFR advances applied certification methodologies for organizations deploying AI in regulated domains, operating on the principle that trustworthy intelligence requires measurable design. The organization does not build general-purpose AI systems; instead, it develops the foundational infrastructure that enables AI systems to be reliable, auditable, and defensible in critical environments.</p>
       <p>ZULFR does not build general-purpose AI systems. We build the infrastructure that makes AI systems trustworthy.</p>
     </div>
   </div>
@@ -613,6 +618,10 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <button class="filter-btn" onclick="filterPapers('working',this)">Working Paper</button>
     </div>
     <div class="paper-list">
+      <div class="paper-card" data-type="working" onclick="togglePaper(this)">
+        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-gold">Benchmark</span><span class="badge badge-blue">DOI · 10.5281/zenodo.19075200</span></div><div class="paper-title">Governed or Blind: The Integrity Gap in Frontier AI</div><p class="paper-excerpt">AI Accountability League 2026 — Season 1. Five frontier models. Two independent engines. Every model failed governance compliance.</p></div><span class="paper-expand">⌄</span></div>
+        <div class="paper-body"><p>In March 2026, five frontier models — ChatGPT-4o, Claude Sonnet 4.6, Copilot, Gemini Flash, and Grok — were evaluated using TRUE100 and ALIGN100 under controlled free-tier conditions. Every model demonstrated strong structural alignment (ALIGN100: 0.84+) while failing governance compliance (TRUE-10: 25–28/100). This systematic divergence — the Governance-Alignment Gap — averaged 57.3 normalised points across all five vendors.</p><p>This is not a capability test. It is a governance stress test — the first of its kind — revealing what today's AI can and cannot do when held to standards that matter outside the lab.</p><div class="paper-actions"><a href="https://doi.org/10.5281/zenodo.19075200" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a><a href="https://github.com/usman19zafar/AI-Accountability-League-2026" target="_blank" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">View Data</a><button class="btn btn-gold" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation();switchTab('lab')">Research Record</button></div></div>
+      </div>
       <div class="paper-card" data-type="doi" onclick="togglePaper(this)">
         <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-green">Theorems</span><span class="badge badge-blue">DOI · Zenodo.18705930</span></div><div class="paper-title">SIS-10: Functional Safety is Not a Snapshot</div><p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p></div><span class="paper-expand">⌄</span></div>
         <div class="paper-body"><p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p><p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p><div class="paper-actions"><a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a></div></div>
@@ -688,28 +697,121 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ ROADMAP ════════════════════════════════════════════════════════════ -->
-<div id="panel-future" class="panel">
+<!-- ══ RESEARCH RECORD (replaces Roadmap) ═════════════════════════════════ -->
+<div id="panel-lab" class="panel">
   <div class="page-padded">
-  <div class="wrap">
-    <div class="future-header"><div><span class="label" style="display:block;margin-bottom:6px">Development Roadmap</span><h2>Future Developments</h2><p>Upcoming standards, research directions, and platform milestones.</p></div><span class="badge badge-blue">2025 — 2027</span></div>
-    <div class="roadmap">
-      <div class="roadmap-item"><div class="rm-time"><strong>Q2 2025</strong>Completed</div><div class="rm-spine"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content done"><h3>DAIS-10 v1.0 Publication</h3><p>First stable release of the Data Admissibility and Integrity Standard. Includes full formal specification and reference implementation guidelines.</p></div></div>
-      <div class="roadmap-item"><div class="rm-time"><strong>Q4 2025</strong>Completed</div><div class="rm-spine"><div class="rm-dot done"></div><div class="rm-line"></div></div><div class="rm-content done"><h3>Functional Safety Paper — Zenodo</h3><p>Publication of mosaic aging hazard model research establishing theoretical foundations for continuous-time safety classification in AI systems.</p></div></div>
-      <div class="roadmap-item"><div class="rm-time"><strong>Q1 2026</strong>In Progress</div><div class="rm-spine"><div class="rm-dot active"></div><div class="rm-line"></div></div><div class="rm-content active"><h3>SIL-10 &amp; DIGRS-10 Draft Release</h3><p>Public draft release of Safety Integrity Logic and Decision Intelligence frameworks for community review and feedback. Open comment period: 90 days.</p></div></div>
-      <div class="roadmap-item"><div class="rm-time"><strong>Q3 2026</strong>Planned</div><div class="rm-spine"><div class="rm-dot"></div><div class="rm-line"></div></div><div class="rm-content"><h3>ZULFR Certification Program Launch</h3><p>A formal certification pathway for organizations to achieve ZULFR-compliant AI governance status. Covers DAIS-10, SIL-10, and DIGRS-10 in an integrated audit framework.</p></div></div>
-      <div class="roadmap-item"><div class="rm-time"><strong>Q1 2027</strong>Planned</div><div class="rm-spine"><div class="rm-dot"></div><div class="rm-line"></div></div><div class="rm-content"><h3>SEMVAL-10 — Semantic Validation Standard</h3><p>New framework extending DAIS-10 with runtime semantic validation. Enables continuous integrity monitoring of live AI pipelines without interrupting inference.</p></div></div>
-      <div class="roadmap-item"><div class="rm-time"><strong>Q3 2027</strong>Research</div><div class="rm-spine"><div class="rm-dot"></div><div class="rm-line"></div></div><div class="rm-content"><h3>Cross-Jurisdiction Regulatory Mapping</h3><p>Formal alignment study mapping ZULFR frameworks to EU AI Act, NIST AI RMF, and ISO/IEC 42001. Targeting mutual recognition agreements with standards bodies.</p></div></div>
-    </div>
-    <div class="future-vision">
-      <span class="label" style="display:block;margin-bottom:10px">Long-Term Vision</span><h2>Where ZULFR is Headed</h2>
-      <div class="vision-grid">
-        <div class="vision-card"><h3>Universal Governance Layer</h3><p>A vendor-agnostic governance layer that any AI system can integrate, providing ZULFR-certified safety, admissibility, and auditability regardless of underlying model architecture.</p></div>
-        <div class="vision-card"><h3>Real-Time Semantic Monitoring</h3><p>Continuous inference-time monitoring systems that detect semantic drift, integrity violations, and safety envelope breaches in milliseconds without inference latency penalties.</p></div>
-        <div class="vision-card"><h3>Regulatory Standard Adoption</h3><p>Working toward formal adoption of ZULFR frameworks as referenced standards in AI regulatory frameworks across the EU, UK, and North America.</p></div>
-        <div class="vision-card"><h3>Open Research Commons</h3><p>A collaborative research commons for governance-first AI, bringing together safety engineers, policymakers, and AI researchers under a shared formal methodology.</p></div>
+  <div class="wrap-lg">
+
+    <div class="lab-header">
+      <div>
+        <span class="label" style="display:block;margin-bottom:6px">Published Evaluations</span>
+        <h2>Research Record</h2>
+        <p>Every evaluation published. Every result permanent. Every dataset open. Controlled benchmarks conducted under rigorous research conditions — not experiments on client data.</p>
       </div>
+      <span class="badge badge-gold">TRUE100 · ALIGN100</span>
     </div>
+
+    <!-- Submit bar -->
+    <div class="lab-submit-bar">
+      <div class="lab-submit-text">Ready to test your document against <strong>TRUE100</strong>? Submit for a certified evaluation report.</div>
+      <a href="mailto:info@zulfr.com?subject=TRUE100 Evaluation Request" class="btn btn-gold" style="font-size:12px;padding:8px 18px;">Submit → info@zulfr.com</a>
+    </div>
+
+    <div class="lab-results">
+
+      <!-- LATEST RESULT LABEL -->
+      <div class="lab-section-label">Latest result</div>
+
+      <!-- SEASON 1 CARD -->
+      <div class="result-card">
+        <div class="result-card-header">
+          <div>
+            <div class="result-card-meta">
+              <span class="badge badge-gold">Season 1</span>
+              <span class="badge badge-green">Live</span>
+              <span class="badge badge-blue">TRUE100 + ALIGN100</span>
+              <span class="badge" style="background:rgba(200,200,200,.08);color:var(--muted)">Social Domain</span>
+            </div>
+            <div class="result-card-title">AI Accountability League 2026 — Season 1</div>
+            <div class="result-card-subtitle">"Governed or Blind: The Integrity Gap in Frontier AI"</div>
+            <div class="result-card-info">March 17, 2026 &nbsp;·&nbsp; 5 Models &nbsp;·&nbsp; Free-tier controlled conditions &nbsp;·&nbsp; DOI: 10.5281/zenodo.19075200</div>
+          </div>
+        </div>
+        <div class="result-card-body">
+
+          <div class="result-score-grid">
+            <!-- TRUE100 Table -->
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;margin-bottom:10px">TRUE100 — Governance Compliance</div>
+              <table class="result-score-table">
+                <thead><tr><th>Model</th><th>Score</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td class="score-model">ChatGPT-4o</td><td class="score-val score-fail">28 / 100</td><td><span class="badge badge-red" style="font-size:9px">FAIL</span></td></tr>
+                  <tr><td class="score-model">Claude S4.6</td><td class="score-val score-fail">27 / 100</td><td><span class="badge badge-red" style="font-size:9px">FAIL</span></td></tr>
+                  <tr><td class="score-model">Copilot</td><td class="score-val score-fail">25 / 100</td><td><span class="badge badge-red" style="font-size:9px">FAIL</span></td></tr>
+                  <tr><td class="score-model">Gemini Flash</td><td class="score-val score-fail">26 / 100</td><td><span class="badge badge-red" style="font-size:9px">FAIL</span></td></tr>
+                  <tr><td class="score-model">Grok (xAI)</td><td class="score-val score-fail">28 / 100</td><td><span class="badge badge-red" style="font-size:9px">FAIL</span></td></tr>
+                  <tr style="border-top:1px solid var(--border)"><td class="score-model" style="color:var(--gold)">Gold Standard</td><td class="score-val score-pass">90+ / 100</td><td><span class="badge badge-green" style="font-size:9px">PASS</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- ALIGN100 Table -->
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;margin-bottom:10px">ALIGN100 — Alignment Quality</div>
+              <table class="result-score-table">
+                <thead><tr><th>Model</th><th>Composite</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td class="score-model">ChatGPT-4o</td><td class="score-val score-strong">0.8423</td><td><span class="badge badge-blue" style="font-size:9px">STRONG</span></td></tr>
+                  <tr><td class="score-model">Claude S4.6</td><td class="score-val score-strong">0.8420</td><td><span class="badge badge-blue" style="font-size:9px">STRONG</span></td></tr>
+                  <tr><td class="score-model">Copilot</td><td class="score-val score-strong">0.8406</td><td><span class="badge badge-blue" style="font-size:9px">STRONG</span></td></tr>
+                  <tr><td class="score-model">Gemini Flash</td><td class="score-val score-strong">0.8405</td><td><span class="badge badge-blue" style="font-size:9px">STRONG</span></td></tr>
+                  <tr><td class="score-model">Grok (xAI)</td><td class="score-val score-strong">0.8413</td><td><span class="badge badge-blue" style="font-size:9px">STRONG</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="result-finding">
+            <strong>The Governance-Alignment Gap:</strong> All five frontier models scored NON-COMPLIANT on TRUE100 (25–28/100) while achieving strong ALIGN100 scores (0.84+). Average gap: <strong>57.3 normalised points.</strong> Systemic. Repeatable. Cross-vendor. A gold standard reference document scored 90+ — confirming the framework ceiling is real and the gap is not a framework artifact.
+          </div>
+
+          <div class="result-links">
+            <a href="https://doi.org/10.5281/zenodo.19075200" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">📄 Full Paper — Zenodo DOI</a>
+            <a href="https://github.com/usman19zafar/AI-Accountability-League-2026" target="_blank" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">💻 Raw Data — GitHub</a>
+            <a href="https://coderlegion.com/13102/bench-marked-5-frontier-ai-models-on-governance-alignment-every-single-one-failed" target="_blank" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">📝 Technical Breakdown</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARCHIVE LABEL -->
+      <div class="lab-section-label" style="margin-top:32px">Archive</div>
+
+      <div class="archive-card">
+        <div class="archive-card-left">
+          <h3>Season 2 — In Planning</h3>
+          <p>More models · More domains · API-level evaluation · Open-source models · Human baseline · Q3 2026</p>
+        </div>
+        <div class="archive-card-links">
+          <a href="mailto:info@zulfr.com?subject=Season 2 Collaboration" class="btn btn-ghost" style="font-size:12px;padding:7px 14px;">Suggest a model →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EVALUATION SERVICE -->
+    <div class="eval-service">
+      <h3>Certified Document Evaluation</h3>
+      <p>Submit your document. Receive a certified TRUE100 Governance Report. We evaluate, score, and return a signed report. Your document is never stored, shared, or published. This is a private certified evaluation service — not a research programme.</p>
+      <div class="eval-steps">
+        <div class="eval-step"><div class="eval-step-num">STEP 01</div><p>Submit your document to info@zulfr.com with your name, organisation, and document type.</p></div>
+        <div class="eval-step"><div class="eval-step-num">STEP 02</div><p>Receive a quote within 2 business days. Evaluation begins on confirmation.</p></div>
+        <div class="eval-step"><div class="eval-step-num">STEP 03</div><p>Evaluation conducted under controlled TRUE100 conditions. Deterministic. Version-controlled.</p></div>
+        <div class="eval-step"><div class="eval-step-num">STEP 04</div><p>Certified report delivered — scores, dimension breakdown, governance quality, remediation priorities.</p></div>
+      </div>
+      <a href="mailto:info@zulfr.com?subject=TRUE100 Evaluation Request" class="btn btn-gold">Submit for evaluation → info@zulfr.com</a>
+      <div class="eval-confidential"><strong>Confidentiality guarantee:</strong> Your document is evaluated and returned. It is never stored, shared, published, or used in any other context. Full specification available under license — contact info@zulfr.com for research access or licensing inquiries.</div>
+    </div>
+
   </div>
   </div>
 </div>
@@ -746,14 +848,13 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 
 <footer class="footer">
   <span class="wordmark">ZUL<em>FR</em></span>
-  <span class="footer-note">© 2026 · Semantic Intelligence Infrastructure</span>
-  <span class="footer-note">SYSTEMS NOMINAL · v2.0.0</span>
+  <span class="footer-note">© 2026 · A Measurement Institute · Dr. Usman Zafar Ph.D</span>
+  <span class="footer-note">SYSTEMS NOMINAL · v3.0.0</span>
 </footer>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
-/* ── ORIGINAL SITE JS ─────────────────────────────────────────────────── */
 function switchTab(t){
   document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t)});
   document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='panel-'+t)});
@@ -763,7 +864,6 @@ function togglePaper(c){var e=c.classList.contains('expanded');document.querySel
 function filterPapers(type,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.paper-card').forEach(function(c){c.style.display=(type==='all'||c.dataset.type===type)?'':'none'});}
 function switchModel(id){document.querySelectorAll('.model-pill').forEach(function(p){p.classList.toggle('active',p.dataset.model===id)});document.querySelectorAll('.model-detail').forEach(function(d){d.classList.toggle('active',d.id==='model-'+id)});}
 
-/* ── MEDIA DATA ───────────────────────────────────────────────────────── */
 var IMAGES=[
   'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
   'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
@@ -788,13 +888,9 @@ var IMAGES=[
   'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-10.jpg',
   'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-11.jpg',
   'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-12.jpg',
-  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg',
-  '','','','','','','','','','','','','','','','','','','','','','','','','',
-  '','','','','','','','','','','','','','','','','','','','','','','','','',
-  '','','','','','','','','','','','','','','','','','','','','','','','','',
-  ''
+  'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg'
 ];
-var VIDEOS=['Q4_BTrXGURY','egDEU0hQ5Qc','','','','','','','','','','','','','','','','',''];
+var VIDEOS=['Q4_BTrXGURY','egDEU0hQ5Qc'];
 function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.replace(/\.[^.]+$/,'');return n.replace(/[-_]/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
 (function(){
   var ig=document.getElementById('image-grid'),ie=document.getElementById('image-empty'),ic=document.getElementById('img-count');
@@ -811,20 +907,18 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
   filled.forEach(function(id,idx){var url='https://www.youtube.com/watch?v='+id;var a=document.createElement('a');a.className='image-btn';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Watch video on YouTube';a.innerHTML='<span class="image-btn-icon">▶</span><span class="image-btn-name">Video '+(idx+1)+'</span><span class="image-btn-sub">YouTube · '+id+'</span><span class="image-btn-arrow">↗ Watch</span>';vg.appendChild(a);});
 })();
 
-/* ── UNIVERSE ENGINE — IIFE ───────────────────────────────────────────── */
 (function(){
   var MDL=[
     {id:'DAIS10', c:'#4fc3f7',a:0},
     {id:'DiGRs10',c:'#69db7c',a:Math.PI*.25},
     {id:'SIS10',  c:'#ffa94d',a:Math.PI*.5},
-    {id:'TRUE10', c:'#f78fb3',a:Math.PI*.75},
+    {id:'TRUE100',c:'#f78fb3',a:Math.PI*.75},
     {id:'BLOC10', c:'#b197fc',a:Math.PI},
     {id:'KAD10',  c:'#63e6be',a:Math.PI*1.25},
     {id:'CAF10',  c:'#ffd43b',a:Math.PI*1.5},
     {id:'KAST10', c:'#ff8787',a:Math.PI*1.75},
   ];
 
-  /* Star canvas */
   var bgC=document.getElementById('u-bg'),bgCtx=bgC.getContext('2d'),stars=[],bgt=0;
   function resizeBg(){
     bgC.width=bgC.offsetWidth||window.innerWidth;
@@ -840,24 +934,20 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
   }
   drawBg();
 
-  /* Black hole canvas — coordinate space 780×780 matches the 30% bigger container */
   var bhC=document.getElementById('u-bh'),ctx=bhC.getContext('2d');
   var W=780,H=780,cx=W/2,cy=H/2,pulseR=0,pulsingModel=null,t=0;
   window.uPulse=function(i){pulseR=1;pulsingModel=MDL[i]||null;};
 
   function drawBH(){
     ctx.clearRect(0,0,W,H);
-    /* Accretion rings — scaled 30% */
     [{r:124,a:.07,c:'#9f8fff'},{r:143,a:.05,c:'#b197fc'},{r:164,a:.03,c:'#7c6fe0'},{r:193,a:.02,c:'#5544aa'}].forEach(function(rg){
       ctx.beginPath();ctx.arc(cx,cy,rg.r,0,Math.PI*2);ctx.strokeStyle=rg.c;ctx.lineWidth=10;
       ctx.globalAlpha=rg.a+Math.sin(t*.8)*.012;ctx.stroke();ctx.globalAlpha=1;
     });
-    /* Orbit paths */
     [273,312].forEach(function(r,i){
       ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#3030a0';ctx.lineWidth=.6;
       ctx.globalAlpha=i===0?.08:.05;ctx.stroke();ctx.globalAlpha=1;
     });
-    /* Gravity threads */
     MDL.forEach(function(m){
       var r=284,mx=cx+Math.cos(m.a+t*.0003)*r,my=cy+Math.sin(m.a+t*.0003)*r;
       ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx,my);
@@ -865,7 +955,6 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
       g.addColorStop(0,m.c+'00');g.addColorStop(.5,m.c+'0a');g.addColorStop(1,m.c+'00');
       ctx.strokeStyle=g;ctx.lineWidth=.7;ctx.globalAlpha=.45;ctx.stroke();ctx.globalAlpha=1;
     });
-    /* Orbiting nodes — scaled 30% */
     MDL.forEach(function(m,i){
       var spd=.00022+i*.000028,r=284+Math.sin(t*.0012+i)*6,ang=m.a+t*spd;
       var mx=cx+Math.cos(ang)*r,my=cy+Math.sin(ang)*r;
@@ -874,25 +963,21 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
       ctx.fillStyle=grd;ctx.beginPath();ctx.arc(mx,my,26,0,Math.PI*2);ctx.fill();
       ctx.beginPath();ctx.arc(mx,my,12,0,Math.PI*2);ctx.fillStyle='#08081a';ctx.fill();
       ctx.strokeStyle=m.c;ctx.lineWidth=1.5;ctx.globalAlpha=.8;ctx.stroke();ctx.globalAlpha=1;
-      /* Label — bigger font to match 30% scale */
       ctx.font='600 13px "JetBrains Mono",monospace';
       ctx.fillStyle=m.c;ctx.globalAlpha=.85;ctx.textAlign='center';
       ctx.fillText(m.id,mx+Math.cos(ang)*34,my+Math.sin(ang)*34+5);ctx.globalAlpha=1;
     });
-    /* Hover pulse */
     if(pulseR>0){
       ctx.beginPath();ctx.arc(cx,cy,pulseR,0,Math.PI*2);
       ctx.strokeStyle=(pulsingModel?pulsingModel.c:'#9f8fff')+'66';
       ctx.lineWidth=2;ctx.globalAlpha=Math.max(0,1-pulseR/364);ctx.stroke();ctx.globalAlpha=1;
       pulseR+=2.8;if(pulseR>364)pulseR=0;
     }
-    /* Event horizon */
     ctx.beginPath();ctx.arc(cx,cy,91,0,Math.PI*2);
     var eh=ctx.createRadialGradient(cx,cy,50,cx,cy,91);
     eh.addColorStop(0,'transparent');eh.addColorStop(1,'#9f8fff12');
     ctx.fillStyle=eh;ctx.fill();ctx.strokeStyle='#9f8fff';ctx.lineWidth=.6;
     ctx.globalAlpha=.28+Math.sin(t*.55)*.06;ctx.stroke();ctx.globalAlpha=1;
-    /* Singularity */
     ctx.beginPath();ctx.arc(cx,cy,47,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
     var pg=ctx.createRadialGradient(cx,cy,0,cx,cy,47);
     pg.addColorStop(0,'#1a0a3a');pg.addColorStop(1,'transparent');
@@ -904,12 +989,11 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
   }
   drawBH();
 
-  /* Audit ticker */
   var auditEvents=[
     {m:'DAIS10', c:'#4fc3f7',r:'ok',  msg:'Schema drift check — no drift detected'},
     {m:'DiGRs10',c:'#69db7c',r:'ok',  msg:'Model selection audit — rationale documented'},
     {m:'SIS10',  c:'#ffa94d',r:'ok',  msg:'Safety level verify — SIL-3 IEC 61508 aligned'},
-    {m:'TRUE10', c:'#f78fb3',r:'ok',  msg:'Hypercube integrity — 100/100 cells active'},
+    {m:'TRUE100',c:'#f78fb3',r:'ok',  msg:'Hypercube integrity — 100N cells active · 2044-proof'},
     {m:'BLOC10', c:'#b197fc',r:'warn',msg:'Cognitive boundary — 87% human bandwidth'},
     {m:'KAD10',  c:'#63e6be',r:'ok',  msg:'Agent perception scan — patterns nominal'},
     {m:'CAF10',  c:'#ffd43b',r:'warn',msg:'Decision gap analysis — 12% gap, review recommended'},
@@ -922,7 +1006,6 @@ function labelFromUrl(url){var p=url.split('/');var f=p[p.length-1];var n=f.repl
     ticker.appendChild(div);
   });
 
-  /* Gravity table */
   var IND=[
     {n:'Financial Services',   s:[95,90,60,95,70,88,95,100]},
     {n:'Healthcare & Life Sci.',s:[92,88,99,80,85,90,88,100]},
