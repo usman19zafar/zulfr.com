@@ -356,12 +356,46 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <button class="tab" onclick="switchTab('media')" data-tab="media"><span class="tab-icon">▣</span><span class="tab-label">Media</span></button>
       <button class="tab" onclick="switchTab('lab')" data-tab="lab"><span class="tab-icon">◎</span><span class="tab-label">Record</span></button>
       <button class="tab" onclick="switchTab('contact')" data-tab="contact"><span class="tab-icon">◌</span><span class="tab-label">Contact</span></button>
-      <a class="tab" href="/app" target="_blank" style="text-decoration:none"><span class="tab-icon">⬡</span><span class="tab-label">Lab</span></a>
+      <button class="tab" onclick="switchTab('labapp')" data-tab="labapp"><span class="tab-icon">⬡</span><span class="tab-label">Lab</span></button>
     </nav>
     <div class="topbar-status"><span class="status-dot"></span>SYSTEMS NOMINAL</div>
   </div>
 </header>
-
+<div id="panel-labapp" class="panel">
+  <div class="page-padded">
+  <div class="wrap-lg">
+    <div class="models-header">
+      <span class="label" style="display:block;margin-bottom:6px">Live Model Analysis</span>
+      <h2>Lab</h2>
+      <p>Interactive demos for each governance model. Upload your data and run live analysis.</p>
+    </div>
+    <div class="card" style="margin-bottom:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:28px 32px">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#4fc3f7">DAIS-10</span>
+          <span class="badge badge-green">LIVE</span>
+          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted)">01 · DATA</span>
+        </div>
+        <h3 style="margin-bottom:6px">Data Admissibility &amp; Integrity Standard</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.65">Upload your dataset and run all 8 engines live. Row-level scores, tier assignments, cap codes, and AMD diagnostics.</p>
+      </div>
+      <a href="/app" target="_blank" class="btn btn-primary" style="white-space:nowrap">▶ Launch Analysis</a>
+    </div>
+    <div class="card" style="margin-bottom:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:28px 32px;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#69db7c">DiGRs-10</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted)">02 · MODELS</span>
+        </div>
+        <h3 style="margin-bottom:6px">Decision Intelligence &amp; Graph Reasoning</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.65">Submit a model selection decision for governance audit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed">Coming Soon</button>
+    </div>
+  </div>
+  </div>
+</div>
 <main class="page">
 
 <!-- ══ UNIVERSE PANEL ══════════════════════════════════════════════════════ -->
