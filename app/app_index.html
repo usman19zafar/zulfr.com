@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DAIS-10 · Live Analysis · ZULFR</title>
+<meta name="description" content="DAIS-10 v1.1.8 — Semantic Data Governance. Upload your dataset and get real row-level scores, tier assignments, cap codes, and AMD diagnostics.">
+<meta name="theme-color" content="#112040">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens — identical to zulfr.com ─────────────────────────────── */
+:root{
+  --bg:#112040;--bg-raised:#162848;--bg-float:#1A2F52;--bg-hover:#1f3660;
+  --border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);
+  --acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);
+  --green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;--red:#FF6464;
+  --white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;
+  --tab-h:52px;--radius:8px;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Plus Jakarta Sans',sans-serif;
+  --head:'Syne',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ── Topbar ─────────────────────────────────────────────────────────────── */
+.topbar{background:rgba(17,32,64,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:var(--tab-h);gap:0}
+.wordmark{font-family:var(--head);font-size:15px;font-weight:700;letter-spacing:.2em;color:var(--white);text-decoration:none;margin-right:24px}
+.wordmark em{color:var(--acc);font-style:normal}
+.topbar-crumb{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em;display:flex;align-items:center;gap:8px}
+.topbar-crumb span{color:var(--acc)}
+.topbar-back{font-family:var(--mono);font-size:10px;color:var(--muted);text-decoration:none;letter-spacing:.1em;transition:color .15s;margin-left:auto}
+.topbar-back:hover{color:var(--acc)}
+.topbar-status{font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.1em;margin-left:16px;display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid rgba(62,207,142,.2);border-radius:4px;background:rgba(62,207,142,.05)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2.5s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(62,207,142,.4)}50%{opacity:.6;box-shadow:0 0 0 4px rgba(62,207,142,0)}}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+.page{padding:40px 0 80px}
+
+/* ── Page header ────────────────────────────────────────────────────────── */
+.page-head{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.page-eyebrow{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.page-eyebrow::before{content:'';display:block;width:18px;height:1px;background:var(--acc)}
+.page-title{font-family:var(--head);font-size:clamp(28px,3.5vw,42px);font-weight:700;color:var(--white);margin-bottom:8px;letter-spacing:-.02em}
+.page-title em{color:var(--acc);font-style:normal}
+.page-sub{font-size:14px;color:var(--muted);max-width:560px;line-height:1.75}
+.engine-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.epill{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--acc);border:1px solid var(--acc-mid);padding:3px 9px;border-radius:20px}
+
+/* ── Upload zone ────────────────────────────────────────────────────────── */
+.upload-section{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-bottom:28px;align-items:start}
+.upload-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.upload-card-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.upload-card-title{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:.2em;text-transform:uppercase}
+.upload-card-body{padding:20px}
+.drop-zone{border:1px dashed var(--border-md);border-radius:var(--radius);padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--acc);background:var(--acc-soft)}
+.drop-icon{font-size:28px;color:var(--faint);margin-bottom:10px}
+.drop-txt{font-size:13px;color:var(--white);font-weight:500;margin-bottom:4px}
+.drop-hint{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.fmt-pills{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.fmt-pill{font-family:var(--mono);font-size:9px;color:var(--faint);border:1px solid var(--border);padding:2px 7px;border-radius:3px}
+.file-info{display:none;margin-top:12px;padding:9px 14px;background:rgba(77,170,223,.08);border:1px solid var(--acc-mid);border-radius:6px;font-size:11px;font-family:var(--mono);color:var(--acc)}
+.config-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.config-body{padding:16px}
+.cfg-row{margin-bottom:14px}
+.cfg-label{display:block;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.cfg-select,.cfg-input{width:100%;padding:8px 11px;background:var(--bg);border:1px solid var(--border-md);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--white);outline:none;transition:border-color .15s}
+.cfg-select:focus,.cfg-input:focus{border-color:var(--acc)}
+.cfg-select option{background:var(--bg-raised)}
+.analyze-btn{width:100%;background:var(--acc);color:#112040;border:none;border-radius:6px;padding:12px;font-size:12px;font-weight:700;font-family:var(--mono);cursor:pointer;transition:all .15s;letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.analyze-btn:hover{background:#6EC0EC}
+.analyze-btn:disabled{background:var(--bg-float);color:var(--faint);cursor:not-allowed}
+.spinner{width:14px;height:14px;border:2px solid rgba(17,32,64,.3);border-top-color:#112040;border-radius:50%;display:none;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.backend-url-row{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.backend-note{font-family:var(--mono);font-size:9px;color:var(--faint);margin-bottom:5px;letter-spacing:.5px}
+
+/* ── Error / Status banner ──────────────────────────────────────────────── */
+.banner{display:none;padding:12px 16px;border-radius:6px;font-size:12px;font-family:var(--mono);margin-bottom:20px;line-height:1.6}
+.banner.error{background:rgba(255,100,100,.08);border:1px solid rgba(255,100,100,.25);color:var(--red)}
+.banner.info{background:var(--acc-soft);border:1px solid var(--acc-mid);color:var(--acc)}
+
+/* ── Results dashboard ──────────────────────────────────────────────────── */
+.dashboard{display:none}
+.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.dash-title{font-family:var(--head);font-size:18px;font-weight:700;color:var(--white)}
+.dash-meta{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.05em}
+.dash-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+.kpi{background:var(--bg-raised);padding:14px 12px;text-align:center}
+.kpi-v{font-family:var(--head);font-size:22px;font-weight:700;display:block;margin-bottom:3px}
+.kpi-l{font-family:var(--mono);font-size:8px;color:var(--faint);letter-spacing:1px;text-transform:uppercase}
+
+/* Results tabs */
+.rtabs{display:flex;gap:2px;margin-bottom:16px;flex-wrap:wrap}
+.rtab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:7px 14px;border-radius:4px;border:1px solid var(--border);background:var(--bg-raised);color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase}
+.rtab:hover{color:var(--white)}
+.rtab.active{background:var(--acc-soft);border-color:var(--acc-mid);color:var(--acc)}
+.rpanel{display:none}
+.rpanel.active{display:block}
+
+/* Table */
+.results-table{width:100%;border-collapse:collapse;font-size:11px}
+.results-table th{text-align:left;padding:7px 12px;background:var(--bg-float);color:var(--faint);font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:400}
+.results-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+.results-table tr:last-child td{border-bottom:none}
+.results-table tr:hover td{background:var(--bg-float)}
+.tcard{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px}
+
+/* Score bar */
+.sbar{height:3px;background:var(--border);border-radius:2px;margin-top:3px;overflow:hidden}
+.sfill{height:100%;border-radius:2px}
+
+/* Tier badge */
+.tier-e{background:rgba(255,100,100,.1);color:var(--red);border:1px solid rgba(255,100,100,.25);font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;letter-spacing:.5px}
+.tier-ec{background:rgba(245,166,35,.1);color:var(--amber);border:1px solid rgba(245,166,35,.25);font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;letter-spacing:.5px}
+.tier-c{background:var(--acc-soft);color:var(--acc);border:1px solid var(--acc-mid);font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;letter-spacing:.5px}
+.tier-n{background:var(--bg-float);color:var(--faint);border:1px solid var(--border);font-family:var(--mono);font-size:8px;padding:2px 6px;border-radius:3px;letter-spacing:.5px}
+.status-prime{color:var(--green);font-weight:600}
+.status-good{color:var(--green)}
+.status-fair{color:var(--amber)}
+.status-weak{color:var(--amber)}
+.status-fail{color:var(--red);font-weight:600}
+.status-failure{color:var(--red);font-weight:600}
+
+/* Cap events */
+.cap-item{background:var(--bg-raised);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin-bottom:10px}
+.cap-code{font-family:var(--mono);font-size:10px;color:var(--red);font-weight:700;margin-bottom:4px}
+.cap-ref{font-size:11px;color:var(--muted);margin-bottom:3px}
+.cap-rem{font-size:11px;color:var(--text)}
+
+/* AMD */
+.amd-item{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px}
+.amd-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.amd-attr{font-family:var(--mono);font-size:11px;color:var(--white);font-weight:500}
+.amd-stats{display:flex;gap:8px}
+.amd-stat{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px}
+.amd-pass{background:rgba(62,207,142,.1);color:var(--green);border:1px solid rgba(62,207,142,.2)}
+.amd-warn{background:rgba(245,166,35,.1);color:var(--amber);border:1px solid rgba(245,166,35,.2)}
+.amd-fail{background:rgba(255,100,100,.1);color:var(--red);border:1px solid rgba(255,100,100,.2)}
+.amd-overall{font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.5px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;border:none;text-decoration:none;transition:all .15s}
+.btn-primary{background:var(--acc);color:#112040}.btn-primary:hover{background:#6EC0EC}
+.btn-ghost{background:transparent;border:1px solid var(--border-md);color:var(--text)}.btn-ghost:hover{background:var(--bg-hover);color:var(--white)}
+.btn-gold{background:transparent;border:1px solid rgba(240,192,64,.4);color:var(--gold)}.btn-gold:hover{background:rgba(240,192,64,.08)}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-note{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em}
+
+@media(max-width:860px){.upload-section{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:540px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ──────────────────────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="wordmark">ZUL<em>FR</em></a>
+    <div class="topbar-crumb">
+      <span>Models</span> · <span>DAIS-10</span> · <span>Live Analysis</span>
+    </div>
+    <a href="/" class="topbar-back">← Back to ZULFR</a>
+    <div class="topbar-status"><span class="status-dot"></span>ENGINES ACTIVE</div>
+  </div>
+</header>
+
+<main class="page">
+<div class="wrap">
+
+  <!-- ── Page header ──────────────────────────────────────────────────────── -->
+  <div class="page-head">
+    <div class="page-eyebrow">01 · DATA · LIVE</div>
+    <h1 class="page-title">DAIS<em>-10</em> Live Analysis</h1>
+    <p class="page-sub">Upload your dataset. All 8 engines run on your data. Real row-level scores, tier assignments, legal cap codes, and 22 AMD diagnostics per attribute — returned in seconds.</p>
+    <div class="engine-pills">
+      <span class="epill">SIS-10</span><span class="epill">MCM-10</span><span class="epill">TIER-10</span>
+      <span class="epill">SICM-10</span><span class="epill">DIFS-10</span><span class="epill">SIF-10</span>
+      <span class="epill">QFIM-10</span><span class="epill">AMD-10</span>
+    </div>
+  </div>
+
+  <!-- ── Upload + config ──────────────────────────────────────────────────── -->
+  <div class="upload-section">
+
+    <div class="upload-card">
+      <div class="upload-card-head">
+        <span class="upload-card-title">Dataset Upload</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--faint)">MAX 100,000 ROWS</span>
+      </div>
+      <div class="upload-card-body">
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+          <div class="drop-icon">↑</div>
+          <div class="drop-txt">Drop your dataset here or click to browse</div>
+          <div class="drop-hint">Your data is processed and never stored</div>
+          <div class="fmt-pills">
+            <span class="fmt-pill">.csv</span>
+            <span class="fmt-pill">.json</span>
+          </div>
+        </div>
+        <input type="file" id="file-input" accept=".csv,.json" style="display:none" onchange="handleFile(this)">
+        <div class="file-info" id="file-info"></div>
+      </div>
+    </div>
+
+    <div class="config-card">
+      <div class="upload-card-head">
+        <span class="upload-card-title">Configuration</span>
+      </div>
+      <div class="config-body">
+        <div class="cfg-row">
+          <label class="cfg-label">Domain</label>
+          <select class="cfg-select" id="cfg-domain">
+            <option value="general">General</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="finance">Finance</option>
+            <option value="retail">Retail</option>
+            <option value="ecommerce">E-commerce</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="analytics">Analytics</option>
+            <option value="ml">ML / AI</option>
+          </select>
+        </div>
+        <div class="cfg-row">
+          <label class="cfg-label">Mode</label>
+          <select class="cfg-select" id="cfg-mode">
+            <option value="inference">Inference (auto)</option>
+          </select>
+        </div>
+        <button class="analyze-btn" id="analyze-btn" disabled onclick="runAnalysis()">
+          <div class="spinner" id="spinner"></div>
+          <span id="btn-txt">Select a dataset first</span>
+        </button>
+        <div class="backend-url-row">
+          <div class="backend-note">BACKEND URL</div>
+          <input class="cfg-input" id="backend-url" type="text"
+            value="https://YOUR_USERNAME.pythonanywhere.com"
+            placeholder="https://YOUR_USERNAME.pythonanywhere.com">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Error/Info banner ─────────────────────────────────────────────────── -->
+  <div class="banner" id="banner"></div>
+
+  <!-- ── Results dashboard ────────────────────────────────────────────────── -->
+  <div class="dashboard" id="dashboard">
+
+    <div class="dash-head">
+      <div>
+        <div class="dash-title" id="dash-title">Analysis Results</div>
+        <div class="dash-meta" id="dash-meta"></div>
+      </div>
+      <div class="dash-actions">
+        <button class="btn btn-primary" onclick="exportResults()">↓ Full Results JSON</button>
+        <button class="btn btn-ghost" onclick="exportSchema()">↓ Schema YAML</button>
+        <button class="btn btn-gold" onclick="window.location='/#contact'">Request PDF Report</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi"><span class="kpi-v" id="kpi-rows" style="color:var(--white)">—</span><span class="kpi-l">Total Rows</span></div>
+      <div class="kpi"><span class="kpi-v" id="kpi-cols" style="color:var(--white)">—</span><span class="kpi-l">Columns</span></div>
+      <div class="kpi"><span class="kpi-v" id="kpi-avg" style="color:var(--acc)">—</span><span class="kpi-l">Avg Score</span></div>
+      <div class="kpi"><span class="kpi-v" id="kpi-prime" style="color:var(--green)">—</span><span class="kpi-l">Prime Rows</span></div>
+      <div class="kpi"><span class="kpi-v" id="kpi-fail" style="color:var(--red)">—</span><span class="kpi-l">Failures</span></div>
+      <div class="kpi"><span class="kpi-v" id="kpi-risk" style="color:var(--amber)">—</span><span class="kpi-l">Risk Level</span></div>
+    </div>
+
+    <!-- Result tabs -->
+    <div class="rtabs">
+      <button class="rtab active" onclick="switchRTab('columns',this)">Column Schema</button>
+      <button class="rtab" onclick="switchRTab('best',this)">Best Rows</button>
+      <button class="rtab" onclick="switchRTab('worst',this)">Worst Rows</button>
+      <button class="rtab" onclick="switchRTab('caps',this)">Cap Events</button>
+      <button class="rtab" onclick="switchRTab('amd',this)">AMD Diagnostics</button>
+    </div>
+
+    <!-- Column schema panel -->
+    <div class="rpanel active tcard" id="rpanel-columns">
+      <table class="results-table" id="col-table">
+        <thead><tr>
+          <th>Column</th><th>Tier</th><th>Role</th>
+          <th>Importance</th><th>SIF Weight</th>
+          <th>Governance</th><th>AMD Status</th><th>QFIM</th>
+        </tr></thead>
+        <tbody id="col-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Best rows panel -->
+    <div class="rpanel tcard" id="rpanel-best">
+      <table class="results-table">
+        <thead><tr><th>Row</th><th>Score</th><th>Status</th><th>Governance</th><th>Top Contributor</th></tr></thead>
+        <tbody id="best-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Worst rows panel -->
+    <div class="rpanel tcard" id="rpanel-worst">
+      <table class="results-table">
+        <thead><tr><th>Row</th><th>Score</th><th>Status</th><th>Governance</th><th>Top Contributor</th></tr></thead>
+        <tbody id="worst-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Cap events panel -->
+    <div class="rpanel" id="rpanel-caps">
+      <div id="cap-list"></div>
+    </div>
+
+    <!-- AMD diagnostics panel -->
+    <div class="rpanel" id="rpanel-amd">
+      <div id="amd-list"></div>
+    </div>
+
+  </div><!-- end dashboard -->
+
+</div>
+</main>
+
+<footer class="footer">
+  <a href="/" class="wordmark" style="font-size:13px">ZUL<em>FR</em></a>
+  <span class="footer-note">DAIS-10 v1.1.8 · Dr. Usman Zafar Ph.D · info@zulfr.com</span>
+  <span class="footer-note">© 2026 · A Measurement Institute</span>
+</footer>
+
+<script>
+/* ── State ────────────────────────────────────────────────────────────────── */
+var selectedFile = null;
+var lastResults  = null;
+
+/* ── File handling ────────────────────────────────────────────────────────── */
+function handleFile(input) {
+  if (!input.files.length) return;
+  selectedFile = input.files[0];
+  var fi = document.getElementById('file-info');
+  fi.style.display = 'block';
+  fi.textContent = selectedFile.name + ' · ' + (selectedFile.size / 1024).toFixed(1) + ' KB';
+  document.getElementById('analyze-btn').disabled = false;
+  document.getElementById('btn-txt').textContent = 'Run DAIS-10 Analysis';
+  hideBanner();
+}
+
+var dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover',  function(e){ e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', function(){  dz.classList.remove('drag'); });
+dz.addEventListener('drop', function(e){
+  e.preventDefault(); dz.classList.remove('drag');
+  var f = e.dataTransfer.files[0];
+  if (f) { document.getElementById('file-input').files = e.dataTransfer.files; handleFile(document.getElementById('file-input')); }
+});
+
+/* ── Run analysis ─────────────────────────────────────────────────────────── */
+function runAnalysis() {
+  if (!selectedFile) return;
+
+  var backendUrl = document.getElementById('backend-url').value.trim().replace(/\/$/, '');
+  if (!backendUrl || backendUrl.includes('YOUR_USERNAME')) {
+    showBanner('error', 'Please set your PythonAnywhere backend URL above before running analysis.');
+    return;
+  }
+
+  var btn = document.getElementById('analyze-btn');
+  var sp  = document.getElementById('spinner');
+  var txt = document.getElementById('btn-txt');
+  btn.disabled = true;
+  sp.style.display = 'block';
+  txt.textContent = 'Running 8 engines…';
+  hideBanner();
+  document.getElementById('dashboard').style.display = 'none';
+
+  var form = new FormData();
+  form.append('file',   selectedFile);
+  form.append('domain', document.getElementById('cfg-domain').value);
+  form.append('mode',   document.getElementById('cfg-mode').value);
+
+  fetch(backendUrl + '/analyze', { method: 'POST', body: form })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      sp.style.display = 'none';
+      btn.disabled = false;
+      txt.textContent = 'Run DAIS-10 Analysis';
+      if (data.error) {
+        showBanner('error', 'Engine error: ' + data.error);
+      } else {
+        lastResults = data;
+        renderDashboard(data);
+      }
+    })
+    .catch(function(err) {
+      sp.style.display = 'none';
+      btn.disabled = false;
+      txt.textContent = 'Run DAIS-10 Analysis';
+      showBanner('error', 'Cannot reach backend. Check the URL and make sure PythonAnywhere is running. Error: ' + err.message);
+    });
+}
+
+/* ── Render dashboard ─────────────────────────────────────────────────────── */
+function renderDashboard(d) {
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('dash-title').textContent  = d.filename + ' · DAIS-10 v1.1.8';
+  document.getElementById('dash-meta').textContent   = d.domain.toUpperCase() + ' · ' + new Date().toLocaleString();
+
+  // KPIs
+  document.getElementById('kpi-rows').textContent  = d.total_rows.toLocaleString();
+  document.getElementById('kpi-cols').textContent  = d.total_columns;
+  document.getElementById('kpi-avg').textContent   = d.average_score.toFixed(1);
+  document.getElementById('kpi-prime').textContent = d.prime_count.toLocaleString();
+  document.getElementById('kpi-fail').textContent  = d.fail_count.toLocaleString();
+  document.getElementById('kpi-risk').textContent  = d.risk_level || '—';
+
+  // Column table
+  var tb = document.getElementById('col-tbody');
+  tb.innerHTML = '';
+  Object.entries(d.columns).forEach(function(e) {
+    var col = e[0], c = e[1];
+    var tierClass = {'E':'tier-e','EC':'tier-ec','C':'tier-c','CN':'tier-n','N':'tier-n'}[c.tier] || 'tier-n';
+    var sc = c.importance;
+    var barColor = sc >= 80 ? 'var(--green)' : sc >= 60 ? 'var(--acc)' : sc >= 40 ? 'var(--amber)' : 'var(--red)';
+    var amdSt = c.amd ? c.amd.overall_status : '—';
+    var amdCl = amdSt === 'VALID' ? 'color:var(--green)' : amdSt === 'NEEDS_REVIEW' ? 'color:var(--amber)' : 'color:var(--red)';
+    var qfim  = c.qfim ? c.qfim.category : '—';
+    tb.innerHTML += '<tr>' +
+      '<td style="color:var(--white);font-family:var(--mono);font-size:10px">' + col + '</td>' +
+      '<td><span class="' + tierClass + '">' + c.tier + '</span></td>' +
+      '<td style="font-family:var(--mono);font-size:9px;color:var(--muted)">' + (c.role || '—') + '</td>' +
+      '<td><span style="font-family:var(--mono);font-size:10px;color:' + barColor + '">' + sc.toFixed(1) + '</span>' +
+        '<div class="sbar"><div class="sfill" style="width:' + sc + '%;background:' + barColor + '"></div></div></td>' +
+      '<td style="font-family:var(--mono);font-size:9px;color:var(--faint)">' + (c.sif_weight || '—') + '</td>' +
+      '<td style="font-family:var(--mono);font-size:9px;color:var(--muted)">' + (c.governance || '—') + '</td>' +
+      '<td style="font-family:var(--mono);font-size:9px;' + amdCl + '">' + amdSt + '</td>' +
+      '<td style="font-size:10px;color:var(--muted)">' + qfim + '</td>' +
+    '</tr>';
+  });
+
+  // Best / worst rows
+  renderRowTable('best-tbody',  d.best_rows  || []);
+  renderRowTable('worst-tbody', d.worst_rows || []);
+
+  // Cap events
+  var cl = document.getElementById('cap-list');
+  cl.innerHTML = '';
+  if (!d.cap_events || !d.cap_events.length) {
+    cl.innerHTML = '<div style="padding:20px;font-family:var(--mono);font-size:11px;color:var(--green)">✓ No cap events — all E-tier fields present</div>';
+  } else {
+    d.cap_events.forEach(function(c) {
+      cl.innerHTML += '<div class="cap-item">' +
+        '<div class="cap-code">Row ' + c.row + ' · ' + c.column + ' · ' + (c.cap_reason || '') + '</div>' +
+        '<div class="cap-ref">' + (c.legal_ref || '') + (c.framework ? ' · ' + c.framework : '') + '</div>' +
+        '<div class="cap-rem">' + (c.remediation || 'Remediate missing E-tier field before pipeline entry') + '</div>' +
+      '</div>';
+    });
+  }
+
+  // AMD
+  var al = document.getElementById('amd-list');
+  al.innerHTML = '';
+  Object.entries(d.columns).forEach(function(e) {
+    var col = e[0], c = e[1];
+    if (!c.amd) return;
+    var a = c.amd;
+    al.innerHTML += '<div class="amd-item">' +
+      '<div class="amd-head">' +
+        '<span class="amd-attr">' + col + '</span>' +
+        '<div class="amd-stats">' +
+          '<span class="amd-stat amd-pass">' + a.passed + ' PASS</span>' +
+          '<span class="amd-stat amd-warn">' + a.warnings + ' WARN</span>' +
+          '<span class="amd-stat amd-fail">' + a.failed + ' FAIL</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="amd-overall">' + a.tests_run + ' tests · ' + a.overall_status + '</div>' +
+    '</div>';
+  });
+
+  document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderRowTable(tbodyId, rows) {
+  var tb = document.getElementById(tbodyId);
+  tb.innerHTML = '';
+  rows.forEach(function(r) {
+    var sc  = r.row_score || 0;
+    var stl = r.status ? 'status-' + r.status.toLowerCase() : '';
+    var bar = sc >= 80 ? 'var(--green)' : sc >= 60 ? 'var(--acc)' : sc >= 40 ? 'var(--amber)' : 'var(--red)';
+    var top = (r.top_contributors && r.top_contributors[0]) ? r.top_contributors[0].column : '—';
+    tb.innerHTML += '<tr>' +
+      '<td style="font-family:var(--mono);font-size:10px;color:var(--faint)">' + r.row_id + '</td>' +
+      '<td><span style="font-family:var(--mono);font-size:11px;color:' + bar + '">' + sc.toFixed(1) + '</span>' +
+        '<div class="sbar"><div class="sfill" style="width:' + sc + '%;background:' + bar + '"></div></div></td>' +
+      '<td><span class="' + stl + '" style="font-family:var(--mono);font-size:9px">' + (r.status || '—') + '</span></td>' +
+      '<td style="font-family:var(--mono);font-size:9px;color:var(--muted)">' + (r.governance || '—') + '</td>' +
+      '<td style="font-family:var(--mono);font-size:9px;color:var(--faint)">' + top + '</td>' +
+    '</tr>';
+  });
+}
+
+/* ── Tab switching ────────────────────────────────────────────────────────── */
+function switchRTab(id, btn) {
+  document.querySelectorAll('.rtab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.rpanel').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('rpanel-' + id).classList.add('active');
+}
+
+/* ── Exports ──────────────────────────────────────────────────────────────── */
+function exportResults() {
+  if (!lastResults) return;
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(lastResults, null, 2)], { type: 'application/json' }));
+  a.download = 'dais10_results_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+}
+
+function exportSchema() {
+  if (!lastResults) return;
+  var y = '# DAIS-10 v1.1.8 Schema Export\n# Generated: ' + new Date().toISOString() + '\n# Domain: ' + lastResults.domain + '\ncolumns:\n';
+  Object.entries(lastResults.columns).forEach(function(e) {
+    var col = e[0], c = e[1];
+    y += '  ' + col + ':\n    tier: ' + c.tier + '\n    role: ' + (c.role || 'UNKNOWN') + '\n    importance: ' + c.importance.toFixed(2) + '\n    governance: ' + (c.governance || 'INFO') + '\n';
+  });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([y], { type: 'text/yaml' }));
+  a.download = 'dais10_schema_' + new Date().toISOString().split('T')[0] + '.yaml';
+  a.click();
+}
+
+/* ── Banner ───────────────────────────────────────────────────────────────── */
+function showBanner(type, msg) {
+  var b = document.getElementById('banner');
+  b.className = 'banner ' + type;
+  b.textContent = msg;
+  b.style.display = 'block';
+}
+function hideBanner() {
+  document.getElementById('banner').style.display = 'none';
+}
+</script>
+</body>
+</html>
