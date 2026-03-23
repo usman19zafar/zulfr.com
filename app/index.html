@@ -6,7 +6,7 @@
 <title>DAIS-10 · Live Analysis · ZULFR</title>
 <meta name="description" content="DAIS-10 v3.0.0 — Configure your dataset schema, select compliance standards, and run full governance analysis.">
 <meta name="theme-color" content="#112040">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&amp;family=Syne:wght@600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#112040;--bg-raised:#162848;--bg-float:#1A2F52;--bg-hover:#1f3660;
@@ -35,16 +35,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(62,207,142,.4)}50%{opacity:.6;box-shadow:0 0 0 4px rgba(62,207,142,0)}}
 
 /* Steps indicator */
-.steps-bar{background:var(--bg-raised);border-bottom:1px solid var(--border);padding:0 32px}
-.steps-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:0;height:44px}
+.steps-bar{background:var(--bg-raised);border-bottom:2px solid var(--border-md);padding:0 32px;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.steps-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:0;height:52px}
 .step-item{display:flex;align-items:center;gap:10px;padding:0 20px 0 0;cursor:pointer;opacity:.4;transition:opacity .2s}
 .step-item.active{opacity:1}
 .step-item.done{opacity:.7}
 .step-num{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0}
 .step-item.active .step-num{background:var(--acc);border-color:var(--acc);color:#112040}
 .step-item.done .step-num{background:var(--green);border-color:var(--green);color:#112040}
-.step-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.step-item.active .step-label{color:var(--white)}
+.step-item.info .step-num{background:rgba(77,170,223,.15);border-color:var(--acc-mid);color:var(--acc)}
+.step-item.info .step-label{color:var(--acc)}
+.step-item.info{opacity:1}
+.step-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.step-item.active::after{content:"";display:block;position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--acc)}.step-item{position:relative}
+.step-item.active .step-label{color:var(--white)}.step-item.info .step-label{color:var(--acc)}
 .step-div{width:32px;height:1px;background:var(--border);flex-shrink:0}
 
 /* Layout */
@@ -241,6 +244,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
     <div class="step-item" id="step-ind-2" onclick="goStep(2)">
       <div class="step-num">2</div>
       <div class="step-label">Run &amp; Results</div>
+    </div>
+    <div class="step-div"></div>
+    <div class="step-item" id="step-ind-3" onclick="goStep(3)">
+      <div class="step-num">?</div>
+      <div class="step-label">How to Use</div>
+    </div>
+    <div class="step-div"></div>
+    <div class="step-item" id="step-ind-4" onclick="goStep(4)">
+      <div class="step-num">$</div>
+      <div class="step-label">Pricing</div>
     </div>
   </div>
 </nav>
@@ -486,6 +499,242 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
       <div class="rpanel tcard" id="rpanel-missingness"><div id="miss-content" style="padding:16px"></div></div>
     </div>
   </div><!-- end step2 -->
+
+  <!-- ══════════════════ STEP 3: HOW TO USE ══════════════════ -->
+  <div id="step3" style="display:none">
+    <div class="page-head">
+      <div class="page-eyebrow">03 · GUIDE</div>
+      <h1 class="page-title">How to use DAIS<em>-10</em></h1>
+      <p class="page-sub">Complete walkthrough from upload to results. Follow these steps for the most accurate governance analysis.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:800px">
+
+      <div class="card">
+        <div class="card-head"><span class="card-title" style="color:var(--green)">Step 1 — Prepare your data file</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:12px">Start with a clean CSV or JSON file. DAIS-10 works best when column names are descriptive — <code style="font-family:var(--mono);font-size:11px;color:var(--acc);background:var(--bg-float);padding:1px 5px;border-radius:3px">patient_id</code> rather than <code style="font-family:var(--mono);font-size:11px;color:var(--acc);background:var(--bg-float);padding:1px 5px;border-radius:3px">col1</code>.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:var(--bg-float);border-radius:6px;padding:12px">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--green);letter-spacing:1px;margin-bottom:8px">GOOD COLUMN NAMES</div>
+              <div style="font-family:var(--mono);font-size:10px;color:var(--text);line-height:2">patient_id<br>date_of_birth<br>diagnosis_code<br>admission_date<br>treating_physician</div>
+            </div>
+            <div style="background:var(--bg-float);border-radius:6px;padding:12px">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:1px;margin-bottom:8px">AVOID</div>
+              <div style="font-family:var(--mono);font-size:10px;color:var(--muted);line-height:2">col1, col2, col3<br>field_a, field_b<br>x, y, z<br>data1, data2<br>untitled</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)">Free tier: up to 999 rows, 19 columns, 1MB · Pro: up to 49,999 rows, 199 columns, 10MB</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title" style="color:var(--acc)">Step 2 — Upload and select your domain</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:10px">Drop your file onto the upload zone. Select the domain that matches your dataset — this is the single most important configuration decision. Domain determines which fields DAIS-10 treats as Essential.</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <div style="text-align:center;padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:10px;color:var(--white);margin-bottom:3px">Healthcare</div><div style="font-size:10px;color:var(--faint)">HIPAA standard</div></div>
+            <div style="text-align:center;padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:10px;color:var(--white);margin-bottom:3px">Finance</div><div style="font-size:10px;color:var(--faint)">SOX standard</div></div>
+            <div style="text-align:center;padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:10px;color:var(--white);margin-bottom:3px">E-commerce</div><div style="font-size:10px;color:var(--faint)">PCI-DSS standard</div></div>
+            <div style="text-align:center;padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:10px;color:var(--white);margin-bottom:3px">ML / AI</div><div style="font-size:10px;color:var(--faint)">EU AI Act standard</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title" style="color:var(--acc)">Step 3 — Define your column schema</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:12px">After upload, every detected column appears in a table with DAIS-10 inferred tier and importance — shown greyed until you confirm them. Review each row and adjust if the inference is wrong for your dataset.</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:10px;background:var(--bg-float);border-radius:6px">
+              <span style="font-family:var(--mono);font-size:10px;color:var(--red);background:rgba(255,100,100,.1);padding:2px 6px;border-radius:3px;flex-shrink:0">E</span>
+              <div><div style="font-size:12px;color:var(--white);font-weight:500;margin-bottom:2px">Essential — importance ~95</div><div style="font-size:11px;color:var(--muted)">Missing value collapses row score. Use for primary identifiers and legally required fields.</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:10px;background:var(--bg-float);border-radius:6px">
+              <span style="font-family:var(--mono);font-size:10px;color:var(--amber);background:rgba(245,166,35,.1);padding:2px 6px;border-radius:3px;flex-shrink:0">EC</span>
+              <div><div style="font-size:12px;color:var(--white);font-weight:500;margin-bottom:2px">Semi-Essential — importance ~80</div><div style="font-size:11px;color:var(--muted)">Important but conditional. Missing value significantly reduces row score.</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:10px;background:var(--bg-float);border-radius:6px">
+              <span style="font-family:var(--mono);font-size:10px;color:var(--acc);background:var(--acc-soft);padding:2px 6px;border-radius:3px;flex-shrink:0">C</span>
+              <div><div style="font-size:12px;color:var(--white);font-weight:500;margin-bottom:2px">Contextual — importance ~58</div><div style="font-size:11px;color:var(--muted)">Adds context. Missing reduces score moderately.</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:10px;background:var(--bg-float);border-radius:6px">
+              <span style="font-family:var(--mono);font-size:10px;color:var(--faint);background:var(--bg-hover);padding:2px 6px;border-radius:3px;flex-shrink:0">N</span>
+              <div><div style="font-size:12px;color:var(--white);font-weight:500;margin-bottom:2px">Enrichment — importance ~18</div><div style="font-size:11px;color:var(--muted)">Metadata or audit fields. Missing has minimal impact on score.</div></div>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(77,170,223,.05);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--muted)">
+            Use <strong style="color:var(--white)">Confirm All</strong> to accept all inferred values at once, or confirm each row individually. At least one confirmed column is required to proceed.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title" style="color:var(--acc)">Step 4 — Select compliance standards and retention</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:10px">Tick the compliance standards you want to evaluate against. Your domain pre-selects the most likely standard. Selecting a standard with a fixed retention period auto-fills the years field.</div>
+          <div style="background:var(--bg-float);border-radius:6px;padding:12px;font-size:11px;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--amber)">GDPR</strong> — leave retention years blank or enter your organisation's purpose-specific period.<br>
+            <strong style="color:var(--green)">HIPAA</strong> — auto-fills 6 years (§164.530(j) minimum).<br>
+            <strong style="color:var(--amber)">SOX</strong> — auto-fills 7 years (Section 802).<br>
+            <strong style="color:var(--red)">PCI-DSS</strong> — auto-fills 1 year online.<br>
+            <strong style="color:var(--purple)">EU AI Act</strong> — auto-fills 10 years (Art.12).<br>
+            <strong style="color:var(--green)">IEC 61508</strong> — enter your system's operational life plus 10 years.
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)">Set the <strong style="color:var(--white)">timestamp column</strong> if your dataset has a creation date — this enables temporal decay scoring so older rows receive lower freshness scores.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title" style="color:var(--acc)">Step 5 — Run and read your results</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;color:var(--text);line-height:1.8;margin-bottom:12px">Click <strong style="color:var(--white)">Proceed to Analysis</strong> then <strong style="color:var(--white)">Run DAIS-10 Analysis</strong>. Results appear in 8 tabs:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--acc);letter-spacing:1px;margin-bottom:4px">COLUMN SCHEMA</div><div style="font-size:11px;color:var(--muted)">Tier, importance, AMD pass rate, VCL validity score per column</div></div>
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--acc);letter-spacing:1px;margin-bottom:4px">BEST / WORST ROWS</div><div style="font-size:11px;color:var(--muted)">Top and bottom rows by governance score with top contributor</div></div>
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:1px;margin-bottom:4px">CAP EVENTS</div><div style="font-size:11px;color:var(--muted)">Rows where one field is bottlenecking the score — missing, invalid, or expired</div></div>
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--acc);letter-spacing:1px;margin-bottom:4px">AMD DIAGNOSTICS</div><div style="font-size:11px;color:var(--muted)">22 automated tests per column — pass, warn, fail breakdown</div></div>
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--acc);letter-spacing:1px;margin-bottom:4px">CONFORMANCE</div><div style="font-size:11px;color:var(--muted)">Gap analysis against selected standards — present vs missing mandatory fields</div></div>
+            <div style="padding:10px;background:var(--bg-float);border-radius:6px"><div style="font-family:var(--mono);font-size:9px;color:var(--amber);letter-spacing:1px;margin-bottom:4px">CCM</div><div style="font-size:11px;color:var(--muted)">Cross-column contradictions — date logic, age/DOB, negative amounts</div></div>
+          </div>
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(62,207,142,.05);border:1px solid rgba(62,207,142,.15);border-radius:6px;font-size:11px;color:var(--muted)">
+            Download results as <strong style="color:var(--white)">Full JSON</strong>, <strong style="color:var(--white)">Schema YAML</strong>, or <strong style="color:var(--white)">Row Scores CSV</strong> (Pro tier). Request a <strong style="color:var(--gold)">certified PDF report</strong> via email.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="height:24px"></div>
+    <button class="proceed-btn" onclick="goStep(1)" style="width:auto;padding:10px 28px">← Back to Dataset Configuration</button>
+  </div><!-- end step3 -->
+
+  <!-- ══════════════════ STEP 4: PRICING ══════════════════ -->
+  <div id="step4" style="display:none">
+    <div class="page-head">
+      <div class="page-eyebrow">04 · PRICING</div>
+      <h1 class="page-title">Choose your DAIS<em>-10</em> plan</h1>
+      <p class="page-sub">All tiers process data in memory. Zero retention at every level. GDPR/PIPEDA/HIPAA zero custodianship.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px">
+
+      <!-- Free -->
+      <div class="card" style="border-color:rgba(62,207,142,.2)">
+        <div class="card-head" style="background:rgba(62,207,142,.05);border-bottom-color:rgba(62,207,142,.15)">
+          <span class="card-title" style="color:var(--green)">Free</span>
+          <span style="font-family:var(--head);font-size:18px;font-weight:700;color:var(--green)">$0</span>
+        </div>
+        <div class="card-body">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:14px">No API key needed. Email required for quota.</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Limits</div>
+            <div style="font-size:12px;color:var(--text)">↑ Up to 999 rows per analysis</div>
+            <div style="font-size:12px;color:var(--text)">↑ Up to 19 columns</div>
+            <div style="font-size:12px;color:var(--text)">↑ 1 MB file size</div>
+            <div style="font-size:12px;color:var(--text)">↑ Inference mode only</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Included</div>
+            <div style="font-size:12px;color:var(--green)">✓ 8-engine quality score</div>
+            <div style="font-size:12px;color:var(--green)">✓ Column tier and importance</div>
+            <div style="font-size:12px;color:var(--green)">✓ AMD diagnostics (counts)</div>
+            <div style="font-size:12px;color:var(--green)">✓ Cap events (top 5)</div>
+            <div style="font-size:12px;color:var(--green)">✓ CCM contradiction score</div>
+            <div style="font-size:12px;color:var(--green)">✓ 1 compliance standard</div>
+            <div style="font-size:12px;color:var(--green)">✓ Missingness profiling</div>
+            <div style="font-size:12px;color:var(--green)">✓ Legal retention flag</div>
+            <div style="font-size:12px;color:var(--green)">✓ Executive schema input</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Not included</div>
+            <div style="font-size:11px;color:var(--faint)">✗ VCL-10 value conformance</div>
+            <div style="font-size:11px;color:var(--faint)">✗ All 6 standards + citations</div>
+            <div style="font-size:11px;color:var(--faint)">✗ Full AMD findings detail</div>
+            <div style="font-size:11px;color:var(--faint)">✗ CCM contradiction events</div>
+            <div style="font-size:11px;color:var(--faint)">✗ Row scores CSV download</div>
+            <div style="font-size:11px;color:var(--faint)">✗ Session ID / certified report</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro -->
+      <div class="card" style="border-color:var(--acc-mid)">
+        <div class="card-head" style="background:var(--acc-soft);border-bottom-color:var(--acc-mid)">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="card-title" style="color:var(--acc)">Pro</span>
+              <span style="background:var(--acc);color:#112040;font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.1em">MOST POPULAR</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:6px">
+              <span style="font-family:var(--head);font-size:22px;font-weight:700;color:var(--acc)">$399</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">/ 50k row block</span>
+            </div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint)">$0.007 per row · no subscription</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:14px">API key issued on purchase. Credits never expire. Contact info@zulfr.com.</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Limits</div>
+            <div style="font-size:12px;color:var(--text)">↑ Up to 49,999 rows</div>
+            <div style="font-size:12px;color:var(--text)">↑ Up to 199 columns</div>
+            <div style="font-size:12px;color:var(--text)">↑ 10 MB file size</div>
+            <div style="font-size:12px;color:var(--text)">↑ All modes (inference, sovereign, hybrid)</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Everything in Free, plus</div>
+            <div style="font-size:12px;color:var(--acc)">✓ VCL-10 — value conformance scoring</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Score: Structure × Freshness × Validity</div>
+            <div style="font-size:12px;color:var(--acc)">✓ All 6 compliance standards</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Regulatory citations per gap</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Implementation recommendations</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Full AMD 22-test detail</div>
+            <div style="font-size:12px;color:var(--acc)">✓ CCM contradiction events (row IDs)</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Row scores CSV — all rows</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Domain shadow scoring</div>
+            <div style="font-size:12px;color:var(--acc)">✓ Session ID for certified reports</div>
+            <div style="font-size:12px;color:var(--acc)">✓ SIF weights + QFIM governance</div>
+          </div>
+          <a href="mailto:info@zulfr.com?subject=DAIS-10 Pro Access" class="analyze-btn" style="text-decoration:none;margin-top:4px">Contact for Pro Access</a>
+        </div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="card" style="border-color:rgba(240,192,64,.2)">
+        <div class="card-head" style="background:rgba(240,192,64,.04);border-bottom-color:rgba(240,192,64,.15)">
+          <span class="card-title" style="color:var(--gold)">Enterprise</span>
+          <span style="font-family:var(--head);font-size:18px;font-weight:700;color:var(--gold)">Custom</span>
+        </div>
+        <div class="card-body">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:14px">Dedicated support. Custom limits. White-label reports.</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Limits</div>
+            <div style="font-size:12px;color:var(--text)">↑ Custom row and column limits</div>
+            <div style="font-size:12px;color:var(--text)">↑ Up to 500 MB file size</div>
+            <div style="font-size:12px;color:var(--text)">↑ All modes</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Everything in Pro, plus</div>
+            <div style="font-size:12px;color:var(--gold)">✓ Full audit trail (KAST-10 ready)</div>
+            <div style="font-size:12px;color:var(--gold)">✓ White-label report branding</div>
+            <div style="font-size:12px;color:var(--gold)">✓ Client reference tracking</div>
+            <div style="font-size:12px;color:var(--gold)">✓ Custom retention rule libraries</div>
+            <div style="font-size:12px;color:var(--gold)">✓ Certified PDF report</div>
+            <div style="font-size:12px;color:var(--gold)">✓ Dedicated account support</div>
+            <div style="font-size:12px;color:var(--gold)">✓ SLA guarantee</div>
+          </div>
+          <a href="mailto:info@zulfr.com?subject=DAIS-10 Enterprise" class="analyze-btn" style="text-decoration:none;margin-top:4px;background:var(--bg-hover);color:var(--gold)">Contact for Enterprise</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;padding:20px;font-size:12px;color:var(--faint);font-family:var(--mono)">
+      All plans · Zero data retention · GDPR/PIPEDA/HIPAA zero custodianship · api.zulfr.com/dais10/v1/analyse
+    </div>
+
+    <button class="proceed-btn" onclick="goStep(1)" style="width:auto;padding:10px 28px">← Start Analysis</button>
+  </div><!-- end step4 -->
 
 </div>
 </main>
@@ -769,8 +1018,12 @@ function updateStep1Summary() {
 function goStep(n) {
   document.getElementById('step1').style.display = n===1 ? 'block' : 'none';
   document.getElementById('step2').style.display = n===2 ? 'block' : 'none';
-  document.getElementById('step-ind-1').className = n===1 ? 'step-item active' : 'step-item done';
+  document.getElementById('step3').style.display = n===3 ? 'block' : 'none';
+  document.getElementById('step4').style.display = n===4 ? 'block' : 'none';
+  document.getElementById('step-ind-1').className = n===1 ? 'step-item active' : (n>1&&n<3 ? 'step-item done' : 'step-item');
   document.getElementById('step-ind-2').className = n===2 ? 'step-item active' : 'step-item';
+  document.getElementById('step-ind-3').className = n===3 ? 'step-item info' : 'step-item';
+  document.getElementById('step-ind-4').className = n===4 ? 'step-item info' : 'step-item';
   if (n===2) buildAnalysisSummary();
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -1045,7 +1298,7 @@ function renderDashboard(d) {
     rowCsvB64=d.row_scores_csv.data;
     document.getElementById('csv-btn').style.display='inline-flex';
   }
-  if(d.upgrade_teaser){
+  if(d.upgrade_teaser && (d.upgrade_teaser.locked_features||[]).length){
     var ut=d.upgrade_teaser;
     var tl=document.getElementById('teaser-list'); tl.innerHTML='';
     (ut.locked_features||[]).forEach(function(f){ tl.innerHTML+='<li>'+f+'</li>'; });
