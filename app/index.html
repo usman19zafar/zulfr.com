@@ -1411,57 +1411,6 @@ dz.addEventListener('drop',function(e){
   var f=e.dataTransfer.files[0];
   if(f){document.getElementById('file-input').files=e.dataTransfer.files;handleFile(document.getElementById('file-input'));}
 });
-// 🔥 DAIS‑10 backend call — safe to paste here
-async function runAnalysis(text) {
-  try {
-    const res = await fetch("https://api.zulfr.com/dais10/v1/analyse", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text })
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      return { error: err };
-    }
-
-    return await res.json();
-
-  } catch (e) {
-    return { error: "Network error — backend unreachable" };
-  }
-}
-// Connect the Run button → backend → output
-async function onRunClick() {
-  const inputEl  = document.getElementById("input");
-  const outputEl = document.getElementById("output");
-
-  if (!inputEl) {
-    console.error("❌ No #input element found");
-    return;
-  }
-  if (!outputEl) {
-    console.error("❌ No #output element found");
-    return;
-  }
-
-  const text = inputEl.value.trim();
-  if (!text) {
-    outputEl.innerText = "Please enter text or upload a file.";
-    return;
-  }
-
-  outputEl.innerText = "Processing…";
-
-  const result = await runAnalysis(text);
-
-  if (result.error) {
-    outputEl.innerText = "Error: " + result.error;
-  } else {
-    outputEl.innerText = JSON.stringify(result, null, 2);
-  }
-}
-
 </script>
 </body>
 </html>
