@@ -288,7 +288,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
             </div>
           </div>
           <input type="file" id="file-input" accept=".csv,.json" style="display:none" onchange="handleFile(this)">
-          <div class="file-info" id="file-info"></div>
+          <div class="file-info" id="file-info" style="display:flex;align-items:center;justify-content:space-between">
+            <span id="file-info-name"></span>
+            <button onclick="resetFile()" title="Remove file and start over" style="background:none;border:none;color:var(--red);cursor:pointer;font-family:var(--mono);font-size:11px;padding:0 4px;opacity:.7;transition:opacity .15s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">✕ remove</button>
+          </div>
         </div>
       </div>
 
@@ -811,11 +814,48 @@ function handleFile(input) {
   if (!input.files.length) return;
   selectedFile = input.files[0];
   var fi = document.getElementById('file-info');
-  fi.style.display = 'block';
-  fi.textContent = selectedFile.name + ' · ' + (selectedFile.size/1024).toFixed(1) + ' KB';
+  fi.style.display = 'flex';
+  document.getElementById('file-info-name').textContent = selectedFile.name + ' · ' + (selectedFile.size/1024).toFixed(1) + ' KB';
   var reader = new FileReader();
   reader.onload = function(e){ parseFile(e.target.result, selectedFile.name); };
   reader.readAsText(selectedFile);
+}
+
+function resetFile() {
+  selectedFile = null;
+  parsedRows = [];
+  detectedCols = [];
+  confirmedCols = {};
+  currentTimestamp = null;
+  document.getElementById('file-input').value = '';
+  var fi = document.getElementById('file-info');
+  fi.style.display = 'none';
+  document.getElementById('file-info-name').textContent = '';
+  document.getElementById('standards-card').style.display = 'none';
+  document.getElementById('retention-card').style.display = 'none';
+  document.getElementById('col-config-card').style.display = 'none';
+  document.getElementById('col-config-tbody').innerHTML = '';
+  document.getElementById('cfg-timestamp').innerHTML = '<option value="">None — no temporal decay</option>';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('upgrade-teaser').style.display = 'none';
+  hideBanner();
+  updateStep1Summary();
+}
+
+function checkReady() {
+  var email = document.getElementById('cfg-email').value.trim();
+  var btn   = document.getElementById('analyze-btn');
+  var txt   = document.getElementById('btn-txt');
+  if (selectedFile && email && email.includes('@')) {
+    btn.disabled = false;
+    txt.textContent = 'Run DAIS-10 Analysis';
+  } else if (!selectedFile) {
+    btn.disabled = true;
+    txt.textContent = 'Select a dataset first';
+  } else {
+    btn.disabled = true;
+    txt.textContent = 'Enter your email to continue';
+  }
 }
 
 function parseFile(text, name) {
