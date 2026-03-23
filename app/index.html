@@ -1431,6 +1431,37 @@ async function runAnalysis(text) {
     return { error: "Network error — backend unreachable" };
   }
 }
+// Connect the Run button → backend → output
+async function onRunClick() {
+  const inputEl  = document.getElementById("input");
+  const outputEl = document.getElementById("output");
+
+  if (!inputEl) {
+    console.error("❌ No #input element found");
+    return;
+  }
+  if (!outputEl) {
+    console.error("❌ No #output element found");
+    return;
+  }
+
+  const text = inputEl.value.trim();
+  if (!text) {
+    outputEl.innerText = "Please enter text or upload a file.";
+    return;
+  }
+
+  outputEl.innerText = "Processing…";
+
+  const result = await runAnalysis(text);
+
+  if (result.error) {
+    outputEl.innerText = "Error: " + result.error;
+  } else {
+    outputEl.innerText = JSON.stringify(result, null, 2);
+  }
+}
+
 </script>
 </body>
 </html>
