@@ -1,0 +1,32 @@
+The user wants Option A — fully self-contained tabs where each tab's CSS lives inside its own block. Let me now write the complete HTML file, tab by tab.The structure will be:<head> — shared utilities only (reset, layout, topbar, shared components) </head>
+<body>
+  <header class="topbar"> ... </header>
+  <main class="page">
+    <!-- ══════════════════════════════════════════════════════════
+         TAB: UNIVERSE — START
+    ══════════════════════════════════════════════════════════ -->
+    <style> /* universe-specific CSS */ </style>
+    <div id="panel-universe" class="panel active"> ... </div>
+    <!-- ══════════════════════════════════════════════════════════
+         TAB: UNIVERSE — END
+    ══════════════════════════════════════════════════════════ -->
+
+    <!-- ══ TAB: OVERVIEW — START ══ -->
+    <style> /* overview CSS */ </style>
+    <div id="panel-home" class="panel"> ... </div>
+    <!-- ══ TAB: OVERVIEW — END ══ -->
+
+    ... etc for each tab
+  </main>
+  <footer> ... </footer>
+  <script>
+    /* ── SHARED: tab switching logic ── */
+    /* ── UNIVERSE: canvas + ticker + grid ── */
+    /* ── MEDIA: slot arrays + render ── */
+  </script>
+</body>Wait, the scripts also need to be tab-isolated. The challenge is JavaScript — the Universe canvas script is tightly coupled to the Universe panel DOM. Let me think about how to handle JS.For JS: I'll put tab-specific JS inside <script> blocks within each tab's block too. So each tab block is:
+<!-- ══ TAB: X — START ══ -->
+<style>/* tab CSS */</style>
+<div id="panel-x" class="panel">...</div>
+<script>/* tab JS - runs on DOMContentLoaded or immediately */</script>
+<!-- ══ TAB: X — END ══ -->But the Universe canvas JS uses requestAnimationFrame which runs continuously. If I put it in a <script> tag mid-body, it will execute as the page parses. That's fine actually — the canvas elements are already in the DOM by then since the panel div comes before the script.
