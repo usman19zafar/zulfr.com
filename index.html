@@ -173,26 +173,8 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-hero{width:100%;min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 24px 48px}
 #u-bg{position:absolute;inset:0;width:100%;height:100%}
 .u-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
-
-/* ── MEASUREMENT INSTITUTE BLOCK ─────────────────────────────── */
-.u-institute{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  margin-bottom:20px;
-}
-.u-institute-line{
-  font-family:'JetBrains Mono',monospace;
-  font-size:14px;
-  letter-spacing:.35em;
-  color:#F0C040;
-  text-transform:uppercase;
-  text-align:center;
-  font-weight:500;
-  line-height:1.4;
-}
-
+.u-institute{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
+.u-institute-line{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.35em;color:#F0C040;text-transform:uppercase;text-align:center;font-weight:500;line-height:1.4;}
 .u-bh{width:390px;height:390px;margin:0 auto 36px;position:relative}
 #u-bh{position:absolute;inset:0;width:100%;height:100%}
 .u-h1{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:700;color:#eeeef8;text-align:center;line-height:1.15;margin-bottom:10px;letter-spacing:-.01em}
@@ -256,10 +238,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .u-fw{background:#04040a}
 .u-ft{border-top:1px solid var(--ub);padding:32px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;width:100%}
 .u-fn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--ud)}
-
-/* ═══════════════════════════════════════════════════════════════
-   RESEARCH RECORD (LAB) PANEL
-═══════════════════════════════════════════════════════════════ */
 .lab-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .lab-header h2{margin-bottom:4px}
 .lab-header p{font-size:13px;color:var(--muted);max-width:580px;line-height:1.65}
@@ -269,8 +247,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .lab-results{display:flex;flex-direction:column;gap:20px}
 .lab-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .lab-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* Result Card */
 .result-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .25s,box-shadow .25s}
 .result-card:hover{border-color:var(--acc-mid);box-shadow:0 4px 24px rgba(77,170,223,.08)}
 .result-card-header{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -293,15 +269,11 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .result-finding{background:rgba(77,170,223,.04);border:1px solid rgba(77,170,223,.12);border-left:3px solid var(--acc);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--text);line-height:1.65}
 .result-finding strong{color:var(--white)}
 .result-links{display:flex;gap:10px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
-
-/* Archive section */
 .archive-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;opacity:.65;transition:opacity .2s,border-color .2s}
 .archive-card:hover{opacity:1;border-color:var(--border-md)}
 .archive-card-left h3{font-size:14px;color:var(--white);margin-bottom:4px}
 .archive-card-left p{font-size:12px;color:var(--muted)}
 .archive-card-links{display:flex;gap:8px;flex-wrap:wrap}
-
-/* Evaluation service */
 .eval-service{background:linear-gradient(135deg,rgba(17,32,64,.95),rgba(22,40,72,.95));border:1px solid rgba(240,192,64,.2);border-radius:var(--radius);padding:32px;margin-top:36px;position:relative;overflow:hidden}
 .eval-service::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(240,192,64,.06),transparent 70%);top:-60px;right:-60px;pointer-events:none}
 .eval-service h3{font-family:'Syne',sans-serif;font-size:18px;color:var(--gold);margin-bottom:6px}
@@ -312,8 +284,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 .eval-step p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
 .eval-confidential{background:rgba(62,207,142,.04);border:1px solid rgba(62,207,142,.15);border-radius:6px;padding:12px 16px;font-size:12px;color:var(--muted);line-height:1.65;margin-top:16px}
 .eval-confidential strong{color:var(--green)}
-
-/* Roadmap styles kept for reference — now replaced by Lab */
 .future-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
 .future-header h2{margin-bottom:4px}
 .future-header p{font-size:13px;color:var(--muted)}
@@ -369,6 +339,23 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
     <div class="topbar-status"><span class="status-dot"></span>SYSTEMS NOMINAL</div>
   </div>
 </header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     LABAPP PANEL  ·  MODIFIED
+     ─────────────────────────────────────────────────────────────
+     WHAT CHANGED vs original:
+       • Each row now has border-left:3px solid [model-color]  →  matches Universe panel accent style
+       • Stack badge uses the model color (bg tint + border)   →  matches Universe .u-bdg style
+       • Row padding tightened to 22px 28px                    →  denser, like the Models tab
+       • Button flex-shrink:0 added                            →  prevents squash on small screens
+       • 10 new SLOT rows added after the 2 existing rows
+     ─────────────────────────────────────────────────────────────
+     TO ACTIVATE A SLOT:
+       1. Remove  opacity:.45
+       2. Change  badge-amber → badge-green  and  "COMING SOON" → "LIVE"
+       3. Change  <button disabled> → <a href="/your-app-page" target="_blank" class="btn btn-primary">▶ Launch</a>
+       4. Edit the label text, stack number, h3 title, and p description
+═══════════════════════════════════════════════════════════════ -->
 <div id="panel-labapp" class="panel">
   <div class="page-padded">
   <div class="wrap-lg">
@@ -377,33 +364,181 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <h2>Lab</h2>
       <p>Interactive demos for each governance model. Upload your data and run live analysis.</p>
     </div>
-    <div class="card" style="margin-bottom:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:28px 32px">
+
+    <!-- ROW 01 · DAIS-10 · LIVE ─────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #4fc3f7">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <span class="label" style="color:#4fc3f7">DAIS-10</span>
           <span class="badge badge-green">LIVE</span>
-          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted)">01 · DATA</span>
+          <span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">01 · DATA</span>
         </div>
-        <h3 style="margin-bottom:6px">Data Admissibility &amp; Integrity Standard</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.65">Upload your dataset and run all 8 engines live. Row-level scores, tier assignments, cap codes, and AMD diagnostics.</p>
+        <h3 style="margin-bottom:5px">Data Admissibility &amp; Integrity Standard</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Upload your dataset and run all 8 engines live. Row-level scores, tier assignments, cap codes, and AMD diagnostics.</p>
       </div>
-      <a href="/app" target="_blank" class="btn btn-primary" style="white-space:nowrap">▶ Launch Analysis</a>
+      <a href="/app" target="_blank" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0">&#9654; Launch</a>
     </div>
-    <div class="card" style="margin-bottom:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:28px 32px;opacity:.45">
+
+    <!-- ROW 02 · DiGRs-10 · COMING SOON ─────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #69db7c;opacity:.45">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
           <span class="label" style="color:#69db7c">DiGRs-10</span>
           <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted)">02 · MODELS</span>
+          <span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">02 · MODELS</span>
         </div>
-        <h3 style="margin-bottom:6px">Decision Intelligence &amp; Graph Reasoning</h3>
-        <p style="font-size:13px;color:var(--muted);line-height:1.65">Submit a model selection decision for governance audit.</p>
+        <h3 style="margin-bottom:5px">Decision Intelligence &amp; Graph Reasoning</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Submit a model selection decision for governance audit.</p>
       </div>
-      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed">Coming Soon</button>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
+
+    <!-- SLOT 03 · color:#ffa94d ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #ffa94d;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#ffa94d">SLOT-03</span><!-- EDIT label -->
+          <span class="badge badge-amber">COMING SOON</span><!-- badge-amber → badge-green when live -->
+          <span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">03 · STACK</span><!-- EDIT stack -->
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 03</h3><!-- EDIT title -->
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p><!-- EDIT description -->
+      </div>
+      <!-- EDIT: change to <a href="/your-app" target="_blank" class="btn btn-primary"> when live -->
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 04 · color:#f78fb3 ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #f78fb3;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#f78fb3">SLOT-04</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(247,143,179,.08);color:#f78fb3;border:1px solid rgba(247,143,179,.2)">04 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 04</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 05 · color:#b197fc ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #b197fc;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#b197fc">SLOT-05</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">05 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 05</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 06 · color:#63e6be ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #63e6be;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#63e6be">SLOT-06</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(99,230,190,.08);color:#63e6be;border:1px solid rgba(99,230,190,.2)">06 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 06</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 07 · color:#ffd43b ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #ffd43b;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#ffd43b">SLOT-07</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(255,212,59,.08);color:#ffd43b;border:1px solid rgba(255,212,59,.2)">07 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 07</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 08 · color:#ff8787 ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #ff8787;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#ff8787">SLOT-08</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(255,135,135,.08);color:#ff8787;border:1px solid rgba(255,135,135,.2)">08 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 08</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 09 · color:#4fc3f7 ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #4fc3f7;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#4fc3f7">SLOT-09</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">09 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 09</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 10 · color:#69db7c ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #69db7c;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#69db7c">SLOT-10</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">10 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 10</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 11 · color:#ffa94d ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #ffa94d;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#ffa94d">SLOT-11</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">11 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 11</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
+    <!-- SLOT 12 · color:#b197fc ──────────────────────────────── -->
+    <div class="card" style="margin-bottom:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:22px 28px;border-left:3px solid #b197fc;opacity:.45">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="label" style="color:#b197fc">SLOT-12</span>
+          <span class="badge badge-amber">COMING SOON</span>
+          <span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">12 · STACK</span>
+        </div>
+        <h3 style="margin-bottom:5px">App Title — Slot 12</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
+      </div>
+      <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
+    </div>
+
   </div>
   </div>
 </div>
+<!-- end panel-labapp -->
+
 <main class="page">
 
 <!-- ══ UNIVERSE PANEL ══════════════════════════════════════════════════════ -->
@@ -412,14 +547,11 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   <div class="u-hero">
     <canvas id="u-bg"></canvas>
     <div class="u-inner">
-
-      <!-- ★ MEASUREMENT INSTITUTE BLOCK — THREE LINES ★ -->
       <div class="u-institute">
         <div class="u-institute-line">A Measurement Institute.</div>
         <div class="u-institute-line">by</div>
         <div class="u-institute-line">Dr. Usman Zafar</div>
       </div>
-
       <div class="u-bh"><canvas id="u-bh" width="780" height="780"></canvas></div>
       <div class="u-h1">Measurement is our Business.<br><b>Engineering &amp; Safety Cosmos.</b></div>
       <div class="u-sub">Governance architecture for the intelligence age.</div>
@@ -460,7 +592,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   <div class="u-mw">
     <span class="u-slbl">The Eight Dimensions</span>
     <div class="u-grid">
-
       <div class="u-mb u-a1" onmouseenter="uPulse(0)">
         <span class="u-bdg u-live">LIVE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc1)"></span>DAIS10<span class="u-stk">&nbsp;&nbsp;01 · DATA</span></div>
@@ -470,7 +601,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:92%;background:linear-gradient(90deg,#1e5f7a,var(--uc1))"></div></div><span class="u-sv">92%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:88%;background:linear-gradient(90deg,#1e5f7a,var(--uc1))"></div></div><span class="u-sv">88%</span></div>
       </div>
-
       <div class="u-mb u-a2 u-bl2" onmouseenter="uPulse(1)">
         <span class="u-bdg u-live">LIVE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc2)"></span>DiGRs10<span class="u-stk">&nbsp;&nbsp;02 · MODELS</span></div>
@@ -480,7 +610,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:85%;background:linear-gradient(90deg,#1b5e20,var(--uc2))"></div></div><span class="u-sv">85%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:79%;background:linear-gradient(90deg,#1b5e20,var(--uc2))"></div></div><span class="u-sv">79%</span></div>
       </div>
-
       <div class="u-mb u-a3 u-bt2" onmouseenter="uPulse(2)">
         <span class="u-bdg u-live">LIVE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc3)"></span>SIS10<span class="u-stk">&nbsp;&nbsp;03 · SAFETY</span></div>
@@ -490,7 +619,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:97%;background:linear-gradient(90deg,#7a3e00,var(--uc3))"></div></div><span class="u-sv">97%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:94%;background:linear-gradient(90deg,#7a3e00,var(--uc3))"></div></div><span class="u-sv">94%</span></div>
       </div>
-
       <div class="u-mb u-a4 u-bt2 u-bl2" onmouseenter="uPulse(3)">
         <span class="u-bdg u-live">LIVE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc4)"></span>TRUE100<span class="u-stk">&nbsp;&nbsp;04 · AI</span></div>
@@ -500,7 +628,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:90%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">90%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:96%;background:linear-gradient(90deg,#7a0033,var(--uc4))"></div></div><span class="u-sv">96%</span></div>
       </div>
-
       <div class="u-mb u-a5 u-bt2" onmouseenter="uPulse(4)">
         <span class="u-bdg u-fut">FUTURE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc5)"></span>BLOC10<span class="u-stk">&nbsp;&nbsp;05 · COGNITION</span></div>
@@ -510,7 +637,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:78%;background:linear-gradient(90deg,#3a0070,var(--uc5))"></div></div><span class="u-sv">78%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:83%;background:linear-gradient(90deg,#3a0070,var(--uc5))"></div></div><span class="u-sv">83%</span></div>
       </div>
-
       <div class="u-mb u-a6 u-bt2 u-bl2" onmouseenter="uPulse(5)">
         <span class="u-bdg u-fut">FUTURE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc6)"></span>KAD10<span class="u-stk">&nbsp;&nbsp;06 · AGENTS</span></div>
@@ -520,7 +646,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:81%;background:linear-gradient(90deg,#004d55,var(--uc6))"></div></div><span class="u-sv">81%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:75%;background:linear-gradient(90deg,#004d55,var(--uc6))"></div></div><span class="u-sv">75%</span></div>
       </div>
-
       <div class="u-mb u-a7 u-bt2" onmouseenter="uPulse(6)">
         <span class="u-bdg u-fut">FUTURE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc7)"></span>CAF10<span class="u-stk">&nbsp;&nbsp;07 · DECISIONS</span></div>
@@ -530,7 +655,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:88%;background:linear-gradient(90deg,#7a5500,var(--uc7))"></div></div><span class="u-sv">88%</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:86%;background:linear-gradient(90deg,#7a5500,var(--uc7))"></div></div><span class="u-sv">86%</span></div>
       </div>
-
       <div class="u-mb u-a8 u-bt2 u-bl2" onmouseenter="uPulse(7)">
         <span class="u-bdg u-fut">FUTURE</span>
         <div class="u-id"><span class="u-dot" style="background:var(--uc8)"></span>KAST10<span class="u-stk">&nbsp;&nbsp;08 · GOVERNANCE</span></div>
@@ -540,7 +664,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">REACH</span><div class="u-sbg"><div class="u-sf" style="width:100%;background:linear-gradient(90deg,#7a0000,var(--uc8))"></div></div><span class="u-sv">∞</span></div>
         <div class="u-sr"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ud);letter-spacing:.1em">DEPTH</span><div class="u-sbg"><div class="u-sf" style="width:100%;background:linear-gradient(90deg,#7a0000,var(--uc8))"></div></div><span class="u-sv">∞</span></div>
       </div>
-
     </div>
   </div>
 
@@ -741,11 +864,10 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
   </div>
 </div>
 
-<!-- ══ RESEARCH RECORD (replaces Roadmap) ═════════════════════════════════ -->
+<!-- ══ RESEARCH RECORD ════════════════════════════════════════════════════ -->
 <div id="panel-lab" class="panel">
   <div class="page-padded">
   <div class="wrap-lg">
-
     <div class="lab-header">
       <div>
         <span class="label" style="display:block;margin-bottom:6px">Published Evaluations</span>
@@ -754,19 +876,12 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       </div>
       <span class="badge badge-gold">TRUE100 · ALIGN100</span>
     </div>
-
-    <!-- Submit bar -->
     <div class="lab-submit-bar">
       <div class="lab-submit-text">Ready to test your document against <strong>TRUE100</strong>? Submit for a certified evaluation report.</div>
       <a href="mailto:info@zulfr.com?subject=TRUE100 Evaluation Request" class="btn btn-gold" style="font-size:12px;padding:8px 18px;">Submit → info@zulfr.com</a>
     </div>
-
     <div class="lab-results">
-
-      <!-- LATEST RESULT LABEL -->
       <div class="lab-section-label">Latest result</div>
-
-      <!-- SEASON 1 CARD -->
       <div class="result-card">
         <div class="result-card-header">
           <div>
@@ -782,9 +897,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
           </div>
         </div>
         <div class="result-card-body">
-
           <div class="result-score-grid">
-            <!-- TRUE100 Table -->
             <div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;margin-bottom:10px">TRUE100 — Governance Compliance</div>
               <table class="result-score-table">
@@ -799,7 +912,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
                 </tbody>
               </table>
             </div>
-            <!-- ALIGN100 Table -->
             <div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;margin-bottom:10px">ALIGN100 — Alignment Quality</div>
               <table class="result-score-table">
@@ -814,11 +926,9 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
               </table>
             </div>
           </div>
-
           <div class="result-finding">
             <strong>The Governance-Alignment Gap:</strong> All five frontier models scored NON-COMPLIANT on TRUE100 (25–28/100) while achieving strong ALIGN100 scores (0.84+). Average gap: <strong>57.3 normalised points.</strong> Systemic. Repeatable. Cross-vendor. A gold standard reference document scored 90+ — confirming the framework ceiling is real and the gap is not a framework artifact.
           </div>
-
           <div class="result-links">
             <a href="https://doi.org/10.5281/zenodo.19075200" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">📄 Full Paper — Zenodo DOI</a>
             <a href="https://github.com/usman19zafar/AI-Accountability-League-2026" target="_blank" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">💻 Raw Data — GitHub</a>
@@ -826,10 +936,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
           </div>
         </div>
       </div>
-
-      <!-- ARCHIVE LABEL -->
       <div class="lab-section-label" style="margin-top:32px">Archive</div>
-
       <div class="archive-card">
         <div class="archive-card-left">
           <h3>Season 2 — In Planning</h3>
@@ -839,10 +946,7 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
           <a href="mailto:info@zulfr.com?subject=Season 2 Collaboration" class="btn btn-ghost" style="font-size:12px;padding:7px 14px;">Suggest a model →</a>
         </div>
       </div>
-
     </div>
-
-    <!-- EVALUATION SERVICE -->
     <div class="eval-service">
       <h3>Certified Document Evaluation</h3>
       <p>Submit your document. Receive a certified TRUE100 Governance Report. We evaluate, score, and return a signed report. Your document is never stored, shared, or published. This is a private certified evaluation service — not a research programme.</p>
@@ -855,7 +959,6 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
       <a href="mailto:info@zulfr.com?subject=TRUE100 Evaluation Request" class="btn btn-gold">Submit for evaluation → info@zulfr.com</a>
       <div class="eval-confidential"><strong>Confidentiality guarantee:</strong> Your document is evaluated and returned. It is never stored, shared, published, or used in any other context. Full specification available under license — contact info@zulfr.com for research access or licensing inquiries.</div>
     </div>
-
   </div>
   </div>
 </div>
