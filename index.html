@@ -611,16 +611,155 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
       <button class="model-pill" onclick="switchModel('sis')" data-model="sis"><span class="model-pill-dot"></span>SIS-10 — Safety Integrity Logic</button>
       <button class="model-pill" onclick="switchModel('digrs')" data-model="digrs"><span class="model-pill-dot"></span>DIGRS-10 — Decision Intelligence</button>
     </div>
-    <div id="model-dais" class="model-detail active">
-      <div class="model-hero"><div><span class="label" style="display:block;margin-bottom:10px">Data Attribute &amp; Importance Standard</span><h2>DAIS-10</h2><p style="margin-top:8px">Semantic admissibility protocols for AI decision pipelines. DAIS-10 establishes formal criteria for which data elements may enter a governed inference chain, replacing probabilistic thresholds with risk-theoretic dominance.</p></div><div class="model-version">v1.0</div></div>
-      <div class="model-specs"><div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-green">Published</span></div></div><div class="spec-card"><span class="label">Domain</span><div class="spec-value">Data Pipeline Governance</div></div><div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Risk-Theoretic Dominance</div></div></div>
-      <div class="model-principles">
-        <div class="principle-item"><span class="principle-num">01</span><div class="principle-text"><strong>Semantic Fingerprinting</strong>Each data element receives a semantic fingerprint encoding its provenance, type class, and authorized transformation history.</div></div>
-        <div class="principle-item"><span class="principle-num">02</span><div class="principle-text"><strong>Dominance Criterion</strong>Admissibility is determined by risk-theoretic dominance over an authorized reference class, not model confidence.</div></div>
-        <div class="principle-item"><span class="principle-num">03</span><div class="principle-text"><strong>Upstream Governance</strong>Data governance is applied before inference, not as a post-processing filter, eliminating a class of adversarial attacks.</div></div>
-        <div class="principle-item"><span class="principle-num">04</span><div class="principle-text"><strong>Audit Continuity</strong>Every admissibility decision is logged with its dominance proof, enabling full retroactive audit of any downstream output.</div></div>
+    
+  <!-- HERO SECTION -->
+  <div class="model-hero">
+    <div>
+      <span class="label" style="display:block;margin-bottom:10px">Data Attribute & Importance Standard</span>
+      <h2>DAIS‑10</h2>
+      <p style="margin-top:8px">
+        DAIS‑10 is the industry’s first deterministic data‑decay and admissibility engine. 
+        It evaluates every row of data for freshness, completeness, retention value, and governance risk — 
+        restoring clarity to datasets that silently degrade over time. 
+        Built on semantic admissibility protocols, DAIS‑10 replaces probabilistic thresholds with 
+        risk‑theoretic dominance, ensuring only high‑integrity data enters AI decision pipelines.
+      </p>
+    </div>
+    <div class="model-version">v1.1.</div>
+  </div>
+
+  <!-- STORY SECTION -->
+  <div class="model-hero" style="margin-top:20px">
+    <div>
+      <h3>Why DAIS‑10 Exists</h3>
+      <p style="margin-top:10px;font-size:14px;color:var(--muted);line-height:1.7">
+        Every organization begins with clean, hopeful data — but over time, something quiet and destructive happens.
+        Phone numbers change. Addresses expire. Fields go missing. CRM entries rot. 
+        Retention deadlines approach. Compliance risk grows. 
+        Data decays faster than humans can manage.
+        DAIS‑10 was built for this world: a world where organizations need to understand the true value of their data 
+        before it becomes a liability.
+      </p>
+    </div>
+  </div>
+  <!-- SPECS -->
+  <div class="model-specs">
+    <div class="spec-card">
+      <span class="label">Maturity</span>
+      <div class="spec-value"><span class="badge badge-green">Published</span></div>
+    </div>
+    <div class="spec-card">
+      <span class="label">Domain</span>
+      <div class="spec-value">Data Pipeline Governance</div>
+    </div>
+    <div class="spec-card">
+      <span class="label">Core Mechanism</span>
+      <div class="spec-value">Risk‑Theoretic Dominance</div>
+    </div>
+  </div>
+
+  <!-- PAIN POINTS / BUSINESS VALUE -->
+  <div class="model-principles" style="margin-top:20px">
+    <div class="principle-item">
+      <span class="principle-num">01</span>
+      <div class="principle-text">
+        <strong>Stale Data</strong>
+        DAIS‑10 tracks data decay and shows what to keep, refresh, or retire.
       </div>
-      <div class="model-media-btn"><button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button></div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">02</span>
+      <div class="principle-text">
+        <strong>Missing Values</strong>
+        Detects incomplete critical fields and adjusts row‑level importance instantly.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">03</span>
+      <div class="principle-text">
+        <strong>Retention Policies</strong>
+        Calculates how long each record should be kept — and when it must be removed.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">04</span>
+      <div class="principle-text">
+        <strong>Data Quality</strong>
+        Assigns quality scores to every row, exposing weak or unreliable entries.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">05</span>
+      <div class="principle-text">
+        <strong>Data Governance</strong>
+        Automates scoring, classification, and prioritization — eliminating manual review.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">06</span>
+      <div class="principle-text">
+        <strong>CRM Decay</strong>
+        Identifies outdated, inactive, or low‑value customer records.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">07</span>
+      <div class="principle-text">
+        <strong>Compliance With Retention Laws</strong>
+        Provides deterministic, audit‑ready scoring aligned with GDPR, CPRA, PIPEDA, and more.
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL PRINCIPLES (CREDIBILITY LAYER) -->
+  <div class="model-principles" style="margin-top:30px">
+    <div class="principle-item">
+      <span class="principle-num">A1</span>
+      <div class="principle-text">
+        <strong>Semantic Fingerprinting</strong>
+        Each data element receives a fingerprint encoding provenance, type class, and authorized transformation history.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">A2</span>
+      <div class="principle-text">
+        <strong>Dominance Criterion</strong>
+        Admissibility is determined by risk‑theoretic dominance over an authorized reference class.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">A3</span>
+      <div class="principle-text">
+        <strong>Upstream Governance</strong>
+        Governance is applied before inference, eliminating entire classes of adversarial attacks.
+      </div>
+    </div>
+    <div class="principle-item">
+      <span class="principle-num">A4</span>
+      <div class="principle-text">
+        <strong>Audit Continuity</strong>
+        Every admissibility decision is logged with its dominance proof for full retroactive audit.
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA: FREE TESTING -->
+  <div class="model-hero" style="margin-top:28px;text-align:center">
+    <h3>Experience DAIS‑10 in Action</h3>
+    <p style="margin-top:10px;font-size:14px;color:var(--muted)">
+      Test your own data or use sample datasets. DAIS‑10 scores every row for freshness, completeness, retention value, and governance risk.
+    </p>
+    <a href="https://zulfr.com/app/" class="btn btn-primary" target="_blank" style="margin-top:14px">
+      Start Free Testing →
+    </a>
+  </div>
+
+  <div class="model-media-btn">
+    <button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button>
+  </div>
+
+</div>
+    
     </div>
     <div id="model-sis" class="model-detail">
       <div class="model-hero"><div><span class="label" style="display:block;margin-bottom:10px">Safety Integrity Logic</span><h2>SIS-10</h2><p style="margin-top:8px">Deterministic safety envelopes independent of model training behavior. SIS-10 defines hard behavioral boundaries that hold regardless of model outputs, implementing safety as a formal constraint layer rather than a training objective.</p></div><div class="model-version">v1.0</div></div>
