@@ -8,10 +8,6 @@
 <meta name="theme-color" content="#0C1A2E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 
-<!-- ════════════════════════════════════════════════════════════
-     SHARED CSS — utilities used by two or more tabs.
-     Tab-specific CSS lives inside each tab's own block below.
-════════════════════════════════════════════════════════════ -->
 <style>
 :root{--bg:#0C1A2E;--bg-raised:#112040;--bg-float:#162848;--bg-hover:#1A2F52;--border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);--acc:#4DAADF;--acc-soft:rgba(77,170,223,.12);--acc-mid:rgba(77,170,223,.28);--green:#3ECF8E;--amber:#F5A623;--gold:#F0C040;--white:#E8EFF9;--text:#C2CFDF;--muted:#7A90AE;--faint:#3D5170;--tab-h:52px;--radius:8px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -70,11 +66,9 @@ h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;col
 @media(max-width:640px){.tab{padding:0 10px;font-size:12px;gap:5px}.tab-label{display:none}}
 </style>
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4WZD772GW5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4WZD772GW5');</script>
 
-<!-- SHARED JS: tab/paper/model switching — no DOM access at define time -->
 <script>
 function switchTab(t){
   document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab===t);});
@@ -89,9 +83,7 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
 <body>
 <div class="app">
 
-<!-- ══════════════════════════════════════════════════════════════════
-     TOPBAR — shared navigation (not a tab; never delete this)
-══════════════════════════════════════════════════════════════════ -->
+<!-- ══ TOPBAR ══════════════════════════════════════════════════════ -->
 <header class="topbar">
   <div class="topbar-inner">
     <div class="topbar-brand">
@@ -115,11 +107,8 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
 
 <!-- ══════════════════════════════════════════════════════════════════
      TAB: UNIVERSE — START
-     Safe to delete everything between START and END without touching any other tab.
-     Includes: CSS · HTML · JS (all scoped to this tab)
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ UNIVERSE TAB CSS ═══════════════════════════════════════════ */
 #panel-universe{background:#04040a;padding:0;--ub:#111128;--ud:#2a2a42;--um:#505070;--us:#8a8aa0;--uc1:#4fc3f7;--uc2:#69db7c;--uc3:#ffa94d;--uc4:#f78fb3;--uc5:#b197fc;--uc6:#63e6be;--uc7:#ffd43b;--uc8:#ff8787;}
 .u-hero{width:100%;min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:60px 24px 48px}
 #u-bg{position:absolute;inset:0;width:100%;height:100%}
@@ -374,11 +363,10 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
       <span class="u-fn">DR. USMAN ZAFAR Ph.D &nbsp;·&nbsp; 2026 · ALL RIGHTS RESERVED</span>
     </div>
   </div>
-</div>
+</div><!-- end #panel-universe -->
 <!-- TAB: UNIVERSE — END -->
 
 <script>
-/* ═══ UNIVERSE TAB JS ═══════════════════════════════════════════ */
 (function(){
   var MDL=[
     {id:'DAIS10', c:'#4fc3f7',a:0},
@@ -390,13 +378,11 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
     {id:'CAF10',  c:'#ffd43b',a:Math.PI*1.5},
     {id:'KAST10', c:'#ff8787',a:Math.PI*1.75}
   ];
-  /* starfield bg */
   var bgC=document.getElementById('u-bg'),bgCtx=bgC.getContext('2d'),stars=[],bgt=0;
   function resizeBg(){bgC.width=bgC.offsetWidth||window.innerWidth;bgC.height=bgC.offsetHeight||window.innerHeight;stars=[];for(var i=0;i<180;i++)stars.push({x:Math.random()*bgC.width,y:Math.random()*bgC.height,r:Math.random()*1.2+0.5,ps:Math.random()*.018+.004,po:Math.random()*Math.PI*2});}
   resizeBg();window.addEventListener('resize',resizeBg);
   function drawBg(){bgCtx.clearRect(0,0,bgC.width,bgC.height);stars.forEach(function(s){bgCtx.globalAlpha=Math.max(0.04,0.08+Math.sin(bgt*s.ps+s.po)*0.07);bgCtx.fillStyle='#fff';bgCtx.fillRect(s.x,s.y,s.r,s.r);});bgCtx.globalAlpha=1;bgt++;requestAnimationFrame(drawBg);}
   drawBg();
-  /* black hole canvas */
   var bhC=document.getElementById('u-bh'),ctx=bhC.getContext('2d');
   var W=780,H=780,cx=W/2,cy=H/2,pulseR=0,pulsingModel=null,t=0;
   window.uPulse=function(i){pulseR=1;pulsingModel=MDL[i]||null;};
@@ -413,7 +399,6 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
     t++;requestAnimationFrame(drawBH);
   }
   drawBH();
-  /* ticker */
   var auditEvents=[
     {m:'DAIS10', c:'#4fc3f7',r:'ok',  msg:'Schema drift check — no drift detected'},
     {m:'DiGRs10',c:'#69db7c',r:'ok',  msg:'Model selection audit — rationale documented'},
@@ -426,7 +411,6 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
   ];
   var ticker=document.getElementById('u-ticker');
   auditEvents.concat(auditEvents).forEach(function(e){var div=document.createElement('div');div.className='u-ti';var w=e.r==='warn';div.innerHTML='<span class="u-td" style="background:'+(w?'#ffa94d':'#69db7c')+'"></span><span style="color:'+(w?'#ffa94d55':'#69db7c55')+'">KAST10</span><span style="color:#1e1e38;padding:0 4px">→</span><span style="color:'+e.c+'">'+e.m+'</span><span style="color:#33334a;margin-left:4px">'+e.msg+'</span>';ticker.appendChild(div);});
-  /* gravity table */
   var IND=[
     {n:'Financial Services',    s:[95,90,60,95,70,88,95,100]},
     {n:'Healthcare & Life Sci.',s:[92,88,99,80,85,90,88,100]},
@@ -450,7 +434,6 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
      TAB: OVERVIEW — START
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ OVERVIEW TAB CSS ══════════════════════════════════════════ */
 .ov-hero{padding:56px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px;position:relative}
 .ov-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(77,170,223,.11) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black,transparent);pointer-events:none}
 .ov-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px}
@@ -503,7 +486,7 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
     </div>
   </div>
   </div>
-</div>
+</div><!-- end #panel-home -->
 <!-- TAB: OVERVIEW — END -->
 
 
@@ -511,7 +494,6 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
      TAB: RESEARCH — START
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ RESEARCH TAB CSS ══════════════════════════════════════════ */
 .rsch-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .rsch-header h2{margin-bottom:4px}
 .rsch-header p{font-size:13px;color:var(--muted)}
@@ -566,127 +548,183 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
     </div>
   </div>
   </div>
-</div>
+</div><!-- end #panel-research -->
 <!-- TAB: RESEARCH — END -->
 
 
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB: MODELS — START
+══════════════════════════════════════════════════════════════════ -->
+<style>
+.mdl-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.mdl-header h2{margin-bottom:6px}
+.mdl-header p{font-size:13px;color:var(--muted)}
+.model-selector{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.model-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);background:var(--bg-raised);cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.model-pill:hover{border-color:var(--border-md);color:var(--white);background:var(--bg-hover)}
+.model-pill.active{border-color:var(--acc-mid);background:var(--acc-soft);color:var(--acc)}
+.model-pill-dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.model-detail{display:none}
+.model-detail.active{display:block;animation:fadeIn .25s ease}
+.model-hero{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:32px 36px;margin-bottom:20px;display:grid;grid-template-columns:1fr auto;align-items:start;gap:24px}
+.model-hero h2{margin-bottom:6px}
+.model-hero p{font-size:14px;color:var(--muted);line-height:1.7;max-width:580px}
+.model-version{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500;color:var(--faint);letter-spacing:-.02em;text-align:right;white-space:nowrap}
+.model-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.spec-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.spec-card .label{margin-bottom:8px;display:block}
+.spec-value{font-size:14px;font-weight:500;color:var(--white)}
+.model-principles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.principle-item{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:flex;gap:12px}
+.principle-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--acc);padding-top:2px;flex-shrink:0}
+.principle-text{font-size:13px;color:var(--muted);line-height:1.6}
+.principle-text strong{color:var(--white);font-weight:500;display:block;margin-bottom:3px}
+.model-media-btn{margin-top:20px}
+@media(max-width:860px){.model-specs,.model-principles{grid-template-columns:1fr}.model-hero{grid-template-columns:1fr}.model-version{text-align:left}}
+</style>
+
 <div id="panel-models" class="panel">
   <div class="page-padded">
-    <div class="wrap-lg">
+  <div class="wrap-lg">
 
-      <!-- HEADER -->
-      <div class="mdl-header">
-        <span class="label" style="display:block;margin-bottom:6px">Governance Frameworks</span>
-        <h2>Active Models</h2>
-        <p>Select a framework to explore its architecture, principles, and implementation specifications.</p>
-      </div>
-
-      <!-- SELECTOR -->
-      <div class="model-selector">
-        <button class="model-pill active" onclick="switchModel('dais')">DAIS-10 — Data Governance</button>
-        <button class="model-pill" onclick="switchModel('sis')">SIS-10 — Safety Integrity Logic</button>
-        <button class="model-pill" onclick="switchModel('digrs')">DIGRS-10 — Decision Intelligence</button>
-      </div>
-
-      <!-- ===================== DAIS ===================== -->
-      <div id="model-dais" class="model-detail active">
-
-        <div class="model-hero">
-          <div>
-            <span class="label">Data Attribute & Importance Standard</span>
-            <h2>DAIS-10</h2>
-            <p>Semantic admissibility protocols replacing probabilistic thresholds with risk-theoretic dominance.</p>
-          </div>
-          <div class="model-version">v1.1</div>
-        </div>
-
-        <div class="model-hero">
-          <div>
-            <h3>WHY DAIS-10 Exists</h3>
-            <p>Data decays. Fields vanish. Risk accumulates. DAIS-10 quantifies decay before it becomes liability.</p>
-          </div>
-        </div>
-
-        <div class="model-specs">
-          <div class="spec-card"><span class="label">Maturity</span><div class="spec-value">Published</div></div>
-          <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Data Pipeline Governance</div></div>
-          <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Risk-Theoretic Dominance</div></div>
-        </div>
-
-        <div class="model-principles">
-          <div class="principle-item"><span>01</span><div><strong>Stale Data</strong> Track decay.</div></div>
-          <div class="principle-item"><span>02</span><div><strong>Missing Values</strong> Detect gaps.</div></div>
-          <div class="principle-item"><span>03</span><div><strong>Retention</strong> Enforce lifecycle.</div></div>
-          <div class="principle-item"><span>04</span><div><strong>Quality</strong> Score reliability.</div></div>
-          <div class="principle-item"><span>05</span><div><strong>Governance</strong> Automate control.</div></div>
-          <div class="principle-item"><span>06</span><div><strong>Decay</strong> Identify obsolete records.</div></div>
-          <div class="principle-item"><span>07</span><div><strong>Compliance</strong> Deterministic audit.</div></div>
-          <div class="principle-item"><span>08</span><div><strong>Semantic Fingerprinting</strong></div></div>
-          <div class="principle-item"><span>09</span><div><strong>Upstream Governance</strong></div></div>
-          <div class="principle-item"><span>10</span><div><strong>Audit Continuity</strong></div></div>
-        </div>
-
-        <div class="model-hero" style="text-align:center">
-          <h3>Experience DAIS-10</h3>
-          <a href="https://zulfr.com/app/" class="btn btn-primary" target="_blank">Start Free Testing</a>
-        </div>
-
-      </div>
-
-      <!-- ===================== SIS ===================== -->
-      <div id="model-sis" class="model-detail">
-
-        <div class="model-hero">
-          <div>
-            <span class="label">Safety Integrity Logic</span>
-            <h2>SIS-10</h2>
-            <p>Deterministic safety envelopes independent of training behavior.</p>
-          </div>
-          <div class="model-version">v1.0</div>
-        </div>
-
-        <div class="model-specs">
-          <div class="spec-card"><span class="label">Maturity</span><div class="spec-value">Draft</div></div>
-          <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Behavioral Safety</div></div>
-          <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Formal Safety Envelopes</div></div>
-        </div>
-
-      </div>
-
-      <!-- ===================== DIGRS ===================== -->
-      <div id="model-digrs" class="model-detail">
-
-        <div class="model-hero">
-          <div>
-            <span class="label">Decision Intelligence</span>
-            <h2>DIGRS-10</h2>
-            <p>Traceable DAG-based decision outputs for auditability.</p>
-          </div>
-          <div class="model-version">v1.0</div>
-        </div>
-
-        <div class="model-specs">
-          <div class="spec-card"><span class="label">Maturity</span><div class="spec-value">Draft</div></div>
-          <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Decision Architecture</div></div>
-          <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Traceable DAG</div></div>
-        </div>
-
-      </div>
-
+    <div class="mdl-header">
+      <span class="label" style="display:block;margin-bottom:6px">Governance Frameworks</span>
+      <h2>Active Models</h2>
+      <p>Select a framework to explore its architecture, principles, and implementation specifications.</p>
     </div>
-  </div>
-</div>
+
+    <div class="model-selector">
+      <button class="model-pill active" onclick="switchModel('dais')" data-model="dais"><span class="model-pill-dot"></span>DAIS-10 — Data Governance</button>
+      <button class="model-pill" onclick="switchModel('sis')" data-model="sis"><span class="model-pill-dot"></span>SIS-10 — Safety Integrity Logic</button>
+      <button class="model-pill" onclick="switchModel('digrs')" data-model="digrs"><span class="model-pill-dot"></span>DIGRS-10 — Decision Intelligence</button>
+    </div>
+
+    <!-- ═══ DAIS-10 ═══════════════════════════════════════════════ -->
+    <div id="model-dais" class="model-detail active">
+
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Data Attribute &amp; Importance Standard</span>
+          <h2>DAIS‑10</h2>
+          <p style="margin-top:8px">DAIS‑10 is the industry's first deterministic data‑decay and admissibility engine. It evaluates every row of data for freshness, completeness, retention value, and governance risk — restoring clarity to datasets that silently degrade over time. Built on semantic admissibility protocols, DAIS‑10 replaces probabilistic thresholds with risk‑theoretic dominance, ensuring only high‑integrity data enters AI decision pipelines.</p>
+        </div>
+        <div class="model-version">v1.1</div>
+      </div>
+
+      <div class="model-hero" style="margin-top:20px">
+        <div>
+          <h3>Why DAIS‑10 Exists</h3>
+          <p style="margin-top:10px;font-size:14px;color:var(--muted);line-height:1.7">Every organization begins with clean, hopeful data — but over time, something quiet and destructive happens. Phone numbers change. Addresses expire. Fields go missing. CRM entries rot. Retention deadlines approach. Compliance risk grows. Data decays faster than humans can manage. DAIS‑10 was built for this world: a world where organizations need to understand the true value of their data before it becomes a liability.</p>
+        </div>
+      </div>
+
+      <div class="model-specs">
+        <div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-green">Published</span></div></div>
+        <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Data Pipeline Governance</div></div>
+        <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Risk‑Theoretic Dominance</div></div>
+      </div>
+
+      <div class="model-principles" style="margin-top:20px">
+        <div class="principle-item"><span class="principle-num">01</span><div class="principle-text"><strong>Stale Data</strong>DAIS‑10 tracks data decay and shows what to keep, refresh, or retire.</div></div>
+        <div class="principle-item"><span class="principle-num">02</span><div class="principle-text"><strong>Missing Values</strong>Detects incomplete critical fields and adjusts row‑level importance instantly.</div></div>
+        <div class="principle-item"><span class="principle-num">03</span><div class="principle-text"><strong>Retention Policies</strong>Calculates how long each record should be kept — and when it must be removed.</div></div>
+        <div class="principle-item"><span class="principle-num">04</span><div class="principle-text"><strong>Data Quality</strong>Assigns quality scores to every row, exposing weak or unreliable entries.</div></div>
+        <div class="principle-item"><span class="principle-num">05</span><div class="principle-text"><strong>Data Governance</strong>Automates scoring, classification, and prioritization — eliminating manual review.</div></div>
+        <div class="principle-item"><span class="principle-num">06</span><div class="principle-text"><strong>CRM Decay</strong>Identifies outdated, inactive, or low‑value customer records.</div></div>
+        <div class="principle-item"><span class="principle-num">07</span><div class="principle-text"><strong>Compliance With Retention Laws</strong>Provides deterministic, audit‑ready scoring aligned with GDPR, CPRA, PIPEDA, and more.</div></div>
+      </div>
+
+      <div class="model-principles" style="margin-top:30px">
+        <div class="principle-item"><span class="principle-num">A1</span><div class="principle-text"><strong>Semantic Fingerprinting</strong>Each data element receives a fingerprint encoding provenance, type class, and authorized transformation history.</div></div>
+        <div class="principle-item"><span class="principle-num">A2</span><div class="principle-text"><strong>Dominance Criterion</strong>Admissibility is determined by risk‑theoretic dominance over an authorized reference class.</div></div>
+        <div class="principle-item"><span class="principle-num">A3</span><div class="principle-text"><strong>Upstream Governance</strong>Governance is applied before inference, eliminating entire classes of adversarial attacks.</div></div>
+        <div class="principle-item"><span class="principle-num">A4</span><div class="principle-text"><strong>Audit Continuity</strong>Every admissibility decision is logged with its dominance proof for full retroactive audit.</div></div>
+      </div>
+
+      <div class="model-hero" style="margin-top:28px;text-align:center">
+        <h3>Experience DAIS‑10 in Action</h3>
+        <p style="margin-top:10px;font-size:14px;color:var(--muted)">Test your own data or use sample datasets. DAIS‑10 scores every row for freshness, completeness, retention value, and governance risk.</p>
+        <a href="https://zulfr.com/app/" class="btn btn-primary" target="_blank" style="margin-top:14px">Start Free Testing →</a>
+      </div>
+
+      <div class="model-media-btn">
+        <button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button>
+      </div>
+
+    </div><!-- end #model-dais -->
+
+    <!-- ═══ SIS-10 ════════════════════════════════════════════════ -->
+    <div id="model-sis" class="model-detail">
+
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Safety Integrity Logic</span>
+          <h2>SIS-10</h2>
+          <p style="margin-top:8px">Deterministic safety envelopes independent of model training behavior. SIS-10 defines hard behavioral boundaries that hold regardless of model outputs, implementing safety as a formal constraint layer rather than a training objective.</p>
+        </div>
+        <div class="model-version">v1.0</div>
+      </div>
+
+      <div class="model-specs">
+        <div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-blue">Draft</span></div></div>
+        <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Behavioral Safety</div></div>
+        <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Formal Safety Envelopes</div></div>
+      </div>
+
+      <div class="model-principles">
+        <div class="principle-item"><span class="principle-num">01</span><div class="principle-text"><strong>Training Independence</strong>Safety constraints are defined in a separate formal layer, not embedded in training objectives where they can be overridden.</div></div>
+        <div class="principle-item"><span class="principle-num">02</span><div class="principle-text"><strong>Deterministic Rejection</strong>Outputs violating the safety envelope are deterministically rejected before delivery — no probabilistic exceptions.</div></div>
+        <div class="principle-item"><span class="principle-num">03</span><div class="principle-text"><strong>Adversarial Robustness</strong>Envelopes are specified to resist adversarial boundary probing through formal over-approximation of attack surfaces.</div></div>
+        <div class="principle-item"><span class="principle-num">04</span><div class="principle-text"><strong>Compositional Safety</strong>Safety properties compose across pipeline stages so that the aggregate system preserves each component's safety guarantees.</div></div>
+      </div>
+
+      <div class="model-media-btn">
+        <button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button>
+      </div>
+
+    </div><!-- end #model-sis -->
+
+    <!-- ═══ DIGRS-10 ══════════════════════════════════════════════ -->
+    <div id="model-digrs" class="model-detail">
+
+      <div class="model-hero">
+        <div>
+          <span class="label" style="display:block;margin-bottom:10px">Decision Intelligence &amp; Graph Reasoning Standard</span>
+          <h2>DIGRS-10</h2>
+          <p style="margin-top:8px">Graph-structured AI outputs for auditability and authorization control. DIGRS-10 requires that all AI-generated decision recommendations be expressed as directed acyclic graphs where every node is traceable to governance policy.</p>
+        </div>
+        <div class="model-version">v1.0</div>
+      </div>
+
+      <div class="model-specs">
+        <div class="spec-card"><span class="label">Maturity</span><div class="spec-value"><span class="badge badge-blue">Draft</span></div></div>
+        <div class="spec-card"><span class="label">Domain</span><div class="spec-value">Decision Architecture</div></div>
+        <div class="spec-card"><span class="label">Core Mechanism</span><div class="spec-value">Traceable DAG Outputs</div></div>
+      </div>
+
+      <div class="model-principles">
+        <div class="principle-item"><span class="principle-num">01</span><div class="principle-text"><strong>Graph-Structured Output</strong>Every recommendation is expressed as a DAG, making reasoning paths inspectable by humans and automated auditors.</div></div>
+        <div class="principle-item"><span class="principle-num">02</span><div class="principle-text"><strong>Policy Traceability</strong>Each inference node in the output graph references the governance policy that authorizes that reasoning step.</div></div>
+        <div class="principle-item"><span class="principle-num">03</span><div class="principle-text"><strong>Authorization Scoping</strong>Decision scope is bounded by explicit authorization tokens — the system cannot recommend outside its certified domain.</div></div>
+        <div class="principle-item"><span class="principle-num">04</span><div class="principle-text"><strong>Certified Evidence</strong>The output graph constitutes legal-grade decision evidence that can be submitted to regulatory bodies or internal audit functions.</div></div>
+      </div>
+
+      <div class="model-media-btn">
+        <button class="btn btn-ghost" onclick="switchTab('media')">▣ View Media</button>
+      </div>
+
+    </div><!-- end #model-digrs -->
+
+  </div><!-- end .wrap-lg -->
+  </div><!-- end .page-padded -->
+</div><!-- end #panel-models -->
 <!-- TAB: MODELS — END -->
 
 
 <!-- ══════════════════════════════════════════════════════════════════
      TAB: MEDIA — START
-     To add images: fill slots in IMAGES array (slot 1–100).
-     To add videos: fill slots in VIDEOS array (slot 1–20, YouTube ID only).
-     Leave a slot as '' to skip it — it will not render.
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ MEDIA TAB CSS ═════════════════════════════════════════════ */
 .media-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .media-header h2{margin-bottom:4px}
 .media-header p{font-size:13px;color:var(--muted)}
@@ -715,16 +753,12 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
     <div class="media-header"><div><span class="label" style="display:block;margin-bottom:6px">Visual Documentation</span><h2>Media</h2><p>Research imagery, development documentation, and video resources from ZULFR.</p></div><span class="badge badge-blue">ZULFR Archive</span></div>
     <div class="media-section"><div class="media-section-header"><span class="label">Images</span><span class="badge badge-blue" id="img-count"></span></div><div class="media-box"><div class="image-grid" id="image-grid"></div><div class="media-empty" id="image-empty" style="display:none">No images added yet</div></div></div>
     <div class="media-section"><div class="media-section-header"><span class="label">Videos</span><span class="badge badge-blue" id="vid-count"></span></div><div class="media-box"><div class="video-grid" id="video-grid"></div><div class="media-empty" id="video-empty" style="display:none">No videos added yet</div></div></div>
-  </div>
-</div>
+  </div><!-- end .wrap-lg -->
+  </div><!-- end .page-padded -->
+</div><!-- end #panel-media -->
 <!-- TAB: MEDIA — END -->
 
 <script>
-/* ═══ MEDIA TAB DATA + JS ═══════════════════════════════════════
-   IMAGES: 100 slots. Fill a slot with a URL to activate it.
-   VIDEOS: 20 slots. Fill a slot with a YouTube video ID to activate it.
-   Leave a slot as '' to skip — it will not render.
-════════════════════════════════════════════════════════════════ */
 var IMAGES=[
   /* slot 01 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-1.jpg',
   /* slot 02 */'https://github.com/usman19zafar/zulfr-images-videos/blob/main/Dais10/images/Dais10-2.jpg',
@@ -783,16 +817,15 @@ var VIDEOS=[
   var fv=VIDEOS.filter(function(v){return v.trim()!=='';});
   vc.textContent=fv.length+' item'+(fv.length===1?'':'s');
   if(!fv.length){vg.style.display='none';ve.style.display='flex';}
-  else{fv.forEach(function(id,idx){var div=document.createElement('div');div.className='video-item';div.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';vg.appendChild(div);});}
+  else{fv.forEach(function(id){var div=document.createElement('div');div.className='video-item';div.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';vg.appendChild(div);});}
 })();
 </script>
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     TAB: RECORD (lab) — START
+     TAB: RECORD — START
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ RECORD TAB CSS ════════════════════════════════════════════ */
 .lab-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .lab-header h2{margin-bottom:4px}
 .lab-header p{font-size:13px;color:var(--muted);max-width:580px;line-height:1.65}
@@ -931,9 +964,9 @@ var VIDEOS=[
       <a href="mailto:info@zulfr.com?subject=TRUE100 Evaluation Request" class="btn btn-gold">Submit for evaluation → info@zulfr.com</a>
       <div class="eval-confidential"><strong>Confidentiality guarantee:</strong> Your document is evaluated and returned. It is never stored, shared, published, or used in any other context. Full specification available under license — contact info@zulfr.com for research access or licensing inquiries.</div>
     </div>
-  </div>
-  </div>
-</div>
+  </div><!-- end .wrap-lg -->
+  </div><!-- end .page-padded -->
+</div><!-- end #panel-lab -->
 <!-- TAB: RECORD — END -->
 
 
@@ -941,7 +974,6 @@ var VIDEOS=[
      TAB: CONTACT — START
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ CONTACT TAB CSS ═══════════════════════════════════════════ */
 .con-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:36px}
 .con-header h2{margin-bottom:6px}
 .con-header p{font-size:13px;color:var(--muted)}
@@ -986,22 +1018,16 @@ var VIDEOS=[
         <p class="con-note" style="margin-top:16px">Corporate Office: Milton, Ontario, Canada.</p>
       </div>
     </div>
-  </div>
-  </div>
-</div>
+  </div><!-- end .wrap -->
+  </div><!-- end .page-padded -->
+</div><!-- end #panel-contact -->
 <!-- TAB: CONTACT — END -->
 
 
 <!-- ══════════════════════════════════════════════════════════════════
      TAB: LAB (labapp) — START
-     To activate a slot row:
-       1. Remove  opacity:.45
-       2. Change  badge-amber → badge-green  and  "COMING SOON" → "LIVE"
-       3. Change  <button disabled> → <a href="/your-app" target="_blank" class="btn btn-primary">▶ Launch</a>
-       4. Edit the SLOT-XX label, stack number, h3 title, and p description
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ═══ LAB (labapp) TAB CSS ══════════════════════════════════════ */
 .labapp-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
 .labapp-header h2{margin-bottom:6px}
 .labapp-header p{font-size:13px;color:var(--muted)}
@@ -1019,184 +1045,122 @@ var VIDEOS=[
       <p>Interactive demos for each governance model. Upload your data and run live analysis.</p>
     </div>
 
-    <!-- ROW 01 · DAIS-10 · LIVE ───────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #4fc3f7">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#4fc3f7">DAIS-10</span>
-          <span class="badge badge-green">LIVE</span>
-          <span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">01 · DATA</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#4fc3f7">DAIS-10</span><span class="badge badge-green">LIVE</span><span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">01 · DATA</span></div>
         <h3 style="margin-bottom:5px">Data Attribute &amp; Importance Standard</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Upload your dataset and run all 8 engines live. Row-level scores, tier assignments, cap codes, and AMD diagnostics.</p>
       </div>
       <a href="/app" target="_blank" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0">&#9654; Launch</a>
     </div>
 
-    <!-- ROW 02 · DiGRs-10 · COMING SOON ───────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #69db7c;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#69db7c">DiGRs-10</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">02 · MODELS</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#69db7c">DiGRs-10</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">02 · MODELS</span></div>
         <h3 style="margin-bottom:5px">Decision Intelligence &amp; Graph Reasoning</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Submit a model selection decision for governance audit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 03 · color:#ffa94d ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #ffa94d;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#ffa94d">SLOT-03</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">03 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#ffa94d">SLOT-03</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">03 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 03</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 04 · color:#f78fb3 ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #f78fb3;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#f78fb3">SLOT-04</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(247,143,179,.08);color:#f78fb3;border:1px solid rgba(247,143,179,.2)">04 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#f78fb3">SLOT-04</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(247,143,179,.08);color:#f78fb3;border:1px solid rgba(247,143,179,.2)">04 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 04</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 05 · color:#b197fc ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #b197fc;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#b197fc">SLOT-05</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">05 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#b197fc">SLOT-05</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">05 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 05</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 06 · color:#63e6be ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #63e6be;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#63e6be">SLOT-06</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(99,230,190,.08);color:#63e6be;border:1px solid rgba(99,230,190,.2)">06 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#63e6be">SLOT-06</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(99,230,190,.08);color:#63e6be;border:1px solid rgba(99,230,190,.2)">06 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 06</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 07 · color:#ffd43b ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #ffd43b;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#ffd43b">SLOT-07</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(255,212,59,.08);color:#ffd43b;border:1px solid rgba(255,212,59,.2)">07 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#ffd43b">SLOT-07</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(255,212,59,.08);color:#ffd43b;border:1px solid rgba(255,212,59,.2)">07 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 07</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 08 · color:#ff8787 ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #ff8787;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#ff8787">SLOT-08</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(255,135,135,.08);color:#ff8787;border:1px solid rgba(255,135,135,.2)">08 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#ff8787">SLOT-08</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(255,135,135,.08);color:#ff8787;border:1px solid rgba(255,135,135,.2)">08 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 08</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 09 · color:#4fc3f7 ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #4fc3f7;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#4fc3f7">SLOT-09</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">09 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#4fc3f7">SLOT-09</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(79,195,247,.08);color:#4fc3f7;border:1px solid rgba(79,195,247,.2)">09 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 09</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 10 · color:#69db7c ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #69db7c;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#69db7c">SLOT-10</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">10 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#69db7c">SLOT-10</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(105,219,124,.08);color:#69db7c;border:1px solid rgba(105,219,124,.2)">10 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 10</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 11 · color:#ffa94d ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #ffa94d;opacity:.45">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#ffa94d">SLOT-11</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">11 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#ffa94d">SLOT-11</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(255,169,77,.08);color:#ffa94d;border:1px solid rgba(255,169,77,.2)">11 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 11</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-    <!-- SLOT 12 · color:#b197fc ──────────────────────────────── -->
     <div class="lab-row" style="border-left:3px solid #b197fc;opacity:.45;margin-bottom:0">
       <div>
-        <div class="lab-row-meta">
-          <span class="label" style="color:#b197fc">SLOT-12</span>
-          <span class="badge badge-amber">COMING SOON</span>
-          <span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">12 · STACK</span>
-        </div>
+        <div class="lab-row-meta"><span class="label" style="color:#b197fc">SLOT-12</span><span class="badge badge-amber">COMING SOON</span><span class="badge" style="background:rgba(177,151,252,.08);color:#b197fc;border:1px solid rgba(177,151,252,.2)">12 · STACK</span></div>
         <h3 style="margin-bottom:5px">App Title — Slot 12</h3>
         <p style="font-size:12px;color:var(--muted);line-height:1.65">Brief description of what this app does and what the user can analyse or submit.</p>
       </div>
       <button class="btn btn-ghost" disabled style="white-space:nowrap;cursor:not-allowed;flex-shrink:0">Coming Soon</button>
     </div>
 
-  </div>
-  </div>
-</div>
+  </div><!-- end .wrap-lg -->
+  </div><!-- end .page-padded -->
+</div><!-- end #panel-labapp -->
 <!-- TAB: LAB — END -->
 
 </main>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     FOOTER — shared (not a tab; never delete this)
-══════════════════════════════════════════════════════════════════ -->
+<!-- ══ FOOTER ══════════════════════════════════════════════════════ -->
 <footer class="footer">
   <span class="wordmark">ZUL<em>FR</em></span>
   <span class="footer-note">© 2026 · A Measurement Institute · Dr. Usman Zafar Ph.D</span>
