@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIL·10 — Functional Safety Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ── TOKENS ──────────────────────────────────────── */
+:root {
+  --bg:       #07080a;
+  --surface:  #0e1014;
+  --border:   #1c1f26;
+  --muted:    #2a2e38;
+  --text:     #d8dde8;
+  --subtle:   #5a6070;
+  --accent:   #00e5ff;
+  --accent2:  #7b61ff;
+  --green:    #00e676;
+  --yellow:   #ffd740;
+  --orange:   #ff9100;
+  --red:      #ff1744;
+  --mono:     'DM Mono', monospace;
+  --sans:     'Syne', sans-serif;
+}
+
+/* ── RESET ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── GRID BACKGROUND ─────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── LAYOUT ──────────────────────────────────────── */
+.page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HEADER ──────────────────────────────────────── */
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.logo span { color: var(--accent); }
+.logo sub { font-size: 0.38em; color: var(--subtle); vertical-align: baseline; margin-left: 2px; letter-spacing: 0.1em; font-weight: 400; }
+.tagline { font-family: var(--mono); font-size: 0.72rem; color: var(--subtle); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.6; text-align: right; }
+
+/* ── STEP TABS ───────────────────────────────────── */
+.steps {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.step-tab {
+  flex: 1;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  border-bottom: 2px solid transparent;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.2s;
+}
+.step-tab .n {
+  width: 22px; height: 22px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+.step-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.step-tab.done { color: var(--green); }
+
+/* ── SECTION ─────────────────────────────────────── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── SECTION HEADER ──────────────────────────────── */
+.section-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.section-title em { color: var(--accent); font-style: normal; }
+.section-desc { font-family: var(--mono); font-size: 0.78rem; color: var(--subtle); margin-bottom: 36px; }
+
+/* ── FORM GRID ───────────────────────────────────── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field.full { grid-column: 1 / -1; }
+
+label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+label span { color: var(--accent); margin-left: 4px; }
+
+input[type="number"], select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button { display: none; }
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0,229,255,0.08);
+}
+select { cursor: pointer; }
+
+/* ── DEMAND MODE TOGGLE ──────────────────────────── */
+.toggle-group { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.toggle-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--subtle);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.04em;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.toggle-btn:last-child { border-right: none; }
+.toggle-btn.active { background: rgba(0,229,255,0.1); color: var(--accent); }
+
+/* ── PRESET PILLS ────────────────────────────────── */
+.preset-group { display: flex; gap: 8px; }
+.preset-pill {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--subtle);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 10px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.preset-pill.active { border-color: var(--accent2); color: var(--accent2); background: rgba(123,97,255,0.08); }
+
+/* ── RUN BUTTON ──────────────────────────────────── */
+.run-btn {
+  width: 100%;
+  margin-top: 28px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(123,97,255,0.15));
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.run-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(123,97,255,0.1));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.run-btn:hover::before { opacity: 1; }
+.run-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 24px rgba(0,229,255,0.15); }
+.run-btn:active { transform: translateY(0); }
+.run-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* ── BACK LINK ───────────────────────────────────── */
+.back-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 0.75rem; color: var(--subtle);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 32px; padding: 0;
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--text); }
+
+/* ── LOADING ─────────────────────────────────────── */
+.loading {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 80px 0;
+}
+.loading.active { display: flex; }
+.spinner {
+  width: 48px; height: 48px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: var(--mono); font-size: 0.8rem; color: var(--subtle); letter-spacing: 0.1em; }
+
+/* ── RESULTS ─────────────────────────────────────── */
+.results-wrap { display: none; }
+.results-wrap.active { display: block; }
+
+/* ── SIL BADGE ───────────────────────────────────── */
+.sil-hero {
+  text-align: center;
+  padding: 48px 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.sil-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sil-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.sil-level {
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.sil-level.sil4 { color: var(--green); text-shadow: 0 0 40px rgba(0,230,118,0.4); }
+.sil-level.sil3 { color: var(--green); text-shadow: 0 0 40px rgba(0,230,118,0.3); }
+.sil-level.sil2 { color: var(--yellow); text-shadow: 0 0 40px rgba(255,215,64,0.3); }
+.sil-level.sil1 { color: var(--orange); text-shadow: 0 0 40px rgba(255,145,0,0.3); }
+.sil-level.sil0 { color: var(--red); text-shadow: 0 0 40px rgba(255,23,68,0.3); }
+.sil-standard {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--subtle);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.sil-metric {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-top: 4px;
+}
+.sil-metric span { color: var(--subtle); font-size: 0.85em; }
+
+/* ── STAT CARDS ──────────────────────────────────── */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+@media (max-width: 580px) { .stat-row { grid-template-columns: 1fr 1fr; } }
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.stat-label { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); letter-spacing: 0.08em; text-transform: uppercase; }
+.stat-value { font-family: var(--mono); font-size: 1rem; font-weight: 500; color: var(--text); }
+.stat-value.green { color: var(--green); }
+.stat-value.yellow { color: var(--yellow); }
+.stat-value.red { color: var(--red); }
+.stat-value.accent { color: var(--accent); }
+
+/* ── PANEL ───────────────────────────────────────── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.panel-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-header .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.panel-body { padding: 20px 18px; }
+
+/* ── CHART ───────────────────────────────────────── */
+.chart-wrap { height: 220px; position: relative; }
+
+/* ── GOVERNANCE BAR ──────────────────────────────── */
+.gov-state {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+}
+.gov-dot {
+  width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+.gov-dot.GREEN { background: var(--green); color: var(--green); }
+.gov-dot.YELLOW { background: var(--yellow); color: var(--yellow); }
+.gov-dot.STRESS { background: var(--orange); color: var(--orange); }
+.gov-dot.RED { background: var(--red); color: var(--red); }
+.gov-label { font-family: var(--mono); font-size: 0.85rem; }
+.gov-flags { margin-left: auto; display: flex; gap: 8px; }
+.gov-flag {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+  padding: 3px 8px; border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--subtle);
+}
+.gov-flag.active { border-color: var(--red); color: var(--red); }
+
+/* ── AUDIT CHAIN ─────────────────────────────────── */
+.audit-row {
+  display: flex; align-items: center; gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 0.78rem;
+}
+.audit-row:last-child { border-bottom: none; }
+.audit-key { color: var(--subtle); min-width: 120px; }
+.audit-val { color: var(--text); }
+.audit-val.ok { color: var(--green); }
+
+/* ── CASCADE ─────────────────────────────────────── */
+.cascade-nodes { display: flex; flex-direction: column; gap: 10px; }
+.cascade-node {
+  display: flex; align-items: center; gap: 12px;
+}
+.node-id { font-family: var(--mono); font-size: 0.78rem; color: var(--subtle); min-width: 80px; }
+.node-bar-wrap { flex: 1; height: 8px; background: var(--muted); border-radius: 4px; overflow: hidden; }
+.node-bar { height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+.node-pct { font-family: var(--mono); font-size: 0.78rem; color: var(--text); min-width: 50px; text-align: right; }
+
+/* ── INPUT SUMMARY ───────────────────────────────── */
+.input-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+@media (max-width: 580px) { .input-grid { grid-template-columns: 1fr 1fr; } }
+.input-item { font-family: var(--mono); font-size: 0.78rem; }
+.input-item .k { color: var(--subtle); }
+.input-item .v { color: var(--text); }
+
+/* ── ERROR ───────────────────────────────────────── */
+.error-box {
+  display: none;
+  background: rgba(255,23,68,0.07);
+  border: 1px solid rgba(255,23,68,0.3);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+.error-box.active { display: block; }
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+}
+footer .f-logo { font-weight: 700; font-size: 0.9rem; color: var(--subtle); }
+footer .f-logo span { color: var(--accent); }
+footer .f-note { font-family: var(--mono); font-size: 0.68rem; color: var(--subtle); letter-spacing: 0.06em; text-align: right; }
+
+/* ── ANIMATIONS ──────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease forwards; }
+.fade-up-2 { animation: fadeUp 0.5s 0.1s ease both; }
+.fade-up-3 { animation: fadeUp 0.5s 0.2s ease both; }
+.fade-up-4 { animation: fadeUp 0.5s 0.3s ease both; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HEADER ───────────────────────────────────── -->
+<header>
+  <div>
+    <div class="logo">SIL<span>·</span>10<sub>Assessment</sub></div>
+  </div>
+  <div class="tagline">
+    IEC 61508 / 61511<br>
+    Functional Safety Rating<br>
+    Low &amp; High Demand Mode
+  </div>
+</header>
+
+<!-- ── STEP TABS ─────────────────────────────────── -->
+<div class="steps">
+  <div class="step-tab active" id="tab-1">
+    <span class="n">1</span> Configure
+  </div>
+  <div class="step-tab" id="tab-2">
+    <span class="n">2</span> Results
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 1 — CONFIGURE                             -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section active" id="section-1">
+  <div class="section-title">Configure <em>SIS Parameters</em></div>
+  <div class="section-desc">Define your safety instrumented system. Sil10 computes PFD or PFH and classifies your SIL band.</div>
+
+  <div class="error-box" id="form-error"></div>
+
+  <!-- Demand mode -->
+  <div class="field full" style="margin-bottom:20px;">
+    <label>Demand Mode <span>*</span></label>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-mode="low_demand" onclick="setMode('low_demand',this)">
+        Low Demand — PFD&nbsp;&nbsp;(IEC 61511)
+      </button>
+      <button class="toggle-btn" data-mode="high_demand" onclick="setMode('high_demand',this)">
+        High / Continuous — PFH&nbsp;&nbsp;(IEC 61508)
+      </button>
+    </div>
+  </div>
+
+  <!-- Mission time -->
+  <div class="field full" style="margin-bottom:20px;">
+    <label>Mission Time Preset</label>
+    <div class="preset-group">
+      <button class="preset-pill active" data-preset="1yr" onclick="setPreset('1yr',this)">1 Year<br><small style="font-size:0.65rem;color:var(--subtle)">8,760 hrs</small></button>
+      <button class="preset-pill" data-preset="5yr" onclick="setPreset('5yr',this)">5 Years<br><small style="font-size:0.65rem;color:var(--subtle)">43,800 hrs</small></button>
+      <button class="preset-pill" data-preset="10yr" onclick="setPreset('10yr',this)">10 Years<br><small style="font-size:0.65rem;color:var(--subtle)">87,600 hrs</small></button>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <!-- Weibull eta -->
+    <div class="field">
+      <label>Characteristic Life η (hrs) <span>*</span></label>
+      <input type="number" id="eta" value="1000" min="1" step="100" placeholder="e.g. 1000">
+    </div>
+    <!-- Weibull beta -->
+    <div class="field">
+      <label>Shape Parameter β <span>*</span></label>
+      <input type="number" id="beta" value="2.0" min="0.01" step="0.1" placeholder="e.g. 2.0">
+    </div>
+    <!-- Conservative bias -->
+    <div class="field">
+      <label>Conservative Bias ≥ 1.0</label>
+      <input type="number" id="bias" value="1.0" min="1.0" step="0.1" placeholder="e.g. 1.0">
+    </div>
+    <!-- Plant ID -->
+    <div class="field">
+      <label>Plant / Node ID</label>
+      <select id="plant">
+        <option value="plant_A">Plant A</option>
+        <option value="plant_B">Plant B</option>
+        <option value="plant_C">Plant C</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="run-btn" id="run-btn" onclick="runAssessment()">
+    ⟶ &nbsp; Run Functional Safety Assessment
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- STEP 2 — RESULTS                              -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="section-2">
+  <button class="back-btn" onclick="goBack()">← Edit Configuration</button>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Computing safety kernel…</div>
+  </div>
+
+  <div class="results-wrap" id="results-wrap">
+
+    <!-- SIL Badge -->
+    <div class="sil-hero fade-up" id="sil-hero">
+      <div class="sil-badge">
+        <div class="sil-level" id="sil-level-display">—</div>
+        <div class="sil-standard" id="sil-standard-display">IEC 61508 · 61511</div>
+      </div>
+      <div class="sil-metric" id="sil-metric-display">—</div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stat-row fade-up-2">
+      <div class="stat-card">
+        <div class="stat-label">Risk (Mission)</div>
+        <div class="stat-value accent" id="stat-risk">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Reliability R(t)</div>
+        <div class="stat-value" id="stat-rel">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Metric Used</div>
+        <div class="stat-value" id="stat-metric">—</div>
+      </div>
+    </div>
+
+    <!-- Reliability Curve -->
+    <div class="panel fade-up-3">
+      <div class="panel-header"><span class="dot"></span> Reliability &amp; Risk Curve</div>
+      <div class="panel-body">
+        <div class="chart-wrap">
+          <canvas id="rel-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Governance -->
+    <div class="panel fade-up-3">
+      <div class="panel-header"><span class="dot" style="background:var(--green)"></span> Governance State</div>
+      <div class="gov-state">
+        <div class="gov-dot" id="gov-dot"></div>
+        <div class="gov-label" id="gov-label">—</div>
+        <div class="gov-flags">
+          <div class="gov-flag" id="flag-offline">OFFLINE</div>
+          <div class="gov-flag" id="flag-stress">STRESS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Chain -->
+    <div class="panel fade-up-4">
+      <div class="panel-header"><span class="dot" style="background:var(--accent2)"></span> Audit Chain Integrity</div>
+      <div class="panel-body">
+        <div class="audit-row">
+          <div class="audit-key">Chain Integrity</div>
+          <div class="audit-val ok" id="audit-integrity">—</div>
+        </div>
+        <div class="audit-row">
+          <div class="audit-key">Record Count</div>
+          <div class="audit-val" id="audit-count">—</div>
+        </div>
+        <div class="audit-row">
+          <div class="audit-key">Last Hash</div>
+          <div class="audit-val" id="audit-hash" style="font-size:0.72rem;word-break:break-all">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cascade -->
+    <div class="panel fade-up-4">
+      <div class="panel-header"><span class="dot" style="background:var(--yellow)"></span> Network Cascade — Local Exposure</div>
+      <div class="panel-body">
+        <div class="cascade-nodes" id="cascade-nodes"></div>
+      </div>
+    </div>
+
+    <!-- Input Summary -->
+    <div class="panel fade-up-4">
+      <div class="panel-header"><span class="dot" style="background:var(--subtle)"></span> Input Configuration</div>
+      <div class="panel-body">
+        <div class="input-grid" id="input-summary"></div>
+      </div>
+    </div>
+
+  </div><!-- /results-wrap -->
+</div><!-- /section-2 -->
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer>
+  <div class="f-logo">SIL<span>·</span>10</div>
+  <div class="f-note">IEC 61508 / IEC 61511 · Weibull Hazard Model<br>Sil10 Engine · Zero data retention</div>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+/* ── STATE ──────────────────────────────────────── */
+const API_BASE = 'http://localhost:5001'; // ← change to your VPS URL
+let selectedMode   = 'low_demand';
+let selectedPreset = '1yr';
+let relChart       = null;
+
+/* ── CONTROLS ───────────────────────────────────── */
+function setMode(mode, btn) {
+  selectedMode = mode;
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function setPreset(preset, btn) {
+  selectedPreset = preset;
+  document.querySelectorAll('.preset-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* ── NAVIGATION ─────────────────────────────────── */
+function showSection(n) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.step-tab').forEach((t,i) => {
+    t.classList.remove('active','done');
+    if (i===n-1) t.classList.add('active');
+    if (i<n-1)   t.classList.add('done');
+  });
+}
+function goBack() { showSection(1); }
+
+/* ── RUN ────────────────────────────────────────── */
+async function runAssessment() {
+  const errBox = document.getElementById('form-error');
+  errBox.classList.remove('active');
+
+  const eta  = parseFloat(document.getElementById('eta').value);
+  const beta = parseFloat(document.getElementById('beta').value);
+  const bias = parseFloat(document.getElementById('bias').value);
+  const plant = document.getElementById('plant').value;
+
+  if (!eta || eta<=0)       { showError('η (Characteristic Life) must be > 0'); return; }
+  if (!beta || beta<=0)     { showError('β (Shape Parameter) must be > 0'); return; }
+  if (!bias || bias<1.0)    { showError('Conservative Bias must be ≥ 1.0'); return; }
+
+  showSection(2);
+  document.getElementById('loading').classList.add('active');
+  document.getElementById('results-wrap').classList.remove('active');
+
+  try {
+    const res = await fetch(`${API_BASE}/api/assess`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eta, beta,
+        conservative_bias: bias,
+        demand_mode: selectedMode,
+        mission_preset: selectedPreset,
+        plant_id: plant,
+      })
+    });
+
+    if (!res.ok) {
+      const e = await res.json();
+      throw new Error(e.error || 'Server error');
+    }
+
+    const data = await res.json();
+    renderResults(data);
+
+  } catch (err) {
+    document.getElementById('loading').classList.remove('active');
+    goBack();
+    showError(`API Error: ${err.message}`);
+  }
+}
+
+function showError(msg) {
+  const errBox = document.getElementById('form-error');
+  errBox.textContent = '⚠  ' + msg;
+  errBox.classList.add('active');
+}
+
+/* ── RENDER ─────────────────────────────────────── */
+function renderResults(d) {
+  document.getElementById('loading').classList.remove('active');
+  document.getElementById('results-wrap').classList.add('active');
+
+  /* SIL badge */
+  const silLabel = d.sil.label;            // e.g. "SIL 3"
+  const silNum   = silLabel.replace('SIL ','').replace('Below SIL 1','0');
+  const lvlEl    = document.getElementById('sil-level-display');
+  lvlEl.textContent = silLabel;
+  lvlEl.className = 'sil-level ' +
+    (silLabel.includes('4') ? 'sil4' :
+     silLabel.includes('3') ? 'sil3' :
+     silLabel.includes('2') ? 'sil2' :
+     silLabel.includes('1') && !silLabel.includes('Below') ? 'sil1' : 'sil0');
+
+  document.getElementById('sil-standard-display').textContent =
+    d.inputs.demand_mode === 'low_demand'
+      ? 'IEC 61511 · Low Demand Mode · PFD'
+      : 'IEC 61508 · High/Continuous Demand · PFH';
+
+  const metricVal = d.inputs.demand_mode === 'low_demand' ? d.results.pfd : d.results.pfh;
+  const metricLabel = d.results.metric_label;
+  document.getElementById('sil-metric-display').innerHTML =
+    `${metricLabel} = <span>${fmtSci(metricVal)}</span>`;
+
+  /* Stat cards */
+  document.getElementById('stat-risk').textContent = fmtSci(d.results.risk);
+  document.getElementById('stat-rel').textContent  = fmtPct(d.results.reliability);
+  document.getElementById('stat-metric').textContent = `${fmtSci(metricVal)} ${metricLabel}`;
+
+  /* Reliability chart */
+  renderChart(d.curve);
+
+  /* Governance */
+  const gs = d.governance.state;
+  const dot = document.getElementById('gov-dot');
+  dot.className = 'gov-dot ' + gs;
+  document.getElementById('gov-label').textContent = gs;
+  const fOff = document.getElementById('flag-offline');
+  const fStr = document.getElementById('flag-stress');
+  fOff.classList.toggle('active', d.governance.offline_flag);
+  fStr.classList.toggle('active', d.governance.stress_flag);
+
+  /* Audit */
+  document.getElementById('audit-integrity').textContent = d.audit.chain_integrity ? '✓ VALID' : '✗ COMPROMISED';
+  document.getElementById('audit-count').textContent = d.audit.record_count;
+  document.getElementById('audit-hash').textContent = d.audit.last_hash || '—';
+
+  /* Cascade */
+  const cn = document.getElementById('cascade-nodes');
+  cn.innerHTML = '';
+  for (const [node, exp] of Object.entries(d.cascade.local_exposure)) {
+    const pct = (exp * 100).toFixed(1);
+    const color = exp > 0.8 ? 'var(--red)' : exp > 0.5 ? 'var(--yellow)' : 'var(--green)';
+    cn.innerHTML += `
+      <div class="cascade-node">
+        <div class="node-id">${node}</div>
+        <div class="node-bar-wrap">
+          <div class="node-bar" style="width:${pct}%;background:${color}"></div>
+        </div>
+        <div class="node-pct">${pct}%</div>
+      </div>`;
+  }
+
+  /* Input summary */
+  const inp = d.inputs;
+  const is = document.getElementById('input-summary');
+  const hrs = inp.mission_hours.toLocaleString();
+  is.innerHTML = [
+    ['η (eta)', inp.eta + ' hrs'],
+    ['β (beta)', inp.beta],
+    ['Bias', inp.conservative_bias],
+    ['Mode', inp.demand_mode === 'low_demand' ? 'Low Demand' : 'High/Cont.'],
+    ['Mission', inp.mission_preset + ' / ' + hrs + ' hrs'],
+    ['Plant', inp.plant_id],
+  ].map(([k,v]) => `<div class="input-item"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+}
+
+/* ── CHART ──────────────────────────────────────── */
+function renderChart(curve) {
+  if (relChart) { relChart.destroy(); relChart = null; }
+  const ctx = document.getElementById('rel-chart').getContext('2d');
+  relChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: curve.hours,
+      datasets: [
+        {
+          label: 'Reliability R(t)',
+          data: curve.reliability,
+          borderColor: '#00e5ff',
+          backgroundColor: 'rgba(0,229,255,0.07)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.4,
+        },
+        {
+          label: 'Risk 1−R(t)',
+          data: curve.risk,
+          borderColor: '#ff1744',
+          backgroundColor: 'rgba(255,23,68,0.05)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.4,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#5a6070', font: { family: 'DM Mono', size: 11 }, boxWidth: 12 } },
+        tooltip: {
+          backgroundColor: '#0e1014',
+          borderColor: '#1c1f26',
+          borderWidth: 1,
+          titleColor: '#5a6070',
+          bodyColor: '#d8dde8',
+          titleFont: { family: 'DM Mono', size: 10 },
+          bodyFont: { family: 'DM Mono', size: 11 },
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#5a6070', font: { family: 'DM Mono', size: 9 }, maxTicksLimit: 6 },
+          grid: { color: '#1c1f26' },
+          title: { display: true, text: 'Hours', color: '#5a6070', font: { family: 'DM Mono', size: 10 } }
+        },
+        y: {
+          ticks: { color: '#5a6070', font: { family: 'DM Mono', size: 9 } },
+          grid: { color: '#1c1f26' },
+          min: 0, max: 1,
+        }
+      }
+    }
+  });
+}
+
+/* ── UTILS ──────────────────────────────────────── */
+function fmtSci(n) {
+  if (n === 0) return '0';
+  if (n >= 0.001 && n < 1000) return n.toPrecision(4);
+  return n.toExponential(3);
+}
+function fmtPct(n) { return (n * 100).toFixed(4) + '%'; }
+</script>
+</body>
+</html>
