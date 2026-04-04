@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRUE-100 · Information Integrity Engine</title>
+<meta name="description" content="TRUE-100 Mini — Instant information integrity scoring. Paste text or upload a document and get your governance index.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset & Variables ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:        #FFD700;
+  --gold-dim:    #B8960C;
+  --gold-glow:   #FFD70033;
+  --gold-deep:   #3D2E00;
+  --silver:      #C8C8D8;
+  --dark:        #07070F;
+  --dark2:       #0D0D1A;
+  --card:        #10101E;
+  --border:      #1E1E35;
+  --green:       #00E59B;
+  --red:         #FF3D71;
+  --text:        #C4C4D4;
+  --text-dim:    #5A5A7A;
+  --mono:        'Space Mono', monospace;
+  --serif:       'Cormorant Garamond', serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Noise texture overlay ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── Grid lines background ─────────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Layout wrapper ────────────────────────────────────────────────────── */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.site-header {
+  padding: 52px 0 0;
+  text-align: center;
+  animation: fadeDown 0.8s ease both;
+}
+
+.logo-hex {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--gold-dim);
+  border: 1px solid var(--gold-deep);
+  padding: 6px 18px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+  background: #1A1400;
+}
+
+.site-title {
+  font-family: var(--mono);
+  font-size: clamp(42px, 8vw, 72px);
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: var(--gold);
+  text-shadow:
+    0 0 40px #FFD70066,
+    0 0 80px #FFD70033,
+    0 2px 0 #3D2E00;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.site-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.site-tagline {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 300;
+  color: #888898;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.limit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold-dim);
+  background: #1A1400;
+  border: 1px solid var(--gold-deep);
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-top: 12px;
+}
+.limit-badge span { color: var(--gold); }
+
+/* ── Divider ───────────────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-dim), var(--gold-deep), transparent);
+  margin: 36px 0;
+  position: relative;
+}
+.divider::after {
+  content: '⬡';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--dark);
+  color: var(--gold-dim);
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+/* ── Marketing Banner ──────────────────────────────────────────────────── */
+.marketing-banner {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--gold-deep);
+  box-shadow: 0 0 40px #FFD70011, 0 8px 32px #00000066;
+  margin: 0 0 36px;
+  animation: fadeUp 0.9s 0.2s ease both;
+  position: relative;
+}
+.marketing-banner img {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.marketing-banner:hover img { transform: scale(1.01); }
+.marketing-banner-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 18px;
+  background: linear-gradient(transparent, #07070Fcc);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold-dim);
+  text-align: right;
+}
+
+/* ── Input card ────────────────────────────────────────────────────────── */
+.input-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  animation: fadeUp 1s 0.3s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.input-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim)55, transparent);
+}
+
+.input-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.upload-zone {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-bottom: 18px;
+  position: relative;
+  background: var(--dark2);
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--gold-dim);
+  background: #1A1400;
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.upload-zone input[type=file] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.upload-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+  opacity: 0.5;
+}
+.upload-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+.upload-text b { color: var(--gold-dim); }
+
+.file-chosen {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: #111800;
+  border: 1px solid #2A3A00;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+}
+.file-chosen.show { display: flex; }
+.file-remove {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 16px;
+  line-height: 1;
+  border: none;
+  background: none;
+  color: var(--red);
+  padding: 0;
+}
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 16px;
+}
+.or-divider::before, .or-divider::after {
+  content: ''; flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.or-divider span {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+textarea {
+  width: 100%;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.7;
+  padding: 14px 16px;
+  resize: vertical;
+  min-height: 140px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+textarea:focus {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 2px var(--gold-glow);
+}
+textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic; }
+
+/* Word counter ─────────────────────────────────────────────────────────── */
+.word-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.word-bar-track {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-right: 12px;
+  overflow: hidden;
+}
+.word-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--green);
+  transition: width 0.3s ease, background 0.3s ease;
+  width: 0%;
+}
+.word-count-label {
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.word-count-label.warn  { color: var(--gold); }
+.word-count-label.over  { color: var(--red); }
+
+/* ── Submit button ─────────────────────────────────────────────────────── */
+.btn-analyse {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #1E1600, #2E2000);
+  border: 1px solid var(--gold-dim);
+  border-radius: 8px;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-analyse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--gold-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.btn-analyse:hover {
+  box-shadow: 0 0 30px var(--gold-glow), 0 0 60px #FFD70011;
+  border-color: var(--gold);
+}
+.btn-analyse:hover::after { opacity: 1; }
+.btn-analyse:active { transform: scale(0.99); }
+.btn-analyse:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--border);
+  color: var(--text-dim);
+  box-shadow: none;
+}
+
+/* ── Loading ───────────────────────────────────────────────────────────── */
+.loading-bar {
+  display: none;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.loading-bar.show { display: block; }
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  width: 40%;
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-200%); }
+  100% { transform: translateX(400%); }
+}
+
+/* ── Error ─────────────────────────────────────────────────────────────── */
+.error-box {
+  display: none;
+  background: #1A0010;
+  border: 1px solid #FF3D7155;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 1px;
+}
+.error-box.show { display: block; }
+
+/* ── Results ───────────────────────────────────────────────────────────── */
+.results-section {
+  display: none;
+  animation: fadeUp 0.5s ease both;
+}
+.results-section.show { display: block; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 14px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+.kpi-card:hover { box-shadow: 0 0 20px var(--gold-glow); }
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%; height: 1px;
+  background: var(--gold-dim);
+  opacity: 0.4;
+}
+.kpi-card.green::before { background: var(--green); }
+.kpi-card.red::before   { background: var(--red); }
+.kpi-card.silver::before { background: var(--silver); }
+
+.kpi-label {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.kpi-value {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+}
+.kpi-value.sm  { font-size: 14px; padding-top: 4px; }
+.kpi-value.green { color: var(--green); }
+.kpi-value.red   { color: var(--red); }
+.kpi-value.silver{ color: var(--silver); }
+.kpi-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: #33334A;
+  margin-top: 6px;
+}
+
+/* ── Locked panel ──────────────────────────────────────────────────────── */
+.locked-panel {
+  background: var(--card);
+  border: 1px dashed #25253A;
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.lock-icon {
+  font-size: 24px;
+  opacity: 0.25;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.lock-body { flex: 1; }
+.lock-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #404060;
+  margin-bottom: 6px;
+}
+.lock-dims {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.lock-dim {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: #333350;
+  background: #0D0D1A;
+  border: 1px solid #1A1A2A;
+  padding: 3px 10px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+.lock-note {
+  font-family: var(--serif);
+  font-size: 12px;
+  color: #333350;
+  font-style: italic;
+}
+
+/* ── Upgrade banner ────────────────────────────────────────────────────── */
+.upgrade-card {
+  background: linear-gradient(135deg, #130F00, #1E1600 60%, #130F00);
+  border: 1px solid #3D3000;
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.upgrade-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 120px;
+  background: radial-gradient(ellipse, var(--gold-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.upgrade-hex {
+  font-family: var(--mono);
+  font-size: 28px;
+  color: var(--gold-dim);
+  opacity: 0.3;
+  letter-spacing: 8px;
+  margin-bottom: 12px;
+}
+.upgrade-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.upgrade-text {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: #888878;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.upgrade-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.upgrade-feature {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--gold-dim);
+  background: #1E1600;
+  border: 1px solid var(--gold-deep);
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+.btn-upgrade {
+  display: inline-block;
+  padding: 13px 40px;
+  background: linear-gradient(135deg, var(--gold-dim), #B8960C);
+  color: var(--dark);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px #FFD70033;
+}
+.btn-upgrade:hover {
+  box-shadow: 0 4px 40px #FFD70066;
+  transform: translateY(-1px);
+}
+
+/* ── Reset button ──────────────────────────────────────────────────────── */
+.btn-reset {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+.btn-reset:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.site-footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+}
+.footer-logo { color: var(--gold-dim); }
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 10px var(--gold-glow); }
+  50%       { box-shadow: 0 0 30px #FFD70044; }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 500px) {
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .kpi-grid .kpi-card:last-child { grid-column: span 2; }
+  .site-title { letter-spacing: 4px; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="logo-hex">⬡ &nbsp; Z U L F R . C O M &nbsp; ⬡</div>
+    <h1 class="site-title">TRUE‑100</h1>
+    <div class="site-sub">INFORMATION INTEGRITY ENGINE &nbsp;·&nbsp; MINI</div>
+    <p class="site-tagline">Paste text. Get your governance index instantly.</p>
+    <div class="limit-badge">⬡ &nbsp; <span>50-word</span> &nbsp; demo limit &nbsp;·&nbsp; mock engine &nbsp;·&nbsp; no data retained</div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ── MARKETING BANNER ───────────────────────────────────────────────── -->
+  <div class="marketing-banner">
+    <img
+      src="assets/banner.png"
+      alt="Pioneering Solutions in Governance, AI & Technology — Usman Zafar"
+      loading="lazy"
+    >
+    <div class="marketing-banner-overlay">zulfr.com &nbsp;·&nbsp; Governance · AI · Technology</div>
+  </div>
+
+  <!-- ── INPUT CARD ──────────────────────────────────────────────────────── -->
+  <div class="input-card">
+
+    <span class="input-label">UPLOAD DOCUMENT &nbsp;—&nbsp; PDF OR DOCX</span>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".pdf,.docx" aria-label="Upload PDF or DOCX">
+      <span class="upload-icon">⬡</span>
+      <div class="upload-text">
+        Drop file here or <b>click to browse</b><br>
+        <span style="opacity:0.5">PDF · DOCX &nbsp;·&nbsp; max 10 MB</span>
+      </div>
+    </div>
+
+    <div class="file-chosen" id="fileChosen">
+      <span id="fileChosenName">document.pdf</span>
+      <button class="file-remove" id="fileRemove" aria-label="Remove file">✕</button>
+    </div>
+
+    <div class="or-divider"><span>OR PASTE TEXT</span></div>
+
+    <span class="input-label">PASTE UP TO 50 WORDS</span>
+    <textarea
+      id="textInput"
+      placeholder="Paste your text here — policy excerpt, article paragraph, statement..."
+      maxlength="2000"
+      aria-label="Text input"
+    ></textarea>
+
+    <div class="word-counter">
+      <div class="word-bar-track">
+        <div class="word-bar-fill" id="wordBarFill"></div>
+      </div>
+      <span class="word-count-label" id="wordCountLabel">0 / 50 words</span>
+    </div>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <button class="btn-analyse" id="btnAnalyse" disabled>
+      ⬡ &nbsp;&nbsp; ANALYSE INTEGRITY
+    </button>
+
+    <div class="loading-bar" id="loadingBar">
+      <div class="loading-bar-fill"></div>
+    </div>
+
+  </div>
+
+  <!-- ── RESULTS ─────────────────────────────────────────────────────────── -->
+  <div class="results-section" id="resultsSection">
+
+    <div class="kpi-grid" id="kpiGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="locked-panel">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-body">
+        <div class="lock-title">5-DIMENSION BREAKDOWN &nbsp;·&nbsp; COMMERCIAL VERSION</div>
+        <div class="lock-dims">
+          <span class="lock-dim">◈ TRUTHFULNESS</span>
+          <span class="lock-dim">◎ CLARITY</span>
+          <span class="lock-dim">◇ MANIPULATION INTEGRITY</span>
+          <span class="lock-dim">◑ TIMELINESS</span>
+          <span class="lock-dim">◉ EFFECTIVENESS</span>
+        </div>
+        <div class="lock-note">
+          Full 100-cell Governance Reactor · PDF report · Multi-provider AI engine
+        </div>
+      </div>
+    </div>
+
+    <div class="upgrade-card">
+      <div class="upgrade-hex">⬡ ⬡ ⬡</div>
+      <div class="upgrade-title">UNLOCK FULL TRUE-100</div>
+      <p class="upgrade-text">
+        Get the complete information integrity report — five governance dimensions,
+        the 100-cell Hypercube breakdown, Epistemic Entropy, Causal Telemetry Graph,
+        and PDF export. Built for compliance, research and editorial teams.
+      </p>
+      <div class="upgrade-features">
+        <span class="upgrade-feature">5-DIM BREAKDOWN</span>
+        <span class="upgrade-feature">100-CELL HYPERCUBE</span>
+        <span class="upgrade-feature">PDF EXPORT</span>
+        <span class="upgrade-feature">6 AI PROVIDERS</span>
+        <span class="upgrade-feature">GOVERNANCE REACTOR</span>
+        <span class="upgrade-feature">BATCH SCORING</span>
+      </div>
+      <a href="mailto:info@zulfr.com" class="btn-upgrade">⬡ &nbsp; GET FULL ACCESS</a>
+    </div>
+
+    <button class="btn-reset" id="btnReset">↩ &nbsp; RUN ANOTHER EVALUATION</button>
+
+  </div>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <span class="footer-logo">⬡ TRUE-100</span>
+    <span>spec: true10-v0.1 &nbsp;·&nbsp; mock engine</span>
+    <span>© 2026 Usman Zafar Ph.D &nbsp;·&nbsp; <a href="mailto:info@zulfr.com" style="color:var(--gold-dim);text-decoration:none">info@zulfr.com</a></span>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────
+const API_BASE   = 'https://api.true.zulfr.com';
+const WORD_LIMIT = 50;
+
+// ── DOM refs ──────────────────────────────────────────────────────────────
+const fileInput     = document.getElementById('fileInput');
+const uploadZone    = document.getElementById('uploadZone');
+const fileChosen    = document.getElementById('fileChosen');
+const fileChosenName= document.getElementById('fileChosenName');
+const fileRemove    = document.getElementById('fileRemove');
+const textInput     = document.getElementById('textInput');
+const wordBarFill   = document.getElementById('wordBarFill');
+const wordCountLabel= document.getElementById('wordCountLabel');
+const btnAnalyse    = document.getElementById('btnAnalyse');
+const loadingBar    = document.getElementById('loadingBar');
+const errorBox      = document.getElementById('errorBox');
+const resultsSection= document.getElementById('resultsSection');
+const kpiGrid       = document.getElementById('kpiGrid');
+const btnReset      = document.getElementById('btnReset');
+
+let currentFile = null;
+
+// ── Word counter ──────────────────────────────────────────────────────────
+function wordCount(t) {
+  return t.trim() === '' ? 0 : t.trim().split(/\s+/).length;
+}
+
+function updateCounter() {
+  const wc  = wordCount(textInput.value);
+  const pct = Math.min(100, (wc / WORD_LIMIT) * 100);
+  wordBarFill.style.width = pct + '%';
+  wordBarFill.style.background =
+    wc === 0       ? 'var(--text-dim)' :
+    wc <= WORD_LIMIT ? 'var(--green)'   :
+                       'var(--red)';
+  wordCountLabel.textContent = wc + ' / ' + WORD_LIMIT + ' words';
+  wordCountLabel.className   = 'word-count-label' +
+    (wc > WORD_LIMIT ? ' over' : wc > WORD_LIMIT * 0.8 ? ' warn' : '');
+  updateBtn();
+}
+
+function updateBtn() {
+  const wc      = wordCount(textInput.value);
+  const hasFile = currentFile !== null;
+  const hasText = wc > 0 && wc <= WORD_LIMIT;
+  btnAnalyse.disabled = !(hasFile || hasText);
+}
+
+textInput.addEventListener('input', updateCounter);
+
+// ── File upload ───────────────────────────────────────────────────────────
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', ()=> uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) setFile(f);
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) setFile(fileInput.files[0]);
+});
+
+function setFile(f) {
+  const ext = f.name.split('.').pop().toLowerCase();
+  if (!['pdf','docx'].includes(ext)) {
+    showError('Only PDF and DOCX files are supported.');
+    return;
+  }
+  currentFile = f;
+  fileChosenName.textContent = f.name;
+  fileChosen.classList.add('show');
+  uploadZone.style.display = 'none';
+  textInput.value = '';
+  updateCounter();
+  hideError();
+}
+
+fileRemove.addEventListener('click', () => {
+  currentFile = null;
+  fileInput.value = '';
+  fileChosen.classList.remove('show');
+  uploadZone.style.display = 'block';
+  updateBtn();
+});
+
+// ── Error helpers ─────────────────────────────────────────────────────────
+function showError(msg) {
+  errorBox.textContent = '✕  ' + msg;
+  errorBox.classList.add('show');
+}
+function hideError() {
+  errorBox.classList.remove('show');
+}
+
+// ── API call ──────────────────────────────────────────────────────────────
+async function runAnalysis() {
+  hideError();
+  btnAnalyse.disabled = true;
+  loadingBar.classList.add('show');
+  resultsSection.classList.remove('show');
+
+  try {
+    let data;
+
+    if (currentFile) {
+      const form = new FormData();
+      form.append('file', currentFile);
+      const res = await fetch(API_BASE + '/v1/score/file', {
+        method: 'POST', body: form
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || 'Server error ' + res.status);
+      }
+      data = await res.json();
+    } else {
+      const res = await fetch(API_BASE + '/v1/score/text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: textInput.value })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || 'Server error ' + res.status);
+      }
+      data = await res.json();
+    }
+
+    renderResults(data);
+
+  } catch (e) {
+    showError(e.message || 'Connection error — check your network.');
+    btnAnalyse.disabled = false;
+  } finally {
+    loadingBar.classList.remove('show');
+  }
+}
+
+// ── Render results ────────────────────────────────────────────────────────
+function renderResults(d) {
+  const idx       = d.index;
+  const compliant = d.compliant;
+  const words     = d.words;
+
+  const idxColor  = idx >= 70 ? 'var(--green)' : idx >= 45 ? 'var(--gold)' : 'var(--red)';
+  const compClass = compliant ? 'green' : 'red';
+  const compLabel = compliant ? '✓ COMPLIANT' : '✗ NON-COMPLIANT';
+
+  kpiGrid.innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-label">TRUE-100 INDEX</div>
+      <div class="kpi-value" style="color:${idxColor}">${idx}</div>
+      <div class="kpi-sub">/ 100</div>
+    </div>
+    <div class="kpi-card ${compClass}">
+      <div class="kpi-label">COMPLIANCE</div>
+      <div class="kpi-value sm ${compClass}">${compLabel}</div>
+      <div class="kpi-sub">&nbsp;</div>
+    </div>
+    <div class="kpi-card silver">
+      <div class="kpi-label">WORDS</div>
+      <div class="kpi-value silver">${words}</div>
+      <div class="kpi-sub">analysed</div>
+    </div>
+  `;
+
+  resultsSection.classList.add('show');
+  resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Button & reset ────────────────────────────────────────────────────────
+btnAnalyse.addEventListener('click', runAnalysis);
+
+btnReset.addEventListener('click', () => {
+  resultsSection.classList.remove('show');
+  textInput.value = '';
+  currentFile = null;
+  fileInput.value = '';
+  fileChosen.classList.remove('show');
+  uploadZone.style.display = 'block';
+  updateCounter();
+  hideError();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
