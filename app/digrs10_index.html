@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DIGrS-10 — Model Verification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  /* ── Variables ─────────────────────────────────────────────── */
+  :root {
+    --bg:        #08090d;
+    --bg2:       #0e1018;
+    --bg3:       #13151f;
+    --border:    #1e2235;
+    --border2:   #252a40;
+    --blue:      #3b6fff;
+    --blue-dim:  #1a3580;
+    --green:     #00e87a;
+    --green-dim: #003d20;
+    --red:       #ff3b5c;
+    --red-dim:   #3d0012;
+    --amber:     #ffb020;
+    --amber-dim: #3d2800;
+    --muted:     #3a4060;
+    --sub:       #5a6080;
+    --text:      #c8d0f0;
+    --text2:     #7880a8;
+    --white:     #edf0ff;
+    --mono:      'Space Mono', monospace;
+    --sans:      'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Grain overlay ─────────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── Layout ────────────────────────────────────────────────── */
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── Header ────────────────────────────────────────────────── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0 24px;
+  }
+  .header-inner {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .logo span { color: var(--sub); }
+  h1 {
+    font-family: var(--sans);
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  h1 em { color: var(--blue); font-style: normal; }
+  .tagline {
+    font-size: 13px;
+    color: var(--sub);
+    margin-top: 6px;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+  }
+  .header-badge {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+    border: 1px solid;
+  }
+  .pill-blue  { color: var(--blue);  border-color: var(--blue-dim);  background: rgba(59,111,255,0.07); }
+  .pill-muted { color: var(--sub);   border-color: var(--border);    background: transparent; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+         animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── Upload zone ───────────────────────────────────────────── */
+  .upload-section { padding: 48px 0 0; }
+  .section-label {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sub); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .drop-zone {
+    border: 1px dashed var(--border2);
+    border-radius: 4px;
+    background: var(--bg2);
+    padding: 56px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .drop-zone::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(59,111,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--blue);
+    background: rgba(59,111,255,0.04);
+  }
+  .drop-zone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .drop-icon {
+    width: 48px; height: 48px; margin: 0 auto 20px;
+    border: 1px solid var(--border2); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg3);
+  }
+  .drop-icon svg { width: 22px; height: 22px; stroke: var(--blue); fill: none; stroke-width: 1.5; }
+  .drop-title {
+    font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px;
+  }
+  .drop-sub {
+    font-family: var(--mono); font-size: 11px; color: var(--sub);
+  }
+  .drop-constraint {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    margin-top: 14px; letter-spacing: 0.05em;
+  }
+
+  /* ── File selected state ───────────────────────────────────── */
+  .file-selected {
+    display: none;
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 4px; padding: 20px 24px;
+    align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .file-info { display: flex; align-items: center; gap: 14px; }
+  .file-icon {
+    width: 36px; height: 36px; border-radius: 3px;
+    background: rgba(59,111,255,0.1); border: 1px solid var(--blue-dim);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .file-icon svg { width: 16px; height: 16px; stroke: var(--blue); fill:none; stroke-width:2; }
+  .file-name { font-family: var(--mono); font-size: 12px; color: var(--white); font-weight: 700; }
+  .file-size { font-family: var(--mono); font-size: 10px; color: var(--sub); margin-top: 2px; }
+  .btn-clear {
+    background: none; border: 1px solid var(--border2); color: var(--sub);
+    font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 6px 12px; border-radius: 3px; cursor: pointer;
+    text-transform: uppercase; transition: border-color 0.2s, color 0.2s; flex-shrink:0;
+  }
+  .btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── Rules ─────────────────────────────────────────────────── */
+  .rules {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-top: 16px;
+  }
+  .rule {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 3px; padding: 12px 14px;
+    font-family: var(--mono); font-size: 10px; color: var(--sub);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .rule-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); flex-shrink:0; margin-top: 3px; }
+
+  /* ── Run button ────────────────────────────────────────────── */
+  .run-wrap { margin-top: 24px; }
+  #btn-run {
+    width: 100%; padding: 18px 24px;
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: var(--sans); font-size: 15px; font-weight: 700;
+    letter-spacing: 0.04em; transition: background 0.2s, opacity 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  #btn-run:hover:not(:disabled) { background: #2a5aee; }
+  #btn-run:disabled { opacity: 0.4; cursor: not-allowed; }
+  #btn-run svg { width: 18px; height: 18px; stroke: currentColor; fill:none; stroke-width:2; }
+
+  /* ── Progress log ──────────────────────────────────────────── */
+  .log-box {
+    display: none;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; padding: 20px 24px; margin-top: 32px;
+    font-family: var(--mono); font-size: 11px; color: var(--sub);
+    line-height: 2; max-height: 200px; overflow-y: auto;
+  }
+  .log-line { display: flex; gap: 12px; }
+  .log-line .ts { color: var(--muted); flex-shrink: 0; }
+  .log-line .msg { color: var(--sub); }
+  .log-line.active .msg { color: var(--blue); }
+  .cursor { display: inline-block; animation: blink 0.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── Results ───────────────────────────────────────────────── */
+  .results-section { display: none; padding: 48px 0 80px; }
+
+  .verdict-bar {
+    border-radius: 4px; padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 32px;
+    position: relative; overflow: hidden;
+  }
+  .verdict-bar::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(255,255,255,0.02));
+    pointer-events: none;
+  }
+  .verdict-certify { background: var(--green-dim); border: 1px solid rgba(0,232,122,0.25); }
+  .verdict-reject  { background: var(--red-dim);   border: 1px solid rgba(255,59,92,0.25); }
+
+  .verdict-left { display: flex; align-items: center; gap: 20px; }
+  .verdict-icon {
+    width: 56px; height: 56px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .verdict-icon-certify { background: rgba(0,232,122,0.12); border: 1px solid rgba(0,232,122,0.3); }
+  .verdict-icon-reject  { background: rgba(255,59,92,0.12);  border: 1px solid rgba(255,59,92,0.3); }
+  .verdict-label {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .verdict-label-certify { color: rgba(0,232,122,0.7); }
+  .verdict-label-reject  { color: rgba(255,59,92,0.7); }
+  .verdict-word {
+    font-family: var(--sans); font-size: 32px; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .verdict-word-certify { color: var(--green); }
+  .verdict-word-reject  { color: var(--red); }
+  .verdict-meta {
+    text-align: right;
+    font-family: var(--mono); font-size: 11px; color: var(--sub);
+    line-height: 1.8;
+  }
+  .verdict-meta strong { color: var(--text2); }
+
+  /* ── Engine grid ───────────────────────────────────────────── */
+  .engines-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  @media(max-width:600px) { .engines-grid { grid-template-columns: 1fr; } }
+
+  .engine-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(10px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .engine-card.pass { border-left: 3px solid var(--green); }
+  .engine-card.fail { border-left: 3px solid var(--red); }
+  .engine-card.na   { border-left: 3px solid var(--muted); opacity: 0.6; }
+
+  .engine-id {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--blue); letter-spacing: 0.06em; margin-bottom: 3px;
+  }
+  .engine-name {
+    font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3;
+  }
+
+  .status-badge {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; padding: 5px 12px; border-radius: 2px;
+    flex-shrink: 0; border: 1px solid;
+  }
+  .status-pass { color: var(--green); border-color: rgba(0,232,122,0.3); background: rgba(0,232,122,0.07); }
+  .status-fail { color: var(--red);   border-color: rgba(255,59,92,0.3);  background: rgba(255,59,92,0.07); }
+  .status-na   { color: var(--muted); border-color: var(--border);        background: transparent; }
+
+  /* ── Footer note ───────────────────────────────────────────── */
+  .result-footer {
+    margin-top: 28px; padding: 20px 24px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    line-height: 1.9; letter-spacing: 0.02em;
+  }
+  .result-footer strong { color: var(--sub); }
+
+  .btn-reset {
+    display: block; width: 100%; margin-top: 20px;
+    padding: 14px; text-align: center;
+    background: none; border: 1px solid var(--border2); border-radius: 4px;
+    color: var(--sub); font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* ── Error box ─────────────────────────────────────────────── */
+  .error-box {
+    display: none; margin-top: 20px;
+    background: rgba(255,59,92,0.06); border: 1px solid rgba(255,59,92,0.2);
+    border-radius: 4px; padding: 16px 20px;
+    font-family: var(--mono); font-size: 11px; color: var(--red);
+  }
+
+  /* ── Divider ───────────────────────────────────────────────── */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────── -->
+<header>
+  <div class="wrap">
+    <div class="header-inner">
+      <div>
+        <div class="logo">DIGrS-10 <span>/ Verification System / v1.0.0</span></div>
+        <h1>Model <em>Verification</em></h1>
+        <p class="tagline">10-engine statistical gate &nbsp;·&nbsp; CSV in, verdict out</p>
+      </div>
+      <div class="header-badge">
+        <span class="pill pill-blue"><span class="dot"></span>System Online</span>
+        <span class="pill pill-muted">Public Verification</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── Upload ──────────────────────────────────────────────────────── -->
+<main>
+<div class="wrap">
+  <section class="upload-section">
+    <div class="section-label">Upload Dataset</div>
+
+    <!-- Drop zone -->
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept=".csv"/>
+      <div class="drop-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="drop-title">Drop CSV file here or click to browse</div>
+      <div class="drop-sub">Target column must be the last column in your CSV</div>
+      <div class="drop-constraint">CSV only &nbsp;·&nbsp; Max 25 MB &nbsp;·&nbsp; Minimum 10 rows &nbsp;·&nbsp; 2+ columns required</div>
+    </div>
+
+    <!-- File selected state -->
+    <div class="file-selected" id="file-selected">
+      <div class="file-info">
+        <div class="file-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <div class="file-name" id="file-name-display">—</div>
+          <div class="file-size" id="file-size-display">—</div>
+        </div>
+      </div>
+      <button class="btn-clear" id="btn-clear">✕ Remove</button>
+    </div>
+
+    <!-- Rules -->
+    <div class="rules">
+      <div class="rule"><span class="rule-dot"></span>Last column is treated as the target variable</div>
+      <div class="rule"><span class="rule-dot"></span>Model type auto-detected from target distribution</div>
+      <div class="rule"><span class="rule-dot"></span>CSV deleted from memory immediately after run</div>
+    </div>
+
+    <!-- Run button -->
+    <div class="run-wrap">
+      <button id="btn-run" disabled>
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run DIGrS-10 Verification
+      </button>
+    </div>
+
+    <!-- Error -->
+    <div class="error-box" id="error-box"></div>
+
+    <!-- Log -->
+    <div class="log-box" id="log-box"></div>
+  </section>
+
+  <!-- ── Results ──────────────────────────────────────────────────── -->
+  <section class="results-section" id="results-section">
+    <div class="section-label">Verification Results</div>
+
+    <!-- Verdict bar -->
+    <div id="verdict-bar" class="verdict-bar">
+      <div class="verdict-left">
+        <div id="verdict-icon" class="verdict-icon">⬡</div>
+        <div>
+          <div id="verdict-label" class="verdict-label">—</div>
+          <div id="verdict-word"  class="verdict-word">—</div>
+        </div>
+      </div>
+      <div class="verdict-meta" id="verdict-meta"></div>
+    </div>
+
+    <!-- Engine cards -->
+    <div class="engines-grid" id="engines-grid"></div>
+
+    <!-- Footer note -->
+    <div class="result-footer">
+      <strong>DIGrS-10 Verification Notice</strong><br>
+      This report documents a technical pre-verification assessment using DIGrS-10 v1.0.
+      Results indicate statistical gate status only. Detailed scores, thresholds, and
+      benchmark values are available under commercial license. This output does not
+      constitute regulatory certification or legal compliance advice. Review by a qualified
+      compliance professional is required before any regulatory submission.
+    </div>
+
+    <button class="btn-reset" id="btn-reset">↩ Run Another Verification</button>
+  </section>
+
+</div>
+</main>
+
+<!-- ── Footer ──────────────────────────────────────────────────────── -->
+<footer>
+  <div class="wrap" style="width:100%; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+    <span>DIGrS-10 &copy; 2025 Usman Zafar Ph.D &nbsp;·&nbsp; All rights reserved</span>
+    <span>Public verification &nbsp;·&nbsp; No data retained &nbsp;·&nbsp; Scores & benchmarks: commercial only</span>
+  </div>
+</footer>
+
+<script>
+  // ── Config ────────────────────────────────────────────────────────
+  const API = '/digrs10/verify';   // same-origin via Nginx proxy
+
+  const ENGINE_META = {
+    P1:   'P1 — Bootstrap Stability',
+    P2:   'P2 — Sample Adequacy',
+    P3:   'P3 — Data Leakage',
+    P4:   'P4 — Class Balance',
+    P5:   'P5 — Collinearity',
+    PHI1: 'φ1 — Nonlinearity (RESET)',
+    PHI2: 'φ2 — Interaction Complexity',
+    PHI3: 'φ3 — Tail Asymmetry',
+    PHI4: 'φ4 — Residual Dependence',
+    RSTAR:'R* — Composite Risk Score',
+  };
+
+  const LOG_STEPS = [
+    'Initialising DIGrS-10 kernel…',
+    'Parsing CSV — target column detection…',
+    'Auto-detecting task type (regression / classification)…',
+    'Running P1 — bootstrap stability (5-fold CV)…',
+    'Running P2 — effective sample size…',
+    'Running P3 — exact leakage arithmetic…',
+    'Running P4 — class balance check…',
+    'Running P5 — condition number κ(X)…',
+    'Running φ1 — RESET nonlinearity test…',
+    'Running φ2 — interaction variance decomposition…',
+    'Running φ3 — tail asymmetry (skewness)…',
+    'Running φ4 — residual dependence (HSIC proxy)…',
+    'Computing R* composite risk score…',
+    'Issuing verdict…',
+    'Purging dataset from memory…',
+  ];
+
+  // ── State ─────────────────────────────────────────────────────────
+  let selectedFile = null;
+
+  // ── Elements ──────────────────────────────────────────────────────
+  const dropZone      = document.getElementById('drop-zone');
+  const fileInput     = document.getElementById('file-input');
+  const fileSelected  = document.getElementById('file-selected');
+  const fileNameEl    = document.getElementById('file-name-display');
+  const fileSizeEl    = document.getElementById('file-size-display');
+  const btnClear      = document.getElementById('btn-clear');
+  const btnRun        = document.getElementById('btn-run');
+  const btnReset      = document.getElementById('btn-reset');
+  const errorBox      = document.getElementById('error-box');
+  const logBox        = document.getElementById('log-box');
+  const resultsSection= document.getElementById('results-section');
+  const verdictBar    = document.getElementById('verdict-bar');
+  const verdictIcon   = document.getElementById('verdict-icon');
+  const verdictLabel  = document.getElementById('verdict-label');
+  const verdictWord   = document.getElementById('verdict-word');
+  const verdictMeta   = document.getElementById('verdict-meta');
+  const enginesGrid   = document.getElementById('engines-grid');
+
+  // ── File handling ──────────────────────────────────────────────────
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+    return (b/1024/1024).toFixed(2) + ' MB';
+  }
+
+  function selectFile(file) {
+    if (!file.name.endsWith('.csv')) { showError('digrs10: Only CSV files are accepted.'); return; }
+    if (file.size > 25 * 1024 * 1024) { showError('digrs10: File exceeds 25 MB limit.'); return; }
+    selectedFile = file;
+    fileNameEl.textContent = file.name;
+    fileSizeEl.textContent = formatBytes(file.size);
+    dropZone.style.display = 'none';
+    fileSelected.style.display = 'flex';
+    btnRun.disabled = false;
+    hideError();
+  }
+
+  function clearFile() {
+    selectedFile = null;
+    fileInput.value = '';
+    dropZone.style.display = 'block';
+    fileSelected.style.display = 'none';
+    btnRun.disabled = true;
+  }
+
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) selectFile(e.target.files[0]); });
+  btnClear.addEventListener('click', clearFile);
+
+  // Drag-and-drop
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) selectFile(e.dataTransfer.files[0]);
+  });
+
+  // ── Error helpers ──────────────────────────────────────────────────
+  function showError(msg) { errorBox.textContent = msg; errorBox.style.display = 'block'; }
+  function hideError()     { errorBox.style.display = 'none'; }
+
+  // ── Log helpers ───────────────────────────────────────────────────
+  let logTimer = null;
+  function startLog(onDone) {
+    logBox.style.display = 'block';
+    logBox.innerHTML = '';
+    let i = 0;
+    logTimer = setInterval(() => {
+      if (i > 0) {
+        const prev = logBox.querySelector('.active');
+        if (prev) prev.classList.remove('active');
+      }
+      if (i < LOG_STEPS.length) {
+        const ts = new Date().toISOString().slice(11,19);
+        const line = document.createElement('div');
+        line.className = 'log-line active';
+        line.innerHTML = `<span class="ts">${ts}</span><span class="msg">${LOG_STEPS[i]}<span class="cursor">_</span></span>`;
+        logBox.appendChild(line);
+        logBox.scrollTop = logBox.scrollHeight;
+        i++;
+      } else {
+        clearInterval(logTimer);
+        const prev = logBox.querySelector('.active');
+        if (prev) prev.classList.remove('active');
+        if (onDone) onDone();
+      }
+    }, 200);
+  }
+
+  // ── Run ────────────────────────────────────────────────────────────
+  btnRun.addEventListener('click', async () => {
+    if (!selectedFile) return;
+    hideError();
+    btnRun.disabled = true;
+    resultsSection.style.display = 'none';
+
+    startLog(null);
+
+    const form = new FormData();
+    form.append('file', selectedFile);
+
+    let data;
+    try {
+      const res = await fetch(API, { method: 'POST', body: form });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: 'Server error.' }));
+        throw new Error(err.detail || 'Verification failed.');
+      }
+      data = await res.json();
+    } catch(e) {
+      clearInterval(logTimer);
+      logBox.style.display = 'none';
+      showError('digrs10: ' + e.message);
+      btnRun.disabled = false;
+      return;
+    }
+
+    // Ensure log finishes before showing results
+    clearInterval(logTimer);
+    setTimeout(() => renderResults(data), 400);
+  });
+
+  // ── Render results ─────────────────────────────────────────────────
+  function renderResults(data) {
+    logBox.style.display = 'none';
+
+    const isCertify = data.verdict === 'CERTIFY';
+
+    // Verdict bar
+    verdictBar.className = 'verdict-bar ' + (isCertify ? 'verdict-certify' : 'verdict-reject');
+    verdictIcon.className = 'verdict-icon ' + (isCertify ? 'verdict-icon-certify' : 'verdict-icon-reject');
+    verdictIcon.textContent = isCertify ? '✓' : '✗';
+    verdictLabel.className = 'verdict-label ' + (isCertify ? 'verdict-label-certify' : 'verdict-label-reject');
+    verdictLabel.textContent = 'DIGrS-10 Verification Verdict';
+    verdictWord.className = 'verdict-word ' + (isCertify ? 'verdict-word-certify' : 'verdict-word-reject');
+    verdictWord.textContent = data.verdict;
+
+    const pass_count = data.engines.filter(e => e.status === 'PASS').length;
+    const fail_count = data.engines.filter(e => e.status === 'FAIL').length;
+    const na_count   = data.engines.filter(e => e.status === 'N/A').length;
+    verdictMeta.innerHTML = `
+      <strong>Task type</strong> ${data.task_type}<br>
+      <strong>Engines</strong> ${data.engines.length} run<br>
+      <strong>Passed</strong> ${pass_count} &nbsp;·&nbsp; <strong>Failed</strong> ${fail_count} &nbsp;·&nbsp; <strong>N/A</strong> ${na_count}
+    `;
+
+    // Engine cards
+    enginesGrid.innerHTML = '';
+    data.engines.forEach((engine, idx) => {
+      const s = engine.status;
+      const cls = s === 'PASS' ? 'pass' : s === 'FAIL' ? 'fail' : 'na';
+      const badgeCls = s === 'PASS' ? 'status-pass' : s === 'FAIL' ? 'status-fail' : 'status-na';
+      const card = document.createElement('div');
+      card.className = `engine-card ${cls}`;
+      card.style.animationDelay = `${idx * 40}ms`;
+      card.innerHTML = `
+        <div>
+          <div class="engine-id">${engine.id}</div>
+          <div class="engine-name">${engine.name}</div>
+        </div>
+        <div class="status-badge ${badgeCls}">${s}</div>
+      `;
+      enginesGrid.appendChild(card);
+    });
+
+    resultsSection.style.display = 'block';
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Reset ──────────────────────────────────────────────────────────
+  btnReset.addEventListener('click', () => {
+    clearFile();
+    resultsSection.style.display = 'none';
+    hideError();
+    btnRun.disabled = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
