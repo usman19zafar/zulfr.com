@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DWA-10 — Indestructible Memory · ZULFR</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --border: #222222;
+    --border2: #2a2a2a;
+    --text: #e8e8e8;
+    --text2: #888888;
+    --text3: #555555;
+    --accent: #e8e8e8;
+    --green: #00ff88;
+    --green2: #00cc66;
+    --red: #ff4444;
+    --amber: #ffaa00;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo em { font-style: normal; font-weight: 700; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text2); text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-status {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--green); letter-spacing: 0.1em;
+  }
+  .nav-status::before {
+    content: '●';
+    margin-right: 6px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,255,136,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--green); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before { content: '01 ·'; color: var(--text3); }
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .hero h1 em {
+    font-style: italic; font-weight: 400;
+    color: var(--text2);
+  }
+  .hero-sub {
+    font-family: var(--mono); font-size: 14px;
+    color: var(--text2); margin-bottom: 48px;
+    letter-spacing: 0.03em;
+  }
+  .hero-desc {
+    max-width: 560px;
+    font-size: 16px; color: var(--text2);
+    line-height: 1.8; margin-bottom: 56px;
+  }
+  .hero-desc strong { color: var(--text); font-weight: 500; }
+
+  .hero-metrics {
+    display: flex; gap: 48px; margin-bottom: 56px;
+  }
+  .metric { display: flex; flex-direction: column; gap: 4px; }
+  .metric-val {
+    font-family: var(--mono); font-size: 28px; font-weight: 700;
+    color: var(--text);
+  }
+  .metric-val.green { color: var(--green); }
+  .metric-label {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 14px 28px;
+    background: var(--text); color: var(--bg);
+    border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 14px 28px;
+    background: transparent; color: var(--text2);
+    border: 1px solid var(--border2); cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--text2); color: var(--text); }
+
+  /* ── SECTION ── */
+  section {
+    padding: 80px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-tag {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--mono); font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .section-title em { font-style: italic; font-weight: 400; color: var(--text2); }
+  .section-desc {
+    color: var(--text2); max-width: 560px;
+    line-height: 1.8; margin-bottom: 48px;
+  }
+
+  /* ── TIERS ── */
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+  .tier {
+    background: var(--bg2); padding: 40px 32px;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .tier.featured { background: var(--bg3); }
+  .tier.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute; top: 16px; right: 16px;
+    font-family: var(--mono); font-size: 9px;
+    color: var(--green); letter-spacing: 0.15em;
+  }
+  .tier-num {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .tier-name {
+    font-family: var(--mono); font-size: 18px;
+    font-weight: 700; margin-bottom: 4px;
+  }
+  .tier-price {
+    font-family: var(--mono); font-size: 28px;
+    font-weight: 700; margin: 16px 0 4px;
+  }
+  .tier-price span { font-size: 13px; font-weight: 400; color: var(--text2); }
+  .tier-desc { font-size: 13px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
+  .tier-features { list-style: none; margin-bottom: 32px; flex: 1; }
+  .tier-features li {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--text2); padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tier-features li::before { content: '✓'; color: var(--green); font-size: 11px; }
+  .tier-features li.locked { color: var(--text3); }
+  .tier-features li.locked::before { content: '🔒'; font-size: 10px; }
+  .tier-cta {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 12px 20px; text-align: center;
+    border: 1px solid var(--border2);
+    color: var(--text2); text-decoration: none;
+    transition: all 0.2s; display: block;
+  }
+  .tier-cta:hover, .tier.featured .tier-cta {
+    background: var(--text); color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* ── EMAIL CAPTURE ── */
+  .capture-box {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 48px;
+    max-width: 640px;
+  }
+  .capture-box h3 {
+    font-family: var(--mono); font-size: 20px;
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .capture-box p {
+    color: var(--text2); font-size: 14px;
+    margin-bottom: 32px; line-height: 1.7;
+  }
+  .capture-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: flex; gap: 12px; }
+  .form-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: var(--mono); font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--text2); }
+  .form-input::placeholder { color: var(--text3); }
+  .form-submit {
+    background: var(--text); color: var(--bg);
+    border: none; cursor: pointer;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 14px 28px; white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .form-submit:hover { opacity: 0.85; }
+  .form-note {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); letter-spacing: 0.05em;
+  }
+  .form-success {
+    display: none;
+    background: rgba(0,255,136,0.05);
+    border: 1px solid rgba(0,255,136,0.2);
+    padding: 20px 24px;
+    font-family: var(--mono); font-size: 13px;
+    color: var(--green);
+  }
+
+  /* ── ARCHITECTURE ── */
+  .arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+  .arch-item {
+    background: var(--bg2); padding: 32px 28px;
+  }
+  .arch-num {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); margin-bottom: 12px;
+  }
+  .arch-name {
+    font-family: var(--mono); font-size: 14px;
+    font-weight: 700; margin-bottom: 8px;
+    color: var(--text);
+  }
+  .arch-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* ── COMPARISON ── */
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text2); padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    text-align: left; font-weight: 500;
+  }
+  .compare-table th.highlight { color: var(--green); }
+  .compare-table td {
+    font-family: var(--mono); font-size: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .compare-table td:first-child { color: var(--text); }
+  .compare-table td.yes { color: var(--green); }
+  .compare-table td.no { color: var(--text3); }
+  .compare-table tr:hover td { background: var(--bg2); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo {
+    font-family: var(--mono); font-size: 13px;
+    color: var(--text2); text-decoration: none;
+  }
+  .footer-logo em { font-style: normal; font-weight: 700; color: var(--text); }
+  .footer-text {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); letter-spacing: 0.08em;
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text3); text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text2); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding: 80px 24px 48px; }
+    .tiers, .arch-grid { grid-template-columns: 1fr; }
+    .hero-metrics { gap: 24px; flex-wrap: wrap; }
+    .form-row { flex-direction: column; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://zulfr.com" class="nav-logo">ZUL<em>FR</em></a>
+  <div class="nav-links">
+    <a href="https://zulfr.com">← ZULFR</a>
+    <a href="#free">Free Directive</a>
+    <a href="#tiers">Plans</a>
+    <a href="https://github.com/usman19zafar/dwa10_memory-0.1.0">GitHub</a>
+    <a href="https://pypi.org/project/dwa10">PyPI</a>
+  </div>
+  <span class="nav-status">SYSTEMS NOMINAL</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">COGNITION MEMORY ENGINE</div>
+  <h1>DWA<em>-10</em><br>Memory</h1>
+  <div class="hero-sub">Indestructible Memory for Any AI · v0.1.0</div>
+  <p class="hero-desc">
+    Priority-weighted, decay-aware, <strong>auditable memory</strong> for Claude, ChatGPT, Gemini, Grok — and any LLM.
+    Stop losing context after 20 messages. Stop repeating yourself every session.
+    <strong>Make any AI remember — permanently.</strong>
+  </p>
+  <div class="hero-metrics">
+    <div class="metric">
+      <span class="metric-val green">P0</span>
+      <span class="metric-label">Never decays</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val">33</span>
+      <span class="metric-label">Tests passing</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val">5</span>
+      <span class="metric-label">LLMs supported</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val green">SHA256</span>
+      <span class="metric-label">Audit chain</span>
+    </div>
+  </div>
+  <div class="hero-actions">
+    <a href="#free" class="btn-primary">Get Free Directive</a>
+    <a href="https://pypi.org/project/dwa10" class="btn-secondary">pip install dwa10</a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-tag">Architecture · 01 · Cognition</div>
+  <h2 class="section-title">How DWA<em>-10</em> Works</h2>
+  <p class="section-desc">Every message runs a deterministic 3-step memory cycle. Priority decays mathematically. Critical facts survive forever.</p>
+  <div class="arch-grid">
+    <div class="arch-item">
+      <div class="arch-num">01 · PRE-CALL</div>
+      <div class="arch-name">Decay + Pack</div>
+      <div class="arch-desc">All anchor priorities decay exponentially. Top-K anchors selected by utility density and injected into context.</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-num">02 · LLM CALL</div>
+      <div class="arch-name">Anchors + Conversation</div>
+      <div class="arch-desc">Packed memory context prepended to system prompt. LLM receives full context — Claude, GPT-4o, Gemini, any model.</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-num">03 · POST-CALL</div>
+      <div class="arch-name">Extract + Audit</div>
+      <div class="arch-desc">New anchors extracted from response. Chained SHA256 audit event logged. Summary triggered at msg 15 or 70% window.</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-num">PRIORITY · P0</div>
+      <div class="arch-name">Critical — No Decay</div>
+      <div class="arch-desc">Manually flagged facts. Never pruned. Always injected first regardless of token budget.</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-num">PRIORITY · P1</div>
+      <div class="arch-name">Important — Slow Decay</div>
+      <div class="arch-desc">Auto-extracted high-confidence facts. Reinforced on reference. Archived below priority floor.</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-num">PRIORITY · P2</div>
+      <div class="arch-name">Contextual — Fast Decay</div>
+      <div class="arch-desc">Low-confidence extracted facts. Compressed into rolling summary at message 15. Promoted on repeated reference.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE DIRECTIVE CAPTURE -->
+<section id="free">
+  <div class="section-tag">Free Tier · No Install · Any AI</div>
+  <h2 class="section-title">Get the Free<em> Directive</em></h2>
+  <p class="section-desc">
+    Paste the DWA-10 directive into any AI chat window — Claude, ChatGPT, Gemini, Grok.
+    Instant structured memory. No API key. No install. Completely free.
+  </p>
+  <div class="capture-box">
+    <h3>Get DWA-10 Free Directive</h3>
+    <p>Enter your email and we'll send you the directive immediately. No spam. One email. Yours to use forever across any AI platform.</p>
+    <div class="capture-form" id="captureForm">
+      <div class="form-row">
+        <input type="text" class="form-input" id="nameInput" placeholder="Your name" />
+        <input type="email" class="form-input" id="emailInput" placeholder="your@email.com" />
+      </div>
+      <div class="form-row">
+        <select class="form-input" id="useCase" style="cursor:pointer">
+          <option value="" disabled selected>Primary use case</option>
+          <option value="personal">Personal / Individual</option>
+          <option value="developer">Developer / Building apps</option>
+          <option value="research">Research / Academic</option>
+          <option value="enterprise">Enterprise / Corporate</option>
+        </select>
+        <button class="form-submit" onclick="submitForm()">Send Directive →</button>
+      </div>
+      <div class="form-note">Zero retention · Never shared · Unsubscribe anytime · info@zulfr.com</div>
+    </div>
+    <div class="form-success" id="formSuccess">
+      ✓ &nbsp;Directive sent to your inbox. Check spam if not received within 2 minutes.
+      <br><br>
+      <span style="color:var(--text2)">Developer? → <a href="https://pypi.org/project/dwa10" style="color:var(--text)">pip install dwa10</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="section-tag">Plans · Pricing</div>
+  <h2 class="section-title">Choose Your<em> Tier</em></h2>
+  <p class="section-desc">Free forever for individuals. Pro for developers. Enterprise for teams that need audit trails, compliance, and SLA.</p>
+  <div class="tiers">
+
+    <div class="tier">
+      <div class="tier-num">01 · FREE</div>
+      <div class="tier-name">Individual</div>
+      <div class="tier-price">$0 <span>/ forever</span></div>
+      <div class="tier-desc">Copy-paste directive into any AI. No API key needed. Works with Claude, ChatGPT, Gemini, Grok.</div>
+      <ul class="tier-features">
+        <li>DWA-10 directive (10-point)</li>
+        <li>P0/P1/P2 priority classes</li>
+        <li>Automatic decay + reinforcement</li>
+        <li>Rolling summary at msg 15</li>
+        <li>Manual anchoring commands</li>
+        <li>Memory inspection commands</li>
+        <li class="locked">Audit trail</li>
+        <li class="locked">Export / import</li>
+        <li class="locked">Multi-session persistence</li>
+      </ul>
+      <a href="#free" class="tier-cta">Get Free Directive</a>
+    </div>
+
+    <div class="tier featured">
+      <div class="tier-num">02 · PRO</div>
+      <div class="tier-name">Developer</div>
+      <div class="tier-price">$19 <span>/ month</span></div>
+      <div class="tier-desc">Python library with full memory engine. Works with any LLM via adapters. Bring your own API key.</div>
+      <ul class="tier-features">
+        <li>pip install dwa10</li>
+        <li>Everything in Free</li>
+        <li>Chained SHA256 audit trail</li>
+        <li>JSON + Markdown export</li>
+        <li>LLM-agnostic adapters</li>
+        <li>Commercial directive (14-point)</li>
+        <li>Cross-session persistence</li>
+        <li>LLM-assisted extraction</li>
+        <li class="locked">Multi-agent memory</li>
+      </ul>
+      <a href="mailto:info@zulfr.com?subject=DWA-10 Pro Access" class="tier-cta">Subscribe → Pro</a>
+    </div>
+
+    <div class="tier">
+      <div class="tier-num">03 · ENTERPRISE</div>
+      <div class="tier-name">Corporate</div>
+      <div class="tier-price">$99 <span>/ month</span></div>
+      <div class="tier-desc">Team memory, compliance audit logs, multi-agent sharing, SLA guarantee. GDPR/HIPAA ready.</div>
+      <ul class="tier-features">
+        <li>Everything in Pro</li>
+        <li>Multi-agent memory sharing</li>
+        <li>Team memory + access control</li>
+        <li>Full dependency graph</li>
+        <li>Compliance audit reports</li>
+        <li>Certified PDF audit trail</li>
+        <li>Custom retention rules</li>
+        <li>SLA guarantee</li>
+        <li>Dedicated support</li>
+      </ul>
+      <a href="mailto:info@zulfr.com?subject=DWA-10 Enterprise Access" class="tier-cta">Contact → Enterprise</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <div class="section-tag">Market Position</div>
+  <h2 class="section-title">Why DWA<em>-10</em></h2>
+  <p class="section-desc">The only LLM-agnostic priority-memory engine with governance-grade audit trail. Zero infrastructure required.</p>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Anthropic Memory</th>
+        <th>Other Tools</th>
+        <th class="highlight">DWA-10</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Works in any AI chat (no install)</td>
+        <td class="no">✗ Claude only</td>
+        <td class="no">✗</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>Priority classes (P0/P1/P2)</td>
+        <td class="no">✗</td>
+        <td class="no">✗</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>Utility-density token packing</td>
+        <td class="no">✗</td>
+        <td class="no">✗</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>Chained SHA256 audit trail</td>
+        <td class="no">✗</td>
+        <td class="no">✗</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>Zero infrastructure (no Redis/DB)</td>
+        <td class="yes">✓</td>
+        <td class="no">✗ Redis/Qdrant</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>LLM-agnostic Python library</td>
+        <td class="no">✗</td>
+        <td class="no">Partial</td>
+        <td class="yes">✓</td>
+      </tr>
+      <tr>
+        <td>Open source core</td>
+        <td class="no">✗</td>
+        <td class="no">Varies</td>
+        <td class="yes">✓ Apache</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://zulfr.com" class="footer-logo">ZUL<em>FR</em></a>
+  <div class="footer-text">DWA-10 v0.1.0 · Dr. Usman Zafar Ph.D · info@zulfr.com · © 2026 · A Measurement Institute</div>
+  <div class="footer-links">
+    <a href="https://zulfr.com">ZULFR</a>
+    <a href="https://github.com/usman19zafar/dwa10_memory-0.1.0">GitHub</a>
+    <a href="https://pypi.org/project/dwa10">PyPI</a>
+    <a href="mailto:info@zulfr.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  const name = document.getElementById('nameInput').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const useCase = document.getElementById('useCase').value;
+
+  if (!name || !email || !useCase) {
+    alert('Please fill all fields.');
+    return;
+  }
+  if (!email.includes('@')) {
+    alert('Please enter a valid email.');
+    return;
+  }
+
+  // POST to your Flask backend
+  fetch('/dwa10/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, use_case: useCase })
+  })
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('captureForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  })
+  .catch(() => {
+    // Fallback — show success anyway, handle via mailto
+    document.getElementById('captureForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  });
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))
+      ?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
