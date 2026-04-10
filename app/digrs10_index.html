@@ -526,7 +526,7 @@
 
   function selectFile(file) {
     if (!file.name.endsWith('.csv')) { showError('digrs10: Only CSV files are accepted.'); return; }
-    if (file.size > 25 * 1024 * 1024) { showError('digrs10: File exceeds 25 MB limit.'); return; }
+    if (file.size > 25 * 1024 * 1024) { showError('digrs10: File exceeds 25 KB limit.'); return; }
     selectedFile = file;
     fileNameEl.textContent = file.name;
     fileSizeEl.textContent = formatBytes(file.size);
