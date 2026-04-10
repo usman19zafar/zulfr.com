@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRUE-100 · Information Integrity Engine</title>
-<meta name="description" content="TRUE-100 Mini — Instant information integrity scoring. Paste text or upload a document and get your governance index.">
+<meta name="description" content="TRUE-100 Mini — Instant information integrity scoring. Paste text and get your governance index.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ── Reset & Variables ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -41,7 +40,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── Noise texture overlay ─────────────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed; inset: 0;
@@ -51,7 +49,6 @@ body::before {
   opacity: 0.4;
 }
 
-/* ── Grid lines background ─────────────────────────────────────────────── */
 body::after {
   content: '';
   position: fixed; inset: 0;
@@ -64,7 +61,6 @@ body::after {
   z-index: 0;
 }
 
-/* ── Layout wrapper ────────────────────────────────────────────────────── */
 .wrap {
   position: relative;
   z-index: 1;
@@ -73,7 +69,7 @@ body::after {
   padding: 0 24px 80px;
 }
 
-/* ── Header ────────────────────────────────────────────────────────────── */
+/* ── Header ── */
 .site-header {
   padding: 52px 0 0;
   text-align: center;
@@ -140,7 +136,7 @@ body::after {
 }
 .limit-badge span { color: var(--gold); }
 
-/* ── Divider ───────────────────────────────────────────────────────────── */
+/* ── Divider ── */
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-dim), var(--gold-deep), transparent);
@@ -158,7 +154,7 @@ body::after {
   font-size: 14px;
 }
 
-/* ── Marketing Banner ──────────────────────────────────────────────────── */
+/* ── Marketing Banner ── */
 .marketing-banner {
   border-radius: 10px;
   overflow: hidden;
@@ -186,12 +182,12 @@ body::after {
   text-align: right;
 }
 
-/* ── Input card ────────────────────────────────────────────────────────── */
+/* ── Input card ── */
 .input-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 28px;
+  padding: 32px;
   margin-bottom: 20px;
   animation: fadeUp 1s 0.3s ease both;
   position: relative;
@@ -209,86 +205,8 @@ body::after {
   font-size: 9px;
   letter-spacing: 3px;
   color: var(--text-dim);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   display: block;
-}
-
-.upload-zone {
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  margin-bottom: 18px;
-  position: relative;
-  background: var(--dark2);
-}
-.upload-zone:hover, .upload-zone.drag-over {
-  border-color: var(--gold-dim);
-  background: #1A1400;
-  box-shadow: 0 0 20px var(--gold-glow);
-}
-.upload-zone input[type=file] {
-  position: absolute; inset: 0;
-  opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
-.upload-icon {
-  font-size: 28px;
-  margin-bottom: 8px;
-  display: block;
-  opacity: 0.5;
-}
-.upload-text {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--text-dim);
-}
-.upload-text b { color: var(--gold-dim); }
-
-.file-chosen {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  background: #111800;
-  border: 1px solid #2A3A00;
-  border-radius: 6px;
-  padding: 10px 14px;
-  margin-bottom: 18px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--green);
-}
-.file-chosen.show { display: flex; }
-.file-remove {
-  margin-left: auto;
-  cursor: pointer;
-  color: var(--text-dim);
-  font-size: 16px;
-  line-height: 1;
-  border: none;
-  background: none;
-  color: var(--red);
-  padding: 0;
-}
-
-.or-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 4px 0 16px;
-}
-.or-divider::before, .or-divider::after {
-  content: ''; flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-.or-divider span {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--text-dim);
 }
 
 textarea {
@@ -298,11 +216,11 @@ textarea {
   border-radius: 8px;
   color: var(--text);
   font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.7;
-  padding: 14px 16px;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 18px 20px;
   resize: vertical;
-  min-height: 140px;
+  min-height: 180px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -312,21 +230,21 @@ textarea:focus {
 }
 textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic; }
 
-/* Word counter ─────────────────────────────────────────────────────────── */
+/* ── Word counter ── */
 .word-counter {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 12px;
   font-family: var(--mono);
   font-size: 10px;
+  gap: 12px;
 }
 .word-bar-track {
   flex: 1;
   height: 3px;
   background: var(--border);
   border-radius: 2px;
-  margin-right: 12px;
   overflow: hidden;
 }
 .word-bar-fill {
@@ -340,15 +258,15 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   color: var(--text-dim);
   white-space: nowrap;
 }
-.word-count-label.warn  { color: var(--gold); }
-.word-count-label.over  { color: var(--red); }
+.word-count-label.warn { color: var(--gold); }
+.word-count-label.over { color: var(--red); }
 
-/* ── Submit button ─────────────────────────────────────────────────────── */
+/* ── Submit button ── */
 .btn-analyse {
   display: block;
   width: 100%;
-  margin-top: 20px;
-  padding: 16px;
+  margin-top: 24px;
+  padding: 18px;
   background: linear-gradient(135deg, #1E1600, #2E2000);
   border: 1px solid var(--gold-dim);
   border-radius: 8px;
@@ -383,7 +301,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   box-shadow: none;
 }
 
-/* ── Loading ───────────────────────────────────────────────────────────── */
+/* ── Loading ── */
 .loading-bar {
   display: none;
   height: 2px;
@@ -404,7 +322,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   100% { transform: translateX(400%); }
 }
 
-/* ── Error ─────────────────────────────────────────────────────────────── */
+/* ── Error ── */
 .error-box {
   display: none;
   background: #1A0010;
@@ -419,7 +337,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
 }
 .error-box.show { display: block; }
 
-/* ── Results ───────────────────────────────────────────────────────────── */
+/* ── Results ── */
 .results-section {
   display: none;
   animation: fadeUp 0.5s ease both;
@@ -470,7 +388,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   line-height: 1;
   color: var(--gold);
 }
-.kpi-value.sm  { font-size: 14px; padding-top: 4px; }
+.kpi-value.sm    { font-size: 14px; padding-top: 4px; }
 .kpi-value.green { color: var(--green); }
 .kpi-value.red   { color: var(--red); }
 .kpi-value.silver{ color: var(--silver); }
@@ -481,7 +399,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   margin-top: 6px;
 }
 
-/* ── Locked panel ──────────────────────────────────────────────────────── */
+/* ── Locked panel ── */
 .locked-panel {
   background: var(--card);
   border: 1px dashed #25253A;
@@ -492,12 +410,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   align-items: flex-start;
   gap: 16px;
 }
-.lock-icon {
-  font-size: 24px;
-  opacity: 0.25;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
+.lock-icon { font-size: 24px; opacity: 0.25; flex-shrink: 0; margin-top: 2px; }
 .lock-body { flex: 1; }
 .lock-title {
   font-family: var(--mono);
@@ -506,12 +419,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   color: #404060;
   margin-bottom: 6px;
 }
-.lock-dims {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
+.lock-dims { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .lock-dim {
   font-family: var(--mono);
   font-size: 9px;
@@ -522,14 +430,9 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   border-radius: 3px;
   letter-spacing: 1px;
 }
-.lock-note {
-  font-family: var(--serif);
-  font-size: 12px;
-  color: #333350;
-  font-style: italic;
-}
+.lock-note { font-family: var(--serif); font-size: 12px; color: #333350; font-style: italic; }
 
-/* ── Upgrade banner ────────────────────────────────────────────────────── */
+/* ── Upgrade banner ── */
 .upgrade-card {
   background: linear-gradient(135deg, #130F00, #1E1600 60%, #130F00);
   border: 1px solid #3D3000;
@@ -549,36 +452,10 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   background: radial-gradient(ellipse, var(--gold-glow) 0%, transparent 70%);
   pointer-events: none;
 }
-.upgrade-hex {
-  font-family: var(--mono);
-  font-size: 28px;
-  color: var(--gold-dim);
-  opacity: 0.3;
-  letter-spacing: 8px;
-  margin-bottom: 12px;
-}
-.upgrade-title {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-.upgrade-text {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: #888878;
-  margin-bottom: 20px;
-  line-height: 1.6;
-  font-weight: 300;
-}
-.upgrade-features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 22px;
-}
+.upgrade-hex { font-family: var(--mono); font-size: 28px; color: var(--gold-dim); opacity: 0.3; letter-spacing: 8px; margin-bottom: 12px; }
+.upgrade-title { font-family: var(--mono); font-size: 11px; letter-spacing: 4px; color: var(--gold); margin-bottom: 10px; }
+.upgrade-text { font-family: var(--serif); font-size: 16px; color: #888878; margin-bottom: 20px; line-height: 1.6; font-weight: 300; }
+.upgrade-features { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 22px; }
 .upgrade-feature {
   font-family: var(--mono);
   font-size: 9px;
@@ -603,12 +480,9 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   transition: all 0.25s;
   box-shadow: 0 4px 20px #FFD70033;
 }
-.btn-upgrade:hover {
-  box-shadow: 0 4px 40px #FFD70066;
-  transform: translateY(-1px);
-}
+.btn-upgrade:hover { box-shadow: 0 4px 40px #FFD70066; transform: translateY(-1px); }
 
-/* ── Reset button ──────────────────────────────────────────────────────── */
+/* ── Reset button ── */
 .btn-reset {
   display: block;
   width: 100%;
@@ -624,12 +498,9 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   transition: all 0.2s;
   margin-bottom: 8px;
 }
-.btn-reset:hover {
-  border-color: var(--text-dim);
-  color: var(--text);
-}
+.btn-reset:hover { border-color: var(--text-dim); color: var(--text); }
 
-/* ── Footer ────────────────────────────────────────────────────────────── */
+/* ── Footer ── */
 .site-footer {
   margin-top: 60px;
   padding-top: 24px;
@@ -646,7 +517,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
 }
 .footer-logo { color: var(--gold-dim); }
 
-/* ── Animations ────────────────────────────────────────────────────────── */
+/* ── Animations ── */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -655,12 +526,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 10px var(--gold-glow); }
-  50%       { box-shadow: 0 0 30px #FFD70044; }
-}
 
-/* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 500px) {
   .kpi-grid { grid-template-columns: 1fr 1fr; }
   .kpi-grid .kpi-card:last-child { grid-column: span 2; }
@@ -672,53 +538,32 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
 <body>
 <div class="wrap">
 
-  <!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+  <!-- HEADER -->
   <header class="site-header">
     <div class="logo-hex">⬡ &nbsp; Z U L F R . C O M &nbsp; ⬡</div>
     <h1 class="site-title">TRUE‑100</h1>
     <div class="site-sub">INFORMATION INTEGRITY ENGINE &nbsp;·&nbsp; MINI</div>
     <p class="site-tagline">Paste text. Get your governance index instantly.</p>
-    <div class="limit-badge">⬡ &nbsp; <span>50-word</span> &nbsp; demo limit &nbsp;·&nbsp; mock engine &nbsp;·&nbsp; no data retained</div>
+    <div class="limit-badge">⬡ &nbsp; <span>100-word</span> &nbsp; demo limit &nbsp;·&nbsp; no data retained</div>
   </header>
 
   <div class="divider"></div>
 
-  <!-- ── MARKETING BANNER ───────────────────────────────────────────────── -->
+  <!-- MARKETING BANNER -->
   <div class="marketing-banner">
-    <img
-      src="assets/banner.png"
-      alt="Pioneering Solutions in Governance, AI & Technology — Usman Zafar"
-      loading="lazy"
-    >
+    <img src="assets/banner.png" alt="Pioneering Solutions in Governance, AI & Technology — Usman Zafar" loading="lazy">
     <div class="marketing-banner-overlay">zulfr.com &nbsp;·&nbsp; Governance · AI · Technology</div>
   </div>
 
-  <!-- ── INPUT CARD ──────────────────────────────────────────────────────── -->
+  <!-- INPUT CARD -->
   <div class="input-card">
 
-    <span class="input-label">UPLOAD DOCUMENT &nbsp;—&nbsp; PDF OR DOCX</span>
+    <span class="input-label">PASTE TEXT &nbsp;—&nbsp; UP TO 100 WORDS</span>
 
-    <div class="upload-zone" id="uploadZone">
-      <input type="file" id="fileInput" accept=".pdf,.docx" aria-label="Upload PDF or DOCX">
-      <span class="upload-icon">⬡</span>
-      <div class="upload-text">
-        Drop file here or <b>click to browse</b><br>
-        <span style="opacity:0.5">PDF · DOCX &nbsp;·&nbsp; max 10 MB</span>
-      </div>
-    </div>
-
-    <div class="file-chosen" id="fileChosen">
-      <span id="fileChosenName">document.pdf</span>
-      <button class="file-remove" id="fileRemove" aria-label="Remove file">✕</button>
-    </div>
-
-    <div class="or-divider"><span>OR PASTE TEXT</span></div>
-
-    <span class="input-label">PASTE UP TO 50 WORDS</span>
     <textarea
       id="textInput"
-      placeholder="Paste your text here — policy excerpt, article paragraph, statement..."
-      maxlength="2000"
+      placeholder="Paste your text here — policy excerpt, article paragraph, statement, press release..."
+      maxlength="4000"
       aria-label="Text input"
     ></textarea>
 
@@ -726,7 +571,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
       <div class="word-bar-track">
         <div class="word-bar-fill" id="wordBarFill"></div>
       </div>
-      <span class="word-count-label" id="wordCountLabel">0 / 50 words</span>
+      <span class="word-count-label" id="wordCountLabel">0 / 100 words</span>
     </div>
 
     <div class="error-box" id="errorBox"></div>
@@ -741,12 +586,10 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
 
   </div>
 
-  <!-- ── RESULTS ─────────────────────────────────────────────────────────── -->
+  <!-- RESULTS -->
   <div class="results-section" id="resultsSection">
 
-    <div class="kpi-grid" id="kpiGrid">
-      <!-- Populated by JS -->
-    </div>
+    <div class="kpi-grid" id="kpiGrid"></div>
 
     <div class="locked-panel">
       <div class="lock-icon">🔒</div>
@@ -759,9 +602,7 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
           <span class="lock-dim">◑ TIMELINESS</span>
           <span class="lock-dim">◉ EFFECTIVENESS</span>
         </div>
-        <div class="lock-note">
-          Full 100-cell Governance Reactor · PDF report · Multi-provider AI engine
-        </div>
+        <div class="lock-note">Full 100-cell Governance Reactor · PDF report · Multi-provider AI engine</div>
       </div>
     </div>
 
@@ -788,39 +629,29 @@ textarea::placeholder { color: var(--text-dim); opacity: 0.6; font-style: italic
 
   </div>
 
-  <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <span class="footer-logo">⬡ TRUE-100</span>
-    <span>spec: true10-v0.1 &nbsp;·&nbsp; mock engine</span>
+    <span>spec: true10-v0.1 &nbsp;·&nbsp; no data retained</span>
     <span>© 2026 Usman Zafar Ph.D &nbsp;·&nbsp; <a href="mailto:info@zulfr.com" style="color:var(--gold-dim);text-decoration:none">info@zulfr.com</a></span>
   </footer>
 
-</div><!-- /wrap -->
+</div>
 
 <script>
-// ── Config ────────────────────────────────────────────────────────────────
 const API_BASE   = 'https://api.true.zulfr.com';
-const WORD_LIMIT = 50;
+const WORD_LIMIT = 100;
 
-// ── DOM refs ──────────────────────────────────────────────────────────────
-const fileInput     = document.getElementById('fileInput');
-const uploadZone    = document.getElementById('uploadZone');
-const fileChosen    = document.getElementById('fileChosen');
-const fileChosenName= document.getElementById('fileChosenName');
-const fileRemove    = document.getElementById('fileRemove');
-const textInput     = document.getElementById('textInput');
-const wordBarFill   = document.getElementById('wordBarFill');
-const wordCountLabel= document.getElementById('wordCountLabel');
-const btnAnalyse    = document.getElementById('btnAnalyse');
-const loadingBar    = document.getElementById('loadingBar');
-const errorBox      = document.getElementById('errorBox');
-const resultsSection= document.getElementById('resultsSection');
-const kpiGrid       = document.getElementById('kpiGrid');
-const btnReset      = document.getElementById('btnReset');
+const textInput      = document.getElementById('textInput');
+const wordBarFill    = document.getElementById('wordBarFill');
+const wordCountLabel = document.getElementById('wordCountLabel');
+const btnAnalyse     = document.getElementById('btnAnalyse');
+const loadingBar     = document.getElementById('loadingBar');
+const errorBox       = document.getElementById('errorBox');
+const resultsSection = document.getElementById('resultsSection');
+const kpiGrid        = document.getElementById('kpiGrid');
+const btnReset       = document.getElementById('btnReset');
 
-let currentFile = null;
-
-// ── Word counter ──────────────────────────────────────────────────────────
 function wordCount(t) {
   return t.trim() === '' ? 0 : t.trim().split(/\s+/).length;
 }
@@ -830,71 +661,20 @@ function updateCounter() {
   const pct = Math.min(100, (wc / WORD_LIMIT) * 100);
   wordBarFill.style.width = pct + '%';
   wordBarFill.style.background =
-    wc === 0       ? 'var(--text-dim)' :
-    wc <= WORD_LIMIT ? 'var(--green)'   :
+    wc === 0         ? 'var(--text-dim)' :
+    wc <= WORD_LIMIT ? 'var(--green)'    :
                        'var(--red)';
   wordCountLabel.textContent = wc + ' / ' + WORD_LIMIT + ' words';
   wordCountLabel.className   = 'word-count-label' +
     (wc > WORD_LIMIT ? ' over' : wc > WORD_LIMIT * 0.8 ? ' warn' : '');
-  updateBtn();
-}
-
-function updateBtn() {
-  const wc      = wordCount(textInput.value);
-  const hasFile = currentFile !== null;
-  const hasText = wc > 0 && wc <= WORD_LIMIT;
-  btnAnalyse.disabled = !(hasFile || hasText);
+  btnAnalyse.disabled = !(wc > 0 && wc <= WORD_LIMIT);
 }
 
 textInput.addEventListener('input', updateCounter);
 
-// ── File upload ───────────────────────────────────────────────────────────
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', ()=> uploadZone.classList.remove('drag-over'));
-uploadZone.addEventListener('drop', e => {
-  e.preventDefault();
-  uploadZone.classList.remove('drag-over');
-  const f = e.dataTransfer.files[0];
-  if (f) setFile(f);
-});
+function showError(msg) { errorBox.textContent = '✕  ' + msg; errorBox.classList.add('show'); }
+function hideError()    { errorBox.classList.remove('show'); }
 
-fileInput.addEventListener('change', () => {
-  if (fileInput.files[0]) setFile(fileInput.files[0]);
-});
-
-function setFile(f) {
-  const ext = f.name.split('.').pop().toLowerCase();
-  if (!['pdf','docx'].includes(ext)) {
-    showError('Only PDF and DOCX files are supported.');
-    return;
-  }
-  currentFile = f;
-  fileChosenName.textContent = f.name;
-  fileChosen.classList.add('show');
-  uploadZone.style.display = 'none';
-  textInput.value = '';
-  updateCounter();
-  hideError();
-}
-
-fileRemove.addEventListener('click', () => {
-  currentFile = null;
-  fileInput.value = '';
-  fileChosen.classList.remove('show');
-  uploadZone.style.display = 'block';
-  updateBtn();
-});
-
-// ── Error helpers ─────────────────────────────────────────────────────────
-function showError(msg) {
-  errorBox.textContent = '✕  ' + msg;
-  errorBox.classList.add('show');
-}
-function hideError() {
-  errorBox.classList.remove('show');
-}
-
-// ── API call ──────────────────────────────────────────────────────────────
 async function runAnalysis() {
   hideError();
   btnAnalyse.disabled = true;
@@ -902,34 +682,17 @@ async function runAnalysis() {
   resultsSection.classList.remove('show');
 
   try {
-    let data;
-
-    if (currentFile) {
-      const form = new FormData();
-      form.append('file', currentFile);
-      const res = await fetch(API_BASE + '/v1/score/file', {
-        method: 'POST', body: form
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail || 'Server error ' + res.status);
-      }
-      data = await res.json();
-    } else {
-      const res = await fetch(API_BASE + '/v1/score/text', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: textInput.value })
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail || 'Server error ' + res.status);
-      }
-      data = await res.json();
+    const res = await fetch(API_BASE + '/v1/score/text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: textInput.value })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Server error ' + res.status);
     }
-
+    const data = await res.json();
     renderResults(data);
-
   } catch (e) {
     showError(e.message || 'Connection error — check your network.');
     btnAnalyse.disabled = false;
@@ -938,15 +701,13 @@ async function runAnalysis() {
   }
 }
 
-// ── Render results ────────────────────────────────────────────────────────
 function renderResults(d) {
-  const idx       = d.index;
-  const compliant = d.compliant;
-  const words     = d.words;
-
-  const idxColor  = idx >= 70 ? 'var(--green)' : idx >= 45 ? 'var(--gold)' : 'var(--red)';
-  const compClass = compliant ? 'green' : 'red';
-  const compLabel = compliant ? '✓ COMPLIANT' : '✗ NON-COMPLIANT';
+  const idx      = d.index;
+  const compliant= d.compliant;
+  const words    = d.words;
+  const idxColor = idx >= 70 ? 'var(--green)' : idx >= 45 ? 'var(--gold)' : 'var(--red)';
+  const compClass= compliant ? 'green' : 'red';
+  const compLabel= compliant ? '✓ COMPLIANT' : '✗ NON-COMPLIANT';
 
   kpiGrid.innerHTML = `
     <div class="kpi-card">
@@ -970,16 +731,11 @@ function renderResults(d) {
   resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ── Button & reset ────────────────────────────────────────────────────────
 btnAnalyse.addEventListener('click', runAnalysis);
 
 btnReset.addEventListener('click', () => {
   resultsSection.classList.remove('show');
   textInput.value = '';
-  currentFile = null;
-  fileInput.value = '';
-  fileChosen.classList.remove('show');
-  uploadZone.style.display = 'block';
   updateCounter();
   hideError();
   window.scrollTo({ top: 0, behavior: 'smooth' });
