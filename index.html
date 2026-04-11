@@ -494,61 +494,292 @@ function switchModel(id){document.querySelectorAll('.model-pill').forEach(functi
      TAB: RESEARCH — START
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-.rsch-header{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.rsch-header h2{margin-bottom:4px}
-.rsch-header p{font-size:13px;color:var(--muted)}
-.filter-row{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
-.filter-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.01em}
-.filter-btn:hover,.filter-btn.active{background:var(--acc-soft);border-color:var(--acc-mid);color:var(--acc)}
-.paper-list{display:flex;flex-direction:column;gap:14px}
-.paper-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;transition:border-color .25s,box-shadow .25s,background .25s;cursor:pointer}
-.paper-card:hover{border-color:var(--acc-mid);background:var(--bg-float);box-shadow:0 4px 24px rgba(77,170,223,.08)}
-.paper-card.expanded{border-color:var(--acc-mid);background:var(--bg-float)}
-.paper-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.paper-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.paper-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px;line-height:1.4}
-.paper-excerpt{font-size:13px;color:var(--muted);line-height:1.65}
-.paper-expand{flex-shrink:0;color:var(--muted);font-size:16px;transition:transform .2s}
-.paper-card.expanded .paper-expand{transform:rotate(180deg);color:var(--acc)}
-.paper-body{display:none;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
-.paper-card.expanded .paper-body{display:block}
-.paper-body p{font-size:13px;color:var(--text);line-height:1.72;margin-bottom:16px}
-.paper-actions{display:flex;gap:10px;flex-wrap:wrap}
+.idx-section{margin-top:48px;padding-top:36px;border-top:1px solid var(--border)}
+.idx-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.idx-header h3{font-size:18px;font-weight:600;color:var(--white);margin-bottom:4px}
+.idx-header p{font-size:13px;color:var(--muted)}
+.idx-controls{display:flex;align-items:center;gap:10px}
+.idx-pill{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--bg-raised);border:1px solid var(--border);color:var(--muted)}
+.idx-search{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--white);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;width:200px;outline:none;transition:border-color .18s}
+.idx-search:focus{border-color:var(--acc-mid)}
+.idx-search::placeholder{color:var(--muted)}
+.idx-list{display:flex;flex-direction:column;gap:2px}
+.idx-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid transparent;transition:background .15s,border-color .15s}
+.idx-row:hover{background:var(--bg-raised);border-color:var(--border)}
+.idx-row.has-gh{cursor:pointer}
+.idx-num{font-size:11px;color:var(--muted);width:28px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.idx-info{flex:1;min-width:0}
+.idx-title{font-size:13px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.idx-desc{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.idx-row.empty .idx-title{color:var(--muted);font-weight:400;font-style:italic}
+.idx-gh{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--acc);flex-shrink:0}
+.idx-gh svg{fill:var(--acc)}
 </style>
 
-<div id="panel-research" class="panel">
-  <div class="page-padded">
-  <div class="wrap">
-    <div class="rsch-header">
-      <div><span class="label" style="display:block;margin-bottom:6px">Publications</span><h2>Research Papers</h2><p>Research with DOI, technical standards, and working papers from the ZULFR research group.</p></div>
-      <span class="badge badge-blue">Sample Publications</span>
+<div class="idx-section">
+  <div class="idx-header">
+    <div>
+      <span class="label" style="display:block;margin-bottom:6px">Index</span>
+      <h3>All Publications</h3>
+      <p>Title and description index — slots with GitHub links open the repository directly.</p>
     </div>
-    <div class="filter-row">
-      <button class="filter-btn active" onclick="filterPapers('all',this)">All</button>
-      <button class="filter-btn" onclick="filterPapers('standard',this)">Technical Report</button>
-      <button class="filter-btn" onclick="filterPapers('working',this)">Working Paper</button>
-    </div>
-    <div class="paper-list">
-      <div class="paper-card" data-type="working" onclick="togglePaper(this)">
-        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-gold">Benchmark</span><span class="badge badge-blue">DOI · 10.5281/zenodo.19075200</span></div><div class="paper-title">Governed or Blind: The Integrity Gap in Frontier AI</div><p class="paper-excerpt">AI Accountability League 2026 — Season 1. Five frontier models. Two independent engines. Every model failed governance compliance.</p></div><span class="paper-expand">⌄</span></div>
-        <div class="paper-body"><p>In March 2026, five frontier models — ChatGPT-4o, Claude Sonnet 4.6, Copilot, Gemini Flash, and Grok — were evaluated using TRUE100 and ALIGN100 under controlled free-tier conditions. Every model demonstrated strong structural alignment (ALIGN100: 0.84+) while failing governance compliance (TRUE-10: 25–28/100). This systematic divergence — the Governance-Alignment Gap — averaged 57.3 normalised points across all five vendors.</p><p>This is not a capability test. It is a governance stress test — the first of its kind — revealing what today's AI can and cannot do when held to standards that matter outside the lab.</p><div class="paper-actions"><a href="https://doi.org/10.5281/zenodo.19075200" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a><a href="https://github.com/usman19zafar/AI-Accountability-League-2026" target="_blank" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">View Data</a><button class="btn btn-gold" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation();switchTab('lab')">Research Record</button></div></div>
-      </div>
-      <div class="paper-card" data-type="doi" onclick="togglePaper(this)">
-        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-green">Theorems</span><span class="badge badge-blue">DOI · Zenodo.18705930</span></div><div class="paper-title">SIS-10: Functional Safety is Not a Snapshot</div><p class="paper-excerpt">Mosaic aging hazard modeling for dynamic safety systems and continuous-time safety classification.</p></div><span class="paper-expand">⌄</span></div>
-        <div class="paper-body"><p>This paper challenges the prevailing assumption that functional safety can be assessed at a single point in time. Drawing on mosaic aging theory from materials science, we propose a continuous-time hazard model in which safety classifications degrade dynamically as system components age, interact, and drift from their certified states.</p><p>The central argument is that snapshot-based safety assessments — the dominant paradigm in IEC 61508 and ISO 26262 — systematically underestimate risk in long-lifecycle systems. We formalize a hazard accumulation function and demonstrate its tractability for real-time monitoring in embedded AI controllers.</p><div class="paper-actions"><a href="https://zenodo.org/record/18705930" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a></div></div>
-      </div>
-      <div class="paper-card" data-type="standard" onclick="togglePaper(this)">
-        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-amber">Technical Standard</span><span class="badge badge-blue">DOI · Zenodo.18684292</span></div><div class="paper-title">DAIS-10: A Doctrine-Aligned Framework for Safety-Dominant Decision Making Under Uncertainty</div><p class="paper-excerpt">Semantic based dominance replacing probabilistic thresholds in data admissibility protocols.</p></div><span class="paper-expand">⌄</span></div>
-        <div class="paper-body"><p>DAIS-10 is a measure theoretic, doctrine aligned decision framework for high risk uncertainty environments. It replaces threshold probability methods with scenario semantics, recursive uncertainty handling, and safety dominant rules based on coherent risk measures such as CVaR. The framework is grounded in seven axioms and seven theorems covering convergence, robustness, and dominance properties.</p><p>DAIS-10 is domain agnostic and certifiable for safety critical applications including autonomous systems, healthcare, finance, and multi agent coordination. Experimental evaluation shows catastrophic miss probability reduction of 77 to 90 percent under distribution shifts.</p><div class="paper-actions"><a href="https://zenodo.org/records/18684292" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access Full Paper</a><button class="btn btn-ghost" style="font-size:12px;padding:8px 16px;" onclick="event.stopPropagation();switchTab('models')">View Model</button></div></div>
-      </div>
-      <div class="paper-card" data-type="working" onclick="togglePaper(this)">
-        <div class="paper-top"><div><div class="paper-meta"><span class="badge badge-amber">Short Working Paper</span><span class="badge badge-blue">DOI · Zenodo.18684292</span></div><div class="paper-title">A Modern Cognitive Architecture Framework (CAF)</div><p class="paper-excerpt">Designing How Intelligent Systems Think, Decide and Behave.</p></div><span class="paper-expand">⌄</span></div>
-        <div class="paper-body"><p>As AI systems are deployed in executive decision support roles — advising on capital allocation, regulatory strategy, and organizational risk — the absence of formal integrity guarantees creates unquantified liability. This working paper proposes a measurement framework for semantic integrity that can be independently audited and certified.</p><p>We define semantic integrity operationally as the preservation of authorized meaning across the full transformation chain from raw input to decision recommendation. Integrity degrades when transformations introduce unauthorized semantic shifts — a phenomenon we term semantic drift — and we provide formal detection criteria.</p><div class="paper-actions"><a href="https://zenodo.org/me/uploads?q=&f=shared_with_me%3Afalse&l=list&p=1&s=10&sort=newest" target="_blank" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Access All Papers</a><span class="badge badge-amber">Future Model</span></div></div>
-      </div>
+    <div class="idx-controls">
+      <span class="idx-pill" id="idxPill">200 slots</span>
+      <input class="idx-search" id="idxSearch" placeholder="Search titles…" oninput="renderIdx()" />
     </div>
   </div>
-  </div>
-</div><!-- end #panel-research -->
+  <div class="idx-list" id="idxList"></div>
+</div>
+
+<script>
+(function(){
+  var GH = '<svg width="13" height="13" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+
+  /* ── POPULATE YOUR 200 SLOTS BELOW ─────────────────────────────
+     Each entry: { title, desc, gh }
+     Leave gh:'' to hide the GitHub button for that slot.
+  ─────────────────────────────────────────────────────────────── */
+  var slots = [
+    /* 01 */ {title:'Governed or Blind: The Integrity Gap in Frontier AI',       desc:'AI Accountability League 2026 — Season 1 benchmark',                    gh:'https://github.com/usman19zafar/AI-Accountability-League-2026'},
+    /* 02 */ {title:'SIS-10: Functional Safety is Not a Snapshot',               desc:'Mosaic aging hazard modeling for dynamic safety systems',                gh:'https://github.com/usman19zafar/zulfr-images-videos/blob/main/SIS10/sis10-13.jpg'},
+    /* 03 */ {title:'DAIS-10: Doctrine-Aligned Framework',                       desc:'Safety-dominant decision making under uncertainty',                      gh:'https://github.com/usman19zafar/zulfr-images-videos/blob/main/DWA10/code.md'},
+    /* 04 */ {title:'A Modern Cognitive Architecture Framework (CAF)',            desc:'Designing how intelligent systems think, decide and behave',             gh:''},
+    /* 05 */ {title:'',desc:'',gh:''},
+    /* 06 */ {title:'',desc:'',gh:''},
+    /* 07 */ {title:'',desc:'',gh:''},
+    /* 08 */ {title:'',desc:'',gh:''},
+    /* 09 */ {title:'',desc:'',gh:''},
+    /* 10 */ {title:'',desc:'',gh:''},
+    /* 11 */ {title:'',desc:'',gh:''},
+    /* 12 */ {title:'',desc:'',gh:''},
+    /* 13 */ {title:'',desc:'',gh:''},
+    /* 14 */ {title:'',desc:'',gh:''},
+    /* 15 */ {title:'',desc:'',gh:''},
+    /* 16 */ {title:'',desc:'',gh:''},
+    /* 17 */ {title:'',desc:'',gh:''},
+    /* 18 */ {title:'',desc:'',gh:''},
+    /* 19 */ {title:'',desc:'',gh:''},
+    /* 20 */ {title:'',desc:'',gh:''},
+    /* 21 */ {title:'',desc:'',gh:''},
+    /* 22 */ {title:'',desc:'',gh:''},
+    /* 23 */ {title:'',desc:'',gh:''},
+    /* 24 */ {title:'',desc:'',gh:''},
+    /* 25 */ {title:'',desc:'',gh:''},
+    /* 26 */ {title:'',desc:'',gh:''},
+    /* 27 */ {title:'',desc:'',gh:''},
+    /* 28 */ {title:'',desc:'',gh:''},
+    /* 29 */ {title:'',desc:'',gh:''},
+    /* 30 */ {title:'',desc:'',gh:''},
+    /* 31 */ {title:'',desc:'',gh:''},
+    /* 32 */ {title:'',desc:'',gh:''},
+    /* 33 */ {title:'',desc:'',gh:''},
+    /* 34 */ {title:'',desc:'',gh:''},
+    /* 35 */ {title:'',desc:'',gh:''},
+    /* 36 */ {title:'',desc:'',gh:''},
+    /* 37 */ {title:'',desc:'',gh:''},
+    /* 38 */ {title:'',desc:'',gh:''},
+    /* 39 */ {title:'',desc:'',gh:''},
+    /* 40 */ {title:'',desc:'',gh:''},
+    /* 41 */ {title:'',desc:'',gh:''},
+    /* 42 */ {title:'',desc:'',gh:''},
+    /* 43 */ {title:'',desc:'',gh:''},
+    /* 44 */ {title:'',desc:'',gh:''},
+    /* 45 */ {title:'',desc:'',gh:''},
+    /* 46 */ {title:'',desc:'',gh:''},
+    /* 47 */ {title:'',desc:'',gh:''},
+    /* 48 */ {title:'',desc:'',gh:''},
+    /* 49 */ {title:'',desc:'',gh:''},
+    /* 50 */ {title:'',desc:'',gh:''},
+    /* 51 */ {title:'',desc:'',gh:''},
+    /* 52 */ {title:'',desc:'',gh:''},
+    /* 53 */ {title:'',desc:'',gh:''},
+    /* 54 */ {title:'',desc:'',gh:''},
+    /* 55 */ {title:'',desc:'',gh:''},
+    /* 56 */ {title:'',desc:'',gh:''},
+    /* 57 */ {title:'',desc:'',gh:''},
+    /* 58 */ {title:'',desc:'',gh:''},
+    /* 59 */ {title:'',desc:'',gh:''},
+    /* 60 */ {title:'',desc:'',gh:''},
+    /* 61 */ {title:'',desc:'',gh:''},
+    /* 62 */ {title:'',desc:'',gh:''},
+    /* 63 */ {title:'',desc:'',gh:''},
+    /* 64 */ {title:'',desc:'',gh:''},
+    /* 65 */ {title:'',desc:'',gh:''},
+    /* 66 */ {title:'',desc:'',gh:''},
+    /* 67 */ {title:'',desc:'',gh:''},
+    /* 68 */ {title:'',desc:'',gh:''},
+    /* 69 */ {title:'',desc:'',gh:''},
+    /* 70 */ {title:'',desc:'',gh:''},
+    /* 71 */ {title:'',desc:'',gh:''},
+    /* 72 */ {title:'',desc:'',gh:''},
+    /* 73 */ {title:'',desc:'',gh:''},
+    /* 74 */ {title:'',desc:'',gh:''},
+    /* 75 */ {title:'',desc:'',gh:''},
+    /* 76 */ {title:'',desc:'',gh:''},
+    /* 77 */ {title:'',desc:'',gh:''},
+    /* 78 */ {title:'',desc:'',gh:''},
+    /* 79 */ {title:'',desc:'',gh:''},
+    /* 80 */ {title:'',desc:'',gh:''},
+    /* 81 */ {title:'',desc:'',gh:''},
+    /* 82 */ {title:'',desc:'',gh:''},
+    /* 83 */ {title:'',desc:'',gh:''},
+    /* 84 */ {title:'',desc:'',gh:''},
+    /* 85 */ {title:'',desc:'',gh:''},
+    /* 86 */ {title:'',desc:'',gh:''},
+    /* 87 */ {title:'',desc:'',gh:''},
+    /* 88 */ {title:'',desc:'',gh:''},
+    /* 89 */ {title:'',desc:'',gh:''},
+    /* 90 */ {title:'',desc:'',gh:''},
+    /* 91 */ {title:'',desc:'',gh:''},
+    /* 92 */ {title:'',desc:'',gh:''},
+    /* 93 */ {title:'',desc:'',gh:''},
+    /* 94 */ {title:'',desc:'',gh:''},
+    /* 95 */ {title:'',desc:'',gh:''},
+    /* 96 */ {title:'',desc:'',gh:''},
+    /* 97 */ {title:'',desc:'',gh:''},
+    /* 98 */ {title:'',desc:'',gh:''},
+    /* 99 */ {title:'',desc:'',gh:''},
+    /*100 */ {title:'',desc:'',gh:''},
+    /*101 */ {title:'',desc:'',gh:''},
+    /*102 */ {title:'',desc:'',gh:''},
+    /*103 */ {title:'',desc:'',gh:''},
+    /*104 */ {title:'',desc:'',gh:''},
+    /*105 */ {title:'',desc:'',gh:''},
+    /*106 */ {title:'',desc:'',gh:''},
+    /*107 */ {title:'',desc:'',gh:''},
+    /*108 */ {title:'',desc:'',gh:''},
+    /*109 */ {title:'',desc:'',gh:''},
+    /*110 */ {title:'',desc:'',gh:''},
+    /*111 */ {title:'',desc:'',gh:''},
+    /*112 */ {title:'',desc:'',gh:''},
+    /*113 */ {title:'',desc:'',gh:''},
+    /*114 */ {title:'',desc:'',gh:''},
+    /*115 */ {title:'',desc:'',gh:''},
+    /*116 */ {title:'',desc:'',gh:''},
+    /*117 */ {title:'',desc:'',gh:''},
+    /*118 */ {title:'',desc:'',gh:''},
+    /*119 */ {title:'',desc:'',gh:''},
+    /*120 */ {title:'',desc:'',gh:''},
+    /*121 */ {title:'',desc:'',gh:''},
+    /*122 */ {title:'',desc:'',gh:''},
+    /*123 */ {title:'',desc:'',gh:''},
+    /*124 */ {title:'',desc:'',gh:''},
+    /*125 */ {title:'',desc:'',gh:''},
+    /*126 */ {title:'',desc:'',gh:''},
+    /*127 */ {title:'',desc:'',gh:''},
+    /*128 */ {title:'',desc:'',gh:''},
+    /*129 */ {title:'',desc:'',gh:''},
+    /*130 */ {title:'',desc:'',gh:''},
+    /*131 */ {title:'',desc:'',gh:''},
+    /*132 */ {title:'',desc:'',gh:''},
+    /*133 */ {title:'',desc:'',gh:''},
+    /*134 */ {title:'',desc:'',gh:''},
+    /*135 */ {title:'',desc:'',gh:''},
+    /*136 */ {title:'',desc:'',gh:''},
+    /*137 */ {title:'',desc:'',gh:''},
+    /*138 */ {title:'',desc:'',gh:''},
+    /*139 */ {title:'',desc:'',gh:''},
+    /*140 */ {title:'',desc:'',gh:''},
+    /*141 */ {title:'',desc:'',gh:''},
+    /*142 */ {title:'',desc:'',gh:''},
+    /*143 */ {title:'',desc:'',gh:''},
+    /*144 */ {title:'',desc:'',gh:''},
+    /*145 */ {title:'',desc:'',gh:''},
+    /*146 */ {title:'',desc:'',gh:''},
+    /*147 */ {title:'',desc:'',gh:''},
+    /*148 */ {title:'',desc:'',gh:''},
+    /*149 */ {title:'',desc:'',gh:''},
+    /*150 */ {title:'',desc:'',gh:''},
+    /*151 */ {title:'',desc:'',gh:''},
+    /*152 */ {title:'',desc:'',gh:''},
+    /*153 */ {title:'',desc:'',gh:''},
+    /*154 */ {title:'',desc:'',gh:''},
+    /*155 */ {title:'',desc:'',gh:''},
+    /*156 */ {title:'',desc:'',gh:''},
+    /*157 */ {title:'',desc:'',gh:''},
+    /*158 */ {title:'',desc:'',gh:''},
+    /*159 */ {title:'',desc:'',gh:''},
+    /*160 */ {title:'',desc:'',gh:''},
+    /*161 */ {title:'',desc:'',gh:''},
+    /*162 */ {title:'',desc:'',gh:''},
+    /*163 */ {title:'',desc:'',gh:''},
+    /*164 */ {title:'',desc:'',gh:''},
+    /*165 */ {title:'',desc:'',gh:''},
+    /*166 */ {title:'',desc:'',gh:''},
+    /*167 */ {title:'',desc:'',gh:''},
+    /*168 */ {title:'',desc:'',gh:''},
+    /*169 */ {title:'',desc:'',gh:''},
+    /*170 */ {title:'',desc:'',gh:''},
+    /*171 */ {title:'',desc:'',gh:''},
+    /*172 */ {title:'',desc:'',gh:''},
+    /*173 */ {title:'',desc:'',gh:''},
+    /*174 */ {title:'',desc:'',gh:''},
+    /*175 */ {title:'',desc:'',gh:''},
+    /*176 */ {title:'',desc:'',gh:''},
+    /*177 */ {title:'',desc:'',gh:''},
+    /*178 */ {title:'',desc:'',gh:''},
+    /*179 */ {title:'',desc:'',gh:''},
+    /*180 */ {title:'',desc:'',gh:''},
+    /*181 */ {title:'',desc:'',gh:''},
+    /*182 */ {title:'',desc:'',gh:''},
+    /*183 */ {title:'',desc:'',gh:''},
+    /*184 */ {title:'',desc:'',gh:''},
+    /*185 */ {title:'',desc:'',gh:''},
+    /*186 */ {title:'',desc:'',gh:''},
+    /*187 */ {title:'',desc:'',gh:''},
+    /*188 */ {title:'',desc:'',gh:''},
+    /*189 */ {title:'',desc:'',gh:''},
+    /*190 */ {title:'',desc:'',gh:''},
+    /*191 */ {title:'',desc:'',gh:''},
+    /*192 */ {title:'',desc:'',gh:''},
+    /*193 */ {title:'',desc:'',gh:''},
+    /*194 */ {title:'',desc:'',gh:''},
+    /*195 */ {title:'',desc:'',gh:''},
+    /*196 */ {title:'',desc:'',gh:''},
+    /*197 */ {title:'',desc:'',gh:''},
+    /*198 */ {title:'',desc:'',gh:''},
+    /*199 */ {title:'',desc:'',gh:''},
+    /*200 */ {title:'',desc:'',gh:''}
+  ];
+
+  function renderIdx(){
+    var q = document.getElementById('idxSearch').value.toLowerCase();
+    var list = document.getElementById('idxList');
+    var pill = document.getElementById('idxPill');
+    var html = '', count = 0;
+    slots.forEach(function(s, i){
+      var num = String(i+1).padStart(3,'0');
+      var hasTitle = s.title.trim() !== '';
+      if(q && !hasTitle) return;
+      if(q && s.title.toLowerCase().indexOf(q) === -1 && s.desc.toLowerCase().indexOf(q) === -1) return;
+      count++;
+      if(s.gh){
+        html += '<div class="idx-row has-gh" onclick="window.open(\''+s.gh+'\',\'_blank\')">'
+          +'<span class="idx-num">'+num+'</span>'
+          +'<div class="idx-info"><div class="idx-title">'+s.title+'</div>'+(s.desc?'<div class="idx-desc">'+s.desc+'</div>':'')+'</div>'
+          +'<span class="idx-gh">'+GH+' GitHub</span>'
+          +'</div>';
+      } else if(hasTitle){
+        html += '<div class="idx-row">'
+          +'<span class="idx-num">'+num+'</span>'
+          +'<div class="idx-info"><div class="idx-title">'+s.title+'</div>'+(s.desc?'<div class="idx-desc">'+s.desc+'</div>':'')+'</div>'
+          +'</div>';
+      } else {
+        html += '<div class="idx-row empty">'
+          +'<span class="idx-num">'+num+'</span>'
+          +'<div class="idx-info"><div class="idx-title">— empty slot —</div></div>'
+          +'</div>';
+      }
+    });
+    list.innerHTML = html;
+    pill.textContent = q ? count+' results' : '200 slots';
+  }
+
+  renderIdx();
+  document.getElementById('idxSearch').addEventListener('input', renderIdx);
+})();
+</script>
+<!-- end #panel-research -->
 <!-- TAB: RESEARCH — END -->
 
 
